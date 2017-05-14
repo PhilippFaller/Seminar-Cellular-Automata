@@ -143,12 +143,12 @@ mit Abänderungen entnommen wurde.
 Sei $L$ eine endliche, nicht leere Menge von Labels, mit einem ausgezeichneten Element $\#$. 
 Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 \begin{itemize}
-	\item[$N$] ist eine endliche, nicht leere Menge aus Knoten.
+	\item[$N$] eine endliche, nicht leere Menge aus Knoten ist.
 	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
 	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f\left(m\right) = \# \implies f\left(n\right) \neq \#$. $f$  heißt \defWord{Labelfunktion}.
-	\item[$g$] $: A \rightarrow Z_d$ ist eine Abbildung, wobei $Z_d = \{1, 2,, d \}$, die folgende Eigenschaften besitzt:
+	\item[$g$] $: A \rightarrow Z_d$ ist eine Abbildung, wobei $Z_d = \left \{1, 2,\text{\dots}, d \right \}$, die folgende Eigenschaften besitzt:
 	
-	Sei für $n \in N$ $A_n := \{\left(n, m\right) \in A\}$ die Menge aller Kanten, die von $n$ ausgehen.
+	Sei $A_n := \left \{\left(n, m\right) \in A\right \}$ die Menge aller Kanten, die von einem Knoten $n \in N$ ausgehen.
 	\begin{enumerate}
 		\item Falls $f\left(n\right) \neq \#$, ist $\left|A_n\right| = d$ und $g \vert_{A_n}$ ($g$ eingeschränkt auf $A_n$) ist eine Bijektion zwischen $A_n$ und $Z_d$.
 		\item Falls $f\left(n\right) = \#$, ist $\left|A_n\right| = 1$
@@ -158,7 +158,16 @@ Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\ri
 
 \section{Zellulare $d$"=Graph Automaten und Akzeptoren}
 
-
+Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
+\begin{itemize}
+	\item[$\Gamma$] ein $d$"=Graph $\left(N, A, f, g\right)$ über einer Labelmenge $L$ ist.
+	\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
+	\begin{itemize}
+		\item[$Q$] ist eine nicht leere Menge von Zuständen, mit $L \subseteq Q$.
+		\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\left \{\left(\#, z, q\right) \vert z \in Z_d^d, q \in Q^d\right \}\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
+	\end{itemize}
+	\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. Für $n \in N$ heißt das Bild $H \left(n\right) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$.
+\end{itemize}
 
 \section{Graphen Eigenschaften}
 
