@@ -32,14 +32,16 @@
 \usepackage{bbold}
 \newcommand{\Z}{\mathbb{Z}}
 
+\usepackage{csquotes}
+
 
 %-----------------------------------------------------------------------------
 % für das Deckblatt
 
 \usepackage{tikz}
 
-\newcommand{\teilnehmername}{Vorname Nachname} % !!!!!
-\newcommand{\teilnehmermatrnr}{1234567}        % !!!!!
+\newcommand{\teilnehmername}{Philipp Faller} % !!!!!
+\newcommand{\teilnehmermatrnr}{1939704}        % !!!!!
 \newcommand{\seminarart}{Proseminar}           % !!!!!  oder Seminar
 \newcommand{\seminarlp}{3 LP}                  % !!!!!  Prosem immer 3 LP, Sem 3 oder 4 LP
 \newcommand{\seminarjahr}{2017}                % !!!!!
@@ -47,6 +49,7 @@
 \newcommand{\meta}[1]{$\langle$\textit{#1}$\rangle$}
 \newcommand{\paket}[1]{\texttt{#1}}
 \newcommand{\prgname}[1]{\texttt{#1}}
+\newcommand{\defWord}[1]{\emph{#1}}
 
 %-----------------------------------------------------------------------------
 \author{Thomas Worsch}
@@ -95,12 +98,11 @@ von \textbf{\teilnehmername}, Matr.nr.~\teilnehmermatrnr
 % nachfolgende ein Beispiel, für Konferenzbeiträge, Buchausschnitte, ...
 % bitte analog vorgehen !!!!!
 %
-Karl Gustav von Kloppenstöck (1958)\\[1ex]
+Angela Wu und Azriel Rosenfeld (1979)\\[1ex]
 %
-\textit{Zellularautomaten im ausgehenden Kambrium unter besonderer
-  Berücksichtigung der Karlsruher Unterpflasterstraßenbahnen}\\[1ex]
+\textit{Cellular Graph Automata I }\\[1ex]
 %
-Zentralblatt für historischen ÖPNV, Band \textbf{42}, S.~123-456
+Information and Controll, Band \textbf{42}, S.~305-329
 }
 \clearpage
 % Ende erste Seite
@@ -134,94 +136,35 @@ mit Abänderungen entnommen wurde.
 %=======================================================================
 
 %-----------------------------------------------------------------------------
-\section{Einleitung}
 
-Hoffentlich geht das gut: Das vorliegende Dokument soll gleichzeitig mehreren
-Zwecken dienen:
-%
-\begin{itemize}[noitemsep]
-\item Es soll als Vorlage für Seminarausarbeitungen dienen.
-  %
-  Daher stelle ich Ihnen die \LaTeX"=Quelle zur Verfügung.
-  %
-  Deshalb sind die beiden ersten Seiten auch etwas ungewöhnlich.
-\item Es soll ein paar (meiner Meinung nach) wichtige Dinge zum Thema \LaTeX{}
-  vermitteln.
-\item Es soll dafür sorgen, dass der in den Seminarausarbeitungen benutzte
-  Formalismus (halbwegs) einheitlich ist.
+\section{Übersicht}
+
+\section{$d$"=Graphen}
+Sei $L$ eine endliche, nicht leere Menge von Labels, mit einem ausgezeichneten Element $\#$. 
+Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
+\begin{itemize}
+	\item[$N$] ist eine endliche, nicht leere Menge aus Knoten.
+	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
+	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f\left(m\right) = \# \implies f\left(n\right) \neq \#$. $f$  heißt \defWord{Labelfunktion}.
+	\item[$g$] $: A \rightarrow Z_d$ ist eine Abbildung, wobei $Z_d = \{1, 2,, d \}$, die folgende Eigenschaften besitzt:
+	
+	Sei für $n \in N$ $A_n := \{\left(n, m\right) \in A\}$ die Menge aller Kanten, die von $n$ ausgehen.
+	\begin{enumerate}
+		\item Falls $f\left(n\right) \neq \#$, ist $\left|A_n\right| = d$ und $g \vert_{A_n}$ ($g$ eingeschränkt auf $A_n$) ist eine Bijektion zwischen $A_n$ und $Z_d$.
+		\item Falls $f\left(n\right) = \#$, ist $\left|A_n\right| = 1$
+	\end{enumerate}
+	
 \end{itemize}
-%
-Daher ist die weitere Arbeit ist wie folgt aufgebaut: 
 
-In Abschnitt~\ref{sec:grundlagen} sind noch mal die Grundlagen zu
-Zellularautomaten aufgeschrieben. Die Auf"|forderung an Seminarteilnehmer ist:
-%
-\begin{itemize}[noitemsep]
-\item Bitte benutzen Sie diesen Formalismus (soweit möglich und sinnvoll).
-\item Aber bitte schreiben Sie ihn nicht alle noch mal ab, sondern verweisen
-  Sie (erst mal) auf das vorliegende Dokument.
-\item Allerdings ist auch mir noch unklar: Wie heißt dieses Dokument? Wie soll
-  man das ziteren?
-\end{itemize}
-%
-In Abschnitt~\ref{sec:dokument-struktur} wird erläutert, an welchen Stellen
-man in diesem Dokument Dinge findet, die für den gewählten Aufbau von
-(Pro-)Seminarausarbeitungen von Bedeutung sind.
+\section{Zellulare $d$"=Graph Automaten und Akzeptoren}
 
-In Abschnitt~\ref{sec:benutzte-pakete} findet man einige Anmerkungen zu den in
-diesem \LaTeX"=Dokument benutzten Paketen. Da lernen Sie vielleicht noch das
-ein oder andere für Ihr späteres Leben.
 
-In Abschnitt~\ref{sec:no-go} werden einige böse Dinge aufgezählt, die man
-\emph{niemals} tun soll.
 
-In Abschnitt~\ref{sec:tipps} finden sich ein paar allgemeine Tipps zur
-Abfassung von \LaTeX"=Quellen.
+\section{Graphen Eigenschaften}
 
-In der aktuellen Version dieses Dokumentes gibt es noch Lücken. Die, die ich
-sehe, sind abschließend in Abschnitt~\ref{sec:todo} aufgeführt.
+\section{Spannbaum durch Breitensuche}
 
-(Randbemerkung: Es ist eine gute und übliche Vorgehensweise, den ersten
-einleitenden Abschnitt einer Arbeit wie eben geschehen mit einem Überblick
-über den Rest zu beenden.)
-
-%-----------------------------------------------------------------------------
-\section{Grundlagen}
-\label{sec:grundlagen}
-
-$\Z$ bezeichnet die Menge der ganzen Zahlen. Sind $A$ und $B$ zwei Mengen, so
-schreiben wir $B^A$ für die Menge aller Abbildungen der Form $f \colon A\to
-B$.
-
-Ein Zellularautomat ist festgelegt durch
-%
-\begin{enumerate}[noitemsep]
-\item den zugrunde liegenden Raum $R$,
-\item die endliche Zustandsmenge $Q$,
-\item die endliche Nachbarschaft $N$ und
-\item die lokale Überführungsfunktion
-  \[
-  \delta: Q^N \to Q
-  \]
-\end{enumerate}
-%
-Erläuterungen und abgeleitete Begriffe:
-%
-\begin{itemize}[noitemsep]
-\item $R$ ist bei uns meist $\Z$ oder $\Z_m$ oder $\Z^2$
-\item Formal enthält $N$ Koordinaten\emph{differenzen}.
-\item Eine \emph{lokale Konfiguration} ist eine Abbildung $\ell:N\to Q$, also
-  mit anderen Worten $\ell\in Q^N$.
-\item Die lokale Überführungsfunktion induziert eine globale
-  Überführungsfunktion
-  \[
-  \Delta: Q^R \to Q^R
-  \]
-\end{itemize}
-%
-Bitte malen Sie Raum"=Zeit"=Diagramme immer so, dass die Zeit \emph{von oben
-  nach unten} zunimmt.
-
+\section{Radius bestimmen und Label finden}
 
 %-----------------------------------------------------------------------------
 
