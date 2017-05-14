@@ -1,0 +1,585 @@
+\begin{filecontents*}{\jobname.bib}
+@article{Worsch_2009_AUC_ar,
+  author  = {Thomas Worsch and Hidenosuke Nishio},
+  title   = {Achieving universality of {CA} by changing the neighborhood},
+  journal = {Journal of Cellular Automata},
+  year    = {2009},
+  volume  = {4},
+  number  = {3},
+  pages   = {237--246},
+}
+@inproceedings{Worsch_2012_IUA_ip_acri,
+  author    = {Thomas Worsch},
+  title     = {({I}ntrinsically?) Universal Asynchronous Cellular Automata},
+  editor    = {Georgios Sirakoulis and Stefania Bandini},
+  booktitle = {Proceedings ACRI 2012},
+  year      = {2012},
+  pages     = {689--698},
+  publisher = {Springer},
+  series    = {LNCS},
+  volume    = {7495},
+}
+\end{filecontents*}
+
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+% \usepackage{mathtools}
+
+\usepackage[tt=false]{libertine}   % !!!!! das muss man nicht nutzen
+\usepackage[libertine]{newtxmath}  % !!!!! das muss man nicht nutzen
+%\usepackage[supstfm=libertinesups,supscaled=1.2,raised=-.13em]{superiors} % params taken from doc
+
+%
+%\usepackage{tgpagella}
+%\usepackage[euler-digits]{eulervm}
+%
+\usepackage{microtype}
+
+\usepackage{fancyvrb}
+
+%\usepackage{graphicx}
+
+\usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
+\setlist{noitemsep}
+
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\tcbuselibrary{listingsutf8}
+
+\usepackage{bbold}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+%-----------------------------------------------------------------------------
+% für das Deckblatt
+
+\usepackage{tikz}
+
+\newcommand{\teilnehmername}{Vorname Nachname} % !!!!!
+\newcommand{\teilnehmermatrnr}{1234567}        % !!!!!
+\newcommand{\seminarart}{Proseminar}           % !!!!!  oder Seminar
+\newcommand{\seminarlp}{3 LP}                  % !!!!!  Prosem immer 3 LP, Sem 3 oder 4 LP
+\newcommand{\seminarjahr}{2017}                % !!!!!
+%-----------------------------------------------------------------------------
+\newcommand{\meta}[1]{$\langle$\textit{#1}$\rangle$}
+\newcommand{\paket}[1]{\texttt{#1}}
+\newcommand{\prgname}[1]{\texttt{#1}}
+
+%-----------------------------------------------------------------------------
+\author{Thomas Worsch}
+\title{Hinweise zu Seminarausarbeitungen}
+
+%=============================================================================
+\begin{document}
+%=======================================================================
+% Anfang erste Seite
+{\thispagestyle{empty}\large\sffamily\raggedright
+%
+\begin{tikzpicture}[remember picture,overlay]
+  \coordinate[xshift=5mm,yshift=-5mm] (NW) at (current page.north west) {};
+  \coordinate[xshift=-5mm,yshift=-5mm] (NE) at (current page.north east) {};
+  \coordinate[xshift=-5mm,yshift=13mm] (SE) at (current page.south east) {};
+  \coordinate[xshift=5mm,yshift=13mm] (SW) at (current page.south west) {};
+
+  \draw[line width=0.25pt] (NW)
+    [rounded corners=5mm] -- (NE) 
+    [sharp corners] -- (SE)
+    [rounded corners=5mm] -- (SW)
+    [sharp corners] -- cycle
+  ;
+\end{tikzpicture}
+%
+\unskip % keine Ahnung warum das nötig ist
+\noindent \textbf{\Large \seminarart\ (\seminarlp)} 
+\\[\baselineskip]
+%
+Zellularautomaten und diskrete komplexe Systeme
+% für Fortgeschrittene  % nur für das 4 Leistungspunkte Seminar !!!!!
+\\[1ex]
+%
+im Sommersemester \seminarjahr
+
+\vspace*{3\baselineskip}
+
+\noindent \textbf{\Large Ausarbeitung} \\[\baselineskip]
+%
+von \textbf{\teilnehmername}, Matr.nr.~\teilnehmermatrnr
+
+\vspace*{3\baselineskip}
+
+\noindent \textbf{\Large Thema} \\[\baselineskip]
+%
+% nachfolgende ein Beispiel, für Konferenzbeiträge, Buchausschnitte, ...
+% bitte analog vorgehen !!!!!
+%
+Karl Gustav von Kloppenstöck (1958)\\[1ex]
+%
+\textit{Zellularautomaten im ausgehenden Kambrium unter besonderer
+  Berücksichtigung der Karlsruher Unterpflasterstraßenbahnen}\\[1ex]
+%
+Zentralblatt für historischen ÖPNV, Band \textbf{42}, S.~123-456
+}
+\clearpage
+% Ende erste Seite
+%=======================================================================
+% Anfang zweite Seite
+{\thispagestyle{empty}\raggedright
+
+\noindent \textbf{\Large Erklärung}\\[1ex]
+gemäß \S 6 (11) der Prüfungsordnung Informatik % !!!!! oder \S 6 (7) (bei MasterPO 2015)
+(Bachelor) % oder Master !!!!!
+\\[\baselineskip]
+
+\noindent
+Ich versichere wahrheitsgemäß, die Seminarausarbeitung zum
+\seminarart{} "`Zellularautomaten und diskrete komplexe Systeme"' im
+Sommersemester \seminarjahr{} selbstständig angefertigt, alle
+benutzten Hilfsmittel vollständig und genau angegeben und alles
+kenntlich gemacht zu haben, was aus Arbeiten anderer unverändert oder
+mit Abänderungen entnommen wurde.
+
+\vspace*{30mm}
+\noindent
+\begin{tabular}{@{}l}
+  \hline
+   \\[-1ex]
+  \hbox to 0.6\textwidth{(\teilnehmername, Matr.nr.~\teilnehmermatrnr) \hss}
+\end{tabular}
+}
+\clearpage
+% Ende zweite Seite
+%=======================================================================
+
+%-----------------------------------------------------------------------------
+\section{Einleitung}
+
+Hoffentlich geht das gut: Das vorliegende Dokument soll gleichzeitig mehreren
+Zwecken dienen:
+%
+\begin{itemize}[noitemsep]
+\item Es soll als Vorlage für Seminarausarbeitungen dienen.
+  %
+  Daher stelle ich Ihnen die \LaTeX"=Quelle zur Verfügung.
+  %
+  Deshalb sind die beiden ersten Seiten auch etwas ungewöhnlich.
+\item Es soll ein paar (meiner Meinung nach) wichtige Dinge zum Thema \LaTeX{}
+  vermitteln.
+\item Es soll dafür sorgen, dass der in den Seminarausarbeitungen benutzte
+  Formalismus (halbwegs) einheitlich ist.
+\end{itemize}
+%
+Daher ist die weitere Arbeit ist wie folgt aufgebaut: 
+
+In Abschnitt~\ref{sec:grundlagen} sind noch mal die Grundlagen zu
+Zellularautomaten aufgeschrieben. Die Auf"|forderung an Seminarteilnehmer ist:
+%
+\begin{itemize}[noitemsep]
+\item Bitte benutzen Sie diesen Formalismus (soweit möglich und sinnvoll).
+\item Aber bitte schreiben Sie ihn nicht alle noch mal ab, sondern verweisen
+  Sie (erst mal) auf das vorliegende Dokument.
+\item Allerdings ist auch mir noch unklar: Wie heißt dieses Dokument? Wie soll
+  man das ziteren?
+\end{itemize}
+%
+In Abschnitt~\ref{sec:dokument-struktur} wird erläutert, an welchen Stellen
+man in diesem Dokument Dinge findet, die für den gewählten Aufbau von
+(Pro-)Seminarausarbeitungen von Bedeutung sind.
+
+In Abschnitt~\ref{sec:benutzte-pakete} findet man einige Anmerkungen zu den in
+diesem \LaTeX"=Dokument benutzten Paketen. Da lernen Sie vielleicht noch das
+ein oder andere für Ihr späteres Leben.
+
+In Abschnitt~\ref{sec:no-go} werden einige böse Dinge aufgezählt, die man
+\emph{niemals} tun soll.
+
+In Abschnitt~\ref{sec:tipps} finden sich ein paar allgemeine Tipps zur
+Abfassung von \LaTeX"=Quellen.
+
+In der aktuellen Version dieses Dokumentes gibt es noch Lücken. Die, die ich
+sehe, sind abschließend in Abschnitt~\ref{sec:todo} aufgeführt.
+
+(Randbemerkung: Es ist eine gute und übliche Vorgehensweise, den ersten
+einleitenden Abschnitt einer Arbeit wie eben geschehen mit einem Überblick
+über den Rest zu beenden.)
+
+%-----------------------------------------------------------------------------
+\section{Grundlagen}
+\label{sec:grundlagen}
+
+$\Z$ bezeichnet die Menge der ganzen Zahlen. Sind $A$ und $B$ zwei Mengen, so
+schreiben wir $B^A$ für die Menge aller Abbildungen der Form $f \colon A\to
+B$.
+
+Ein Zellularautomat ist festgelegt durch
+%
+\begin{enumerate}[noitemsep]
+\item den zugrunde liegenden Raum $R$,
+\item die endliche Zustandsmenge $Q$,
+\item die endliche Nachbarschaft $N$ und
+\item die lokale Überführungsfunktion
+  \[
+  \delta: Q^N \to Q
+  \]
+\end{enumerate}
+%
+Erläuterungen und abgeleitete Begriffe:
+%
+\begin{itemize}[noitemsep]
+\item $R$ ist bei uns meist $\Z$ oder $\Z_m$ oder $\Z^2$
+\item Formal enthält $N$ Koordinaten\emph{differenzen}.
+\item Eine \emph{lokale Konfiguration} ist eine Abbildung $\ell:N\to Q$, also
+  mit anderen Worten $\ell\in Q^N$.
+\item Die lokale Überführungsfunktion induziert eine globale
+  Überführungsfunktion
+  \[
+  \Delta: Q^R \to Q^R
+  \]
+\end{itemize}
+%
+Bitte malen Sie Raum"=Zeit"=Diagramme immer so, dass die Zeit \emph{von oben
+  nach unten} zunimmt.
+
+
+%-----------------------------------------------------------------------------
+\section{Anmerkungen zur Struktur der \LaTeX"=Quelle dieses Dokuments}
+\label{sec:dokument-struktur}
+
+\subsection{Allgemeines}
+
+Jedes \LaTeX"=Dokument hat folgende sytaktische Grobstruktur:
+
+\begin{tcolorbox}
+\begin{Verbatim}[commandchars=\@\[\]]
+\documentclass{article}
+  @meta[Präambel]
+\begin{document}
+  @meta[Rumpf]
+\end{document}
+\end{Verbatim}
+\end{tcolorbox}
+
+Vor der Festlegung \verb|\documentclass{|\dots\verb|}| sind nur wenige
+Kommandos erlaubt.
+%
+Eine Möglichkeit ist die Benutzung einer sogenannten \emph{Umgebung} namens
+\verb|filecontents*|.
+
+\begin{tcolorbox}
+\begin{Verbatim}[commandchars=\@\[\]]
+\begin{filecontents*}{@meta[Dateiname]}
+  @meta[Dateiinhalt]
+\end{filecontents*}
+\end{Verbatim}
+\end{tcolorbox}
+
+Im vorliegenden Fall benutzen wir sie, um in die \LaTeX"=Quelle auch gleich
+noch eine Datei mit Angaben zu Literaturquellen mit einzubinden.
+%
+Die erzeugte Datei hat den gleichen Namen wie die \LaTeX"=Quelle, aber mit der
+Endung \verb|.bib|.
+
+
+\subsection{Die beiden ersten Seiten für unsere Ausarbeitungen}
+
+
+Bitte beachten Sie, dass Sie sowohl in der Präambel als auch auf der ersten
+Seite in den mit fünf Ausrufezeichen \texttt{!!!!!} gekennzeichneten Zeilen
+auf jeden Fall Anpassungen vornehmen müssen.
+
+
+%-----------------------------------------------------------------------------
+\section{Anmerkungen zu benutzten Paketen}
+\label{sec:benutzte-pakete}
+
+Es gibt verschiedene sogenannte \emph{"`\TeX{} engines"'}.
+%
+Der derzeitige Aufbau dieses Dokumentes, genauer gesagt die benutzte Auswahl
+von \LaTeX"=Paketen geht davon aus, dass \prgname{pdflatex} benutzt wird.
+%
+Erfahrene Studenten, die \prgname{lualatex} oder \prgname{xelatex} nutzen
+(wollen), werden vermutlich wissen, dass dann die Paketauswahl anders scein
+muss.
+
+%.............................................................................
+\subsection{Paket \paket{fontenc}}
+
+Am besten einfach wie in der Präambel dieses Dokuments angegeben benutzen:
+
+\verb|\usepackage[T1]{fontenc}|
+
+\subsection{Paket \paket{inputenc}}
+
+In der Präambel dieses Dokumentes steht:
+
+\verb|\usepackage[utf8]{inputenc}|
+
+Das ist richtig so, weil die \LaTeX"=Quelle UTF-8-codiert abgespeichert
+ist. Wenn man die Codierung "'ISO latin 1"' benutzt, dann muss es in der
+Präambel heißen:
+
+\verb|\usepackage[latin1]{inputenc}|
+
+%.............................................................................
+\subsection{Paket \paket{babel}}
+
+\paragraph{Trennungen.}
+
+Die Option \verb|ngerman| sorgt dafür, dass sich der automatische
+Trennalgorithmus an die deutschen "`Regeln"' hält, \dots\ jedenfalls weitgehend.
+
+Wird ein Wort trotzdem falsch getrennt, in der Präambel eine Zeile der
+folgenden Form einfügen:
+\begin{itemize}
+\item \verb|\hyphenation{Tu-ring-ma-schi-ne}|
+\end{itemize}
+
+\paragraph{Anführungszeichen.}
+%
+\begin{itemize}[noitemsep]
+\item normale deutsche gehen so: am Anfang \verb|"`| und am Ende \verb|"'|
+\item Beispiel: \verb|"`Hallo!"'| liefert "`Hallo!"'
+\item eine Alternative sind am Anfang \verb|"<| und am Ende \verb|">|
+\item Beispiel: \verb|"<Hallo!">| liefert "<Hallo!">
+\end{itemize}
+
+
+\paragraph{Bindestriche.}
+
+Wenn man in einem Wort einen Bindestrich als "`Minuszeichen"' \verb|-|
+eingibt, dann sind die entsprechenden Stellen \emph{die einzigen} Stellen, an
+denen \TeX{} noch trennt.
+
+Wenn man den Bindestrich in der Form \verb|"=| notiert, man bleiben die
+Trennstellen in den Wortteilen erhalten. Zum Vergleich nehmen wir das Wort
+\emph{Turingmaschinen"=Konstruktor}:
+\begin{itemize}
+\item \verb|Turingmaschinen"=Konstruktor| liefert\\
+  gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanz hinten Turingmaschinen"=Konstruktor
+  aber
+\item  \verb|Turingmaschinen-Konstruktor| liefert\\
+  gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanz hinten Turingmaschinen-Konstruktor
+\item
+  Hier findet \TeX also die hässliche überhängende Zeile immer noch "`hübscher"'
+  als die zu kurze:\\
+  gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanz hinten \\
+  Turingmaschinen-Konstruktor
+\item Randbemerkung: das "`Wort"' mit den vielen aaaaaaa enthält in allen drei
+  Fällen gleich viele! (Die beobachtbare Stauchung verdankt man
+  \paket{microtype}; siehe weiter unten.)
+\end{itemize}
+
+\paragraph{Ligaturen.}
+
+\LaTeX{} macht automatisch Ligaturen. Das bedeutet, dass manchmal zwei
+Buchstaben zu einem Zeichen zusammengezogen werden. Hier klassische Beispiele
+in ganz groß:
+%
+\begin{center}
+  \scalebox{3}{fl ff ffl}
+\end{center}
+%
+Deutsche Typografie will das aber \emph{nicht}, wenn zum Beispiel das \verb|f|
+und das \verb|l| zu verschiedenen Wortteilen gehören.  Man möchte 
+%
+\begin{center}
+  \scalebox{3}{Auf"|lage, \emph{nicht} Auflage}
+\end{center}
+%
+Um unerwünschte Ligaturen zu verhindern, benutzt man \verb="|= zwischen den
+betroffenen Buchstaben, man schreibt also zum Beispiel in der \LaTeX"=Quelle:
+\verb=Auf"|lage=.
+
+%.............................................................................
+\subsection{Paket \paket{microtype}}
+
+Dieses Paket sorgt tendenziell für schöneres Aussehen der Seiten; (siehe die
+Schlagwörter "`\emph{protrusion}"' und "`\emph{expansion}"' in der
+Dokumentation). Einfach verwenden.
+
+%.............................................................................
+\subsection{Paket \paket{amsmath}}
+
+Dieses Paket ist unter anderem dann nützlich, wenn freigestellte
+(\emph{display math}) Formeln zu setzen hat, die mehrere Zeilen benötigen.
+Hier zeigen wir einfach zwei Beispiele, für genauere Informationen konsultiere
+man die Dokumentation. 
+
+\begin{tcblisting}{}
+  \begin{align*}
+    (x+y)^2 &= (x+y) (x+y) \\
+            &= x(x+y) + y(x+y) \\
+            &= x^2 + xy + yx + y^2 \\
+            &= x^2 + 2xy + y^2 \\
+  \end{align*}
+\end{tcblisting}
+
+Im zweiten Beispiel wird auch noch das Kommando
+\verb|\text{|\meta{Text}\verb|}| benutzt, um in Formeln normal gesetzten Text
+einzufügen.
+
+\begin{tcblisting}{}
+  \begin{alignat*}{2}
+    (x+y)^2 
+    &= (x+y) (x+y)          \\
+    &= x(x+y) + y(x+y)      &\qquad& \text{Distributivität} \\
+    &= x^2 + xy + yx + y^2  && \text{nochmal Distributivität}\\
+    &= x^2 + 2xy + y^2      && \text{Kommutativität}\\
+  \end{alignat*}
+\end{tcblisting}
+
+%.............................................................................
+\subsection{Paket \paket{enumitem}}
+
+Dieses Paket erlaubt es, bequem den für meinen Geschmack zu großzügig
+bemessenen Platz in Listen zu reduzieren.
+%
+Das wird durch das Kommande \verb|\setlist{noitemsep}| in der Präambel
+eingestellt.
+
+%-----------------------------------------------------------------------------
+\section{No Go}
+\label{sec:no-go}
+
+\paragraph{Layout von Absätzen.} \emph{Niemals} 
+%
+ändere man in der Präambel die Werte von \verb|\parskip| und
+\verb|\parindent|.
+
+\paragraph{Text in Formeln.} \emph{Niemals}
+%
+schreibe man normalen Text in Formeln \emph{ohne} Benutzung von
+\verb|\text{}|: \verb|$Text$| liefert $Text$, das ist völliger Murks.
+Vernünftig sind
+\begin{itemize}
+\item \verb|$\text{Text}$| $\to$ $\text{Text}$
+\item \verb|$\mathit{Text}$| $\to$ $\mathit{Text}$
+\end{itemize}
+
+
+\paragraph{Fußnoten.} \emph{Niemals}
+%
+übertreibe man es mit den Fußnoten.
+%
+Am besten lässt man es ganz.
+%
+Das Zitat "`Don't use footnotes in your books, Don."' von Knuths Frau zitiert
+er natürlich in einer Fußnote (im \TeX book) \dots
+
+%-----------------------------------------------------------------------------
+\section{Weitere Tipps}
+\label{sec:tipps}
+
+Kommentare in \LaTeX{} werden mit einem Prozentzeichen \verb|%| eingeleitet
+und reichen bis zum Zeilenende.
+% 
+Genauer gesagt wird auch noch das Zeilenendezeichen mit verschluckt, sowie
+alle Leerzeichen in der darauf"|folgenden Zeile.
+
+Wir haben und angewöhnt, wie in dieser \LaTeX"=Quelle vorgemacht, aufeinander
+folgende Sätze durch eine Zeile zu trennen, in der einfach in der ersten
+Spalte das Kommentarzeichen \verb|%| steht.
+%
+Die bewirken inhaltlich für \LaTeX{} gar nichts.
+%
+Außerdem wird darauf geachtet, dass die Zeilen eine "`überschaubare'' Länge
+haben.
+%
+Diese beiden Maßnahmen haben zur Folge, dass sich bei Änderungen eines Satzes
+nur eine kleine Menge von Zeilen der Eingabedatei ändert.
+%
+Wenn man sich mit \prgname{diff} oder einem ähnlichen Programm die
+Unterschiede \zB zwischen der aktuellen und einer früheren Version ansieht
+(\prgname{git}, \prgname{mercurial} und Co.~lassen grüßen), erstrecken sich
+die Änderungen nur über wenige Zeilen.
+%
+Das findet der Autor dieser Zeilen sehr nützlich.
+
+% -----------------------------------------------------------------------------
+\section{Literatur(verzeichnis)}
+\label{sec:literatur}
+
+Inhaltlich geht es in diesem Abschnitt um Literatur und
+Literaturverzeichnisse.
+%
+Die \LaTeX"=Quelle zeigt aber auch, wie man Abbildungen aufnimmt, die so groß
+sind, dass man nicht "`zu Fuß"' festlegen will, an welcher Stelle sie im
+Pdf"=Dokument auftauchen.
+%
+Und man sieht, wie man auf solche Abbildungen verweist.
+
+Hier sind beispielhaft zwei \emph{bibtex entries}, nämlich in
+Abbildung~\ref{bibtex:article} einer für einen Zeitschriftenaufsatz und in
+Abbildung~\ref{bibtex:inproceedings} einer für einen Konferenzbeitrag.
+
+\begin{figure}[htb]
+\begin{tcblisting}{listing only}
+@article{Worsch_2009_AUC_ar,
+  author  = {Thomas Worsch and Hidenosuke Nishio},
+  title   = {Achieving universality of {CA} by changing the neighborhood},
+  journal = {Journal of Cellular Automata},
+  year    = {2009},
+  volume  = {4},
+  number  = {3},
+  pages   = {237--246},
+}
+\end{tcblisting}
+\caption{Ein \emph{bibtex entry} für einen Zeitschriftenaufsatz}
+\label{bibtex:article}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{tcblisting}{listing only}
+@inproceedings{Worsch_2012_IUA_ip_acri,
+  author    = {Thomas Worsch},
+  title     = {({I}ntrinsically?) Universal Asynchronous Cellular Automata},
+  editor    = {Georgios Sirakoulis and Stefania Bandini},
+  booktitle = {Proceedings ACRI 2012},
+  year      = {2012},
+  pages     = {689--698},
+  publisher = {Springer},
+  series    = {LNCS},
+  volume    = {7495},
+}
+\end{tcblisting}
+\caption{Ein \emph{bibtex entry} für einen Konferenzbeitrag}
+\label{bibtex:inproceedings}
+\end{figure}
+
+Wozu das gut ist, erläutern wir ein andermal \dots
+
+% -----------------------------------------------------------------------------
+\section{Was noch fehlt}
+\label{sec:todo}
+
+\begin{itemize}[noitemsep]
+\item Erläuterungen zum Paket \paket{graphicx}
+\item Erläuterungen zum Paket \paket{booktabs}
+\item Erläuterungen zum Erstellen von Bildern: Paket \paket{tikz}
+\item Literatur
+  \begin{itemize}
+  \item Wie zitiert man?
+  \item Erläuterungen zur automatischen Erstellung eines Literaturverzeichnisses
+  \end{itemize}
+\item allgemein: schöneres Aussehen
+  \begin{itemize}
+  \item Auswahl anderer Schriften?
+  \end{itemize}
+\end{itemize}
+%
+Was möchten Sie noch wissen?
+
+\end{document}
+%=============================================================================
+%%% Der Rest ist für meine Editor  (GNU Emacs, was sonst ;-) :
+%%%
+%%% Local Variables:
+%%% TeX-command-default: "XPDFLaTeX"
+%%% fill-column: 78
+%%% TeX-master: t
+%%% End:
