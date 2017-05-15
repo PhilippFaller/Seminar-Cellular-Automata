@@ -6,6 +6,7 @@
 
 \usepackage{amsmath}
 % \usepackage{mathtools}
+\usepackage[standard]{ntheorem}
 
 \usepackage[tt=false]{libertine}   % !!!!! das muss man nicht nutzen
 \usepackage[libertine]{newtxmath}  % !!!!! das muss man nicht nutzen
@@ -39,6 +40,7 @@
 % für das Deckblatt
 
 \usepackage{tikz}
+\usetikzlibrary{automata}
 
 \newcommand{\teilnehmername}{Philipp Faller} % !!!!!
 \newcommand{\teilnehmermatrnr}{1939704}        % !!!!!
@@ -140,6 +142,7 @@ mit Abänderungen entnommen wurde.
 \section{Übersicht}
 
 \section{$d$"=Graphen}
+\begin{definition}
 Sei $L$ eine endliche, nicht leere Menge von Labels, mit einem ausgezeichneten Element $\#$. 
 Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 \begin{itemize}
@@ -155,6 +158,61 @@ Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\ri
 	\end{enumerate}
 	
 \end{itemize}
+\end{definition}
+
+\begin{beispiel}
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state](a){$a$};
+	\node[state](c)[below right of=a]{$c$};
+	\node[state](b)[above right of=c]{$b$};
+	\foreach \q/\p in {a/b, a/c, b/c}
+			\draw[->] (\p) edge[bend left = 9] (\q)
+					  (\q) edge[bend left = 9] (\p);
+						
+	\end{tikzpicture}
+\end{beispiel}
+
+\begin{beispiel}
+	\begin{tikzpicture}[node distance=2cm]
+		\node[state](a){$a$};
+		\node[state](b)[right of = a]{$b$};
+		\node[state](d)[right of = b]{$d$};
+		\node[state](f)[below right of = d]{$f$};
+		\node[state](e)[below left of = f]{$e$};
+		\node[state](c)[left of = e]{$c$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\draw[->] 	(a1) edge[bend left=9] (a)
+					(a) edge[bend left=9] (a1)
+					(a2) edge[bend left=9] (a)
+					(a) edge[bend left=9] (a2)
+					(a) edge[bend left=9] (b)
+					(b) edge[bend left=9] (a)
+					(b) edge[bend left=9] (d)
+					(d) edge[bend left=9] (b)
+					(d) edge[bend left=9] (f)
+					(f) edge[bend left=9] (d)
+					(d) edge[bend left=9] (e)
+					(e) edge[bend left=9] (d)
+					(f) edge[bend left=9] (e)
+					(e) edge[bend left=9] (f)
+					(c) edge[bend left=9] (e)
+					(e) edge[bend left=9] (c)
+					(c) edge[bend left=9] (b)
+					(b) edge[bend left=9] (c)	
+					(f) edge[bend left=9] (f2)
+					(f2) edge[bend left=9] (f)	
+					(f) edge[bend left=9] (f1)
+					(f1) edge[bend left=9] (f)	
+					(c1) edge[bend left=9] (c)
+					(c) edge[bend left=9] (c1)			
+		;
+	\end{tikzpicture}
+\end{beispiel}
 
 \section{Zellulare $d$"=Graph Automaten und Akzeptoren}
 
