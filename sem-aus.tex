@@ -186,30 +186,11 @@ Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\ri
 		\node[state](f1)[above right of = f]{$\#$};
 		\node[state](f2)[below right of = f]{$\#$};
 		
-		\draw[->] 	(a1) edge[bend left=9] (a)
-					(a) edge[bend left=9] (a1)
-					(a2) edge[bend left=9] (a)
-					(a) edge[bend left=9] (a2)
-					(a) edge[bend left=9] (b)
-					(b) edge[bend left=9] (a)
-					(b) edge[bend left=9] (d)
-					(d) edge[bend left=9] (b)
-					(d) edge[bend left=9] (f)
-					(f) edge[bend left=9] (d)
-					(d) edge[bend left=9] (e)
-					(e) edge[bend left=9] (d)
-					(f) edge[bend left=9] (e)
-					(e) edge[bend left=9] (f)
-					(c) edge[bend left=9] (e)
-					(e) edge[bend left=9] (c)
-					(c) edge[bend left=9] (b)
-					(b) edge[bend left=9] (c)	
-					(f) edge[bend left=9] (f2)
-					(f2) edge[bend left=9] (f)	
-					(f) edge[bend left=9] (f1)
-					(f1) edge[bend left=9] (f)	
-					(c1) edge[bend left=9] (c)
-					(c) edge[bend left=9] (c1)			
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+			\draw[->] 
+				(\q) edge[bend left=9] (\p)
+				(\p) edge[bend left=9] (\q) 			
 		;
 	\end{tikzpicture}
 \end{beispiel}
@@ -230,6 +211,129 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 \section{Graphen Eigenschaften}
 
 \section{Spannbaum durch Breitensuche}
+
+\begin{beispiel}
+	\begin{tikzpicture}[node distance=2cm]
+		\node[state](a){$a\vert ?$};
+		\node[state, fill=red, text=white, accepting](b)[right of = a]{$b$};
+		\node[state](d)[right of = b]{$d\vert ?$};
+		\node[state](f)[below right of = d]{$f\vert ?$};
+		\node[state](e)[below left of = f]{$e\vert ?$};
+		\node[state](c)[left of = e]{$c\vert ?$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+			\draw[->] 
+				(\q) edge[bend left=9] (\p)
+				(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=red, draw=none, text=white](a){$a\vert b$};
+		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=red, draw=none, text=white](d)[right of = b]{$d\vert b$};
+		\node[state](f)[below right of = d]{$f\vert ?$};
+		\node[state](e)[below left of = f]{$e\vert ?$};
+		\node[state, fill=red, draw=none, text=white](c)[left of = e]{$c\vert b$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+			\draw[->] 
+				(\q) edge[bend left=9] (\p)
+				(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		\newline
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=yellow, draw=none](a){$a\vert b$};
+		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=blue, draw=none, text=white](d)[right of = b]{$d\vert b$};
+		\node[state, fill=red, draw=none, text=white](f)[below right of = d]{$f\vert d$};
+		\node[state, fill=red, draw=none, text=white](e)[below left of = f]{$e\vert d$};
+		\node[state, fill=blue, draw=none, text=white](c)[left of = e]{$c\vert b$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+			\draw[->] 
+				(\q) edge[bend left=9] (\p)
+				(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		\newline
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=yellow, draw=none](a){$a\vert b$};
+		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\vert b$};
+		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\vert d$};
+		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\vert d$};
+		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\vert b$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\draw[->] 
+		(\q) edge[bend left=9] (\p)
+		(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		\newline
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=yellow, draw=none](a){$a\vert b$};
+		\node[state, fill=yellow, accepting](b)[right of = a]{$b$};
+		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\vert b$};
+		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\vert d$};
+		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\vert d$};
+		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\vert b$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\draw[->] 
+		(\q) edge[bend left=9] (\p)
+		(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		\newline
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, accepting](b){$b$};
+		\node[state](c)[below of = b]{$c\vert b$};
+		\node[state](d)[right of = c]{$d\vert b$};
+		\node[state](a)[left of = c]{$a\vert b$};
+		\node[state](a1)[below of = a]{$\#$};
+		\node[state](a2)[left of = a1]{$\#$};
+		\node[state](c1)[below of = c]{$\#$};
+		\node[state](e)[right of = c1]{$e\vert d$};
+		\node[state](f)[right of = e]{$f\vert d$};
+		\node[state](f1)[below left of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\draw[->] 
+		(\q) edge[bend left=9] (\p)
+		(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		
+\end{beispiel}
 
 \section{Radius bestimmen und Label finden}
 
