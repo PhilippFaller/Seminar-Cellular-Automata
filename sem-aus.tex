@@ -337,6 +337,174 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 
 \section{Radius bestimmen und Label finden}
 
+\begin{beispiel}
+	\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=red, text=white, accepting] (a) {$0\vert 1$};
+		\node[state] (b)[left of = a] {$0\vert 0$};
+		\node[state] (c)[left of = b] {$0\vert 0$};
+		\node[state] (d)[left of = c] {$0\vert 0$};
+		\node[state] (e)[left of = d] {$0\vert 0$};
+		\node[state] (f)[left of = e] {$0\vert 0$};
+		
+		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+			\draw[->] 
+				(\q) edge (\p)
+				(\p) edge (\q) 			
+		;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state, accepting] (a) {$1\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\vert 0$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$1\vert 1$};
+	\node[state] (b)[left of = a] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$0\vert 0$};
+	\node[state] (b)[left of = a] {$0\vert 1$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$0\vert 1$};
+	\node[state] (b)[left of = a] {$1\vert 0$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$1\vert 0$};
+	\node[state] (b)[left of = a] {$1\vert 0$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$1\vert 1$};
+	\node[state] (b)[left of = a] {$1\vert 0$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$0\vert 0$};
+	\node[state] (b)[left of = a] {$1\vert 1$};
+	\node[state] (c)[left of = b] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$0\vert 1$};
+	\node[state] (b)[left of = a] {$0\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\vert 1$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state] (a) {$1\vert 0$};
+	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\vert 0$};
+	\node[state] (c)[left of = b] {$1\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+	\begin{tikzpicture}[node distance=2cm]
+	\node[state, fill=red, text=white, accepting] (a) {$1\vert 0$};
+	\node[state] (b)[left of = a] {$0\vert 0$};
+	\node[state] (c)[left of = b] {$1\vert 0$};
+	\node[state] (d)[left of = c] {$0\vert 0$};
+	\node[state] (e)[left of = d] {$0\vert 0$};
+	\node[state] (f)[left of = e] {$0\vert 0$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+	
+\end{beispiel}
+
 %-----------------------------------------------------------------------------
 
 \end{document}
