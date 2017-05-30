@@ -5,8 +5,8 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage{amsmath}
-% \usepackage{mathtools}
-\usepackage[standard]{ntheorem}
+\usepackage{mathtools}
+\usepackage[standard, thref]{ntheorem}
 
 \usepackage[tt=false]{libertine}   % !!!!! das muss man nicht nutzen
 \usepackage[libertine]{newtxmath}  % !!!!! das muss man nicht nutzen
@@ -143,12 +143,12 @@ mit Abänderungen entnommen wurde.
 
 \section{$d$"=Graphen}
 \begin{definition}
-Sei $L$ eine endliche, nicht leere Menge von Labels, mit einem ausgezeichneten Element $\#$. 
+Sei $L$ eine endliche, nicht leere Menge von Beschriftungen, mit einem ausgezeichneten Element $\#$. 
 Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 \begin{itemize}
 	\item[$N$] eine endliche, nicht leere Menge aus Knoten ist.
 	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
-	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f\left(m\right) = \# \implies f\left(n\right) \neq \#$. $f$  heißt \defWord{Labelfunktion}.
+	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f\left(m\right) = \# \implies f\left(n\right) \neq \#$. $f$  heißt \defWord{Beschriftungsfunktion}.
 	\item[$g$] $: A \rightarrow Z_d$ ist eine Abbildung, wobei $Z_d = \left \{1, 2,\text{\dots}, d \right \}$, die folgende Eigenschaften besitzt:
 	
 	Sei $A_n := \left \{\left(n, m\right) \in A\right \}$ die Menge aller Kanten, die von einem Knoten $n \in N$ ausgehen.
@@ -160,7 +160,10 @@ Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\ri
 \end{itemize}
 \end{definition}
 
+Informell ist $\Gamma$ also ein Graph, dessen Knoten mit Beschriftungen aus $L$ versehen sind. Jede Kante hat eine Nummer aus $\left\{1, \dots, d\right\}$. Dabei gilt im Allgemeinen $g\left(n, m\right) \neq g\left(m, n\right)$. Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat Grad $1$. 
+
 \begin{beispiel}
+	\label{dGraph}
 	\begin{tikzpicture}[node distance=2cm]
 	\node[state](a){$a$};
 	\node[state](c)[below right of=a]{$c$};
@@ -195,31 +198,60 @@ Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\ri
 	\end{tikzpicture}
 \end{beispiel}
 
+\begin{definition}
+	Sei $\Gamma$ ein $d$"=Graph. Der \defWord{$\Gamma$ zugrunde liegende Graph $G = \left(V, E\right)$} ist der Graph, mit der Knotenmenge $G = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}$ und der Kantenmenge  $E = A\setminus \left\{\left(n, m\right) \in A \mid f\left(n\right) = \# \lor f\left(m\right) = \# \right\}$. $G$ ist also der Graph, der durch entfernen der Knoten, die mit $\#$ beschriftet sind, entsteht.
+\end{definition}
+\begin{definition}
+	Ein $d$"=Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
+\end{definition}
+\begin{definition}
+	Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. Dann heißt $m$ der \defWord{$i$"=te Nachbar von $n$}. Da $A$ symmetrisch ist impliziert das, dass $\left(m, n\right) \in A$ und $\exists j \in Z_d : g\left(m, n\right) = j$. Dann ist $n$ der $j$"=te Nachbar von $m$. Definiere die Abbildung $h : N \times Z_d \rightarrow N$, so dass $h\left(n, i\right) = m \iff g\left(n, m\right) = i$.
+\end{definition}
+
 \section{Zellulare $d$"=Graph Automaten und Akzeptoren}
 
-Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
+Ein \defWord{Zellulärer $d$"=Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 \begin{itemize}
-	\item[$\Gamma$] ein $d$"=Graph $\left(N, A, f, g\right)$ über einer Labelmenge $L$ ist.
+	\item[$\Gamma$] ein $d$"=Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
 	\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
 	\begin{itemize}
 		\item[$Q$] ist eine nicht leere Menge von Zuständen, mit $L \subseteq Q$.
 		\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\left \{\left(\#, z, q\right) \vert z \in Z_d^d, q \in Q^d\right \}\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
 	\end{itemize}
-	\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. Für $n \in N$ heißt das Bild $H \left(n\right) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$.
+	\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. 
+	Für $n \in N$ heißt das Bild $H \left(n\right) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. Es gilt $\forall i \in Z_d : H\left(n\right)_i = \begin{dcases}
+	g\left(h\left(n, i\right), n\right) & ,f\left(n\right) \neq \# \\
+	t & , f\left(n\right) = \# \\
+	\end{dcases}$.
 \end{itemize}
 
+Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Startzustand $f\left(n\right) \in L$. (Wir sagen auch $\Gamma$ ist der \defWord{Eingabegraph} von $M$.) In jedem Zeitschritt liest $M_n$ die Zustände seiner Nachbarn, sowie den Nachbarschaftsvektor und wechselt dann, wie durch die Zustandsübergangsfunktion $\delta$ festgelegt, in einen anderen Zustand. Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbst von seinen Nachbarn ist. In \thref{dGraph} ist zum Beispiel $H\left(a\right) = \left(2, 1\right)$. Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
+\begin{definition}
+	Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung $c : N \rightarrow Q$, die jedem Knoten einen Zustand zuordnet.
+	Sei $n$ ein Knoten mit Zustand $q = c\left(n\right)$ und Nachbarn $m_1, \dots, m_d$. 
+	Sei $q_m = \left( c\left( m_1\right), \dots , c\left(m_d\right)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
+	Der Folgezustand $c'\left( n\right)$ des Knotens $n$ ist dann gegeben durch $c'\left(n\right) = \delta\left(q, H\left(n\right),q_m \right) $. Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
+	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"=Graph Automat}.
+\end{definition}
+\begin{definition}
+	Ein Zellularer $d$"=Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer d"=Graph Automat mit ausgezeichnetem Knoten}.
+	
+	Ein \defWord{Zellularer $d$"=Graph Akzeptor} ist ein Zellularer $d$"=Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$.
+	
+	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine Abbildung $c : N \rightarrow L$. Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt $c'\left(n\right) \in F$. Also eine Konfiguration, bei der der ausgezeichnete Knoten sich in einem akzeptierenden Zustand befindet.
+\end{definition}
 \section{Graphen Eigenschaften}
 
 \section{Spannbaum durch Breitensuche}
 
 \begin{beispiel}
 	\begin{tikzpicture}[node distance=2cm]
-		\node[state](a){$a\vert ?$};
+		\node[state](a){$a\mid ?$};
 		\node[state, fill=red, text=white, accepting](b)[right of = a]{$b$};
-		\node[state](d)[right of = b]{$d\vert ?$};
-		\node[state](f)[below right of = d]{$f\vert ?$};
-		\node[state](e)[below left of = f]{$e\vert ?$};
-		\node[state](c)[left of = e]{$c\vert ?$};
+		\node[state](d)[right of = b]{$d\mid ?$};
+		\node[state](f)[below right of = d]{$f\mid ?$};
+		\node[state](e)[below left of = f]{$e\mid ?$};
+		\node[state](c)[left of = e]{$c\mid ?$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -234,32 +266,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=red, draw=none, text=white](a){$a\vert b$};
+		\node[state, fill=red, draw=none, text=white](a){$a\mid b$};
 		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=red, draw=none, text=white](d)[right of = b]{$d\vert b$};
-		\node[state](f)[below right of = d]{$f\vert ?$};
-		\node[state](e)[below left of = f]{$e\vert ?$};
-		\node[state, fill=red, draw=none, text=white](c)[left of = e]{$c\vert b$};
-		\node[state](a1)[left of = a]{$\#$};
-		\node[state](a2)[below left of = a]{$\#$};
-		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
-		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
-			\draw[->] 
-				(\q) edge[bend left=9] (\p)
-				(\p) edge[bend left=9] (\q) 			
-		;
-		\end{tikzpicture}
-		\newline
-		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\vert b$};
-		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=blue, draw=none, text=white](d)[right of = b]{$d\vert b$};
-		\node[state, fill=red, draw=none, text=white](f)[below right of = d]{$f\vert d$};
-		\node[state, fill=red, draw=none, text=white](e)[below left of = f]{$e\vert d$};
-		\node[state, fill=blue, draw=none, text=white](c)[left of = e]{$c\vert b$};
+		\node[state, fill=red, draw=none, text=white](d)[right of = b]{$d\mid b$};
+		\node[state](f)[below right of = d]{$f\mid ?$};
+		\node[state](e)[below left of = f]{$e\mid ?$};
+		\node[state, fill=red, draw=none, text=white](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -274,12 +286,32 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 		\end{tikzpicture}
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\vert b$};
+		\node[state, fill=yellow, draw=none](a){$a\mid b$};
 		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\vert b$};
-		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\vert d$};
-		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\vert d$};
-		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\vert b$};
+		\node[state, fill=blue, draw=none, text=white](d)[right of = b]{$d\mid b$};
+		\node[state, fill=red, draw=none, text=white](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=red, draw=none, text=white](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=blue, draw=none, text=white](c)[left of = e]{$c\mid b$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[above right of = f]{$\#$};
+		\node[state](f2)[below right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+			\draw[->] 
+				(\q) edge[bend left=9] (\p)
+				(\p) edge[bend left=9] (\q) 			
+		;
+		\end{tikzpicture}
+		\newline
+		\begin{tikzpicture}[node distance=2cm]
+		\node[state, fill=yellow, draw=none](a){$a\mid b$};
+		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\mid b$};
+		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -294,12 +326,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 		\end{tikzpicture}
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\vert b$};
+		\node[state, fill=yellow, draw=none](a){$a\mid b$};
 		\node[state, fill=yellow, accepting](b)[right of = a]{$b$};
-		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\vert b$};
-		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\vert d$};
-		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\vert d$};
-		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\vert b$};
+		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\mid b$};
+		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -315,14 +347,14 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting](b){$b$};
-		\node[state](c)[below of = b]{$c\vert b$};
-		\node[state](d)[right of = c]{$d\vert b$};
-		\node[state](a)[left of = c]{$a\vert b$};
+		\node[state](c)[below of = b]{$c\mid b$};
+		\node[state](d)[right of = c]{$d\mid b$};
+		\node[state](a)[left of = c]{$a\mid b$};
 		\node[state](a1)[below of = a]{$\#$};
 		\node[state](a2)[left of = a1]{$\#$};
 		\node[state](c1)[below of = c]{$\#$};
-		\node[state](e)[right of = c1]{$e\vert d$};
-		\node[state](f)[right of = e]{$f\vert d$};
+		\node[state](e)[right of = c1]{$e\mid d$};
+		\node[state](f)[right of = e]{$f\mid d$};
 		\node[state](f1)[below left of = f]{$\#$};
 		\node[state](f2)[below right of = f]{$\#$};
 		
@@ -339,12 +371,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 
 \begin{beispiel}
 	\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=red, text=white, accepting] (a) {$0\vert 1$};
-		\node[state] (b)[left of = a] {$0\vert 0$};
-		\node[state] (c)[left of = b] {$0\vert 0$};
-		\node[state] (d)[left of = c] {$0\vert 0$};
-		\node[state] (e)[left of = d] {$0\vert 0$};
-		\node[state] (f)[left of = e] {$0\vert 0$};
+		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
+		\node[state] (b)[left of = a] {$0\mid 0$};
+		\node[state] (c)[left of = b] {$0\mid 0$};
+		\node[state] (d)[left of = c] {$0\mid 0$};
+		\node[state] (e)[left of = d] {$0\mid 0$};
+		\node[state] (f)[left of = e] {$0\mid 0$};
 		
 		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 			\draw[->] 
@@ -354,12 +386,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state, accepting] (a) {$1\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\vert 0$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state, accepting] (a) {$1\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -369,12 +401,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$1\vert 1$};
-	\node[state] (b)[left of = a] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$1\mid 1$};
+	\node[state] (b)[left of = a] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -384,12 +416,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$0\vert 0$};
-	\node[state] (b)[left of = a] {$0\vert 1$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$0\mid 0$};
+	\node[state] (b)[left of = a] {$0\mid 1$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -399,12 +431,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$0\vert 1$};
-	\node[state] (b)[left of = a] {$1\vert 0$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$0\mid 1$};
+	\node[state] (b)[left of = a] {$1\mid 0$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -414,12 +446,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$1\vert 0$};
-	\node[state] (b)[left of = a] {$1\vert 0$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$1\mid 0$};
+	\node[state] (b)[left of = a] {$1\mid 0$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -429,12 +461,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$1\vert 1$};
-	\node[state] (b)[left of = a] {$1\vert 0$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$1\mid 1$};
+	\node[state] (b)[left of = a] {$1\mid 0$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -444,12 +476,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$0\vert 0$};
-	\node[state] (b)[left of = a] {$1\vert 1$};
-	\node[state] (c)[left of = b] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$0\mid 0$};
+	\node[state] (b)[left of = a] {$1\mid 1$};
+	\node[state] (c)[left of = b] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -459,12 +491,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$0\vert 1$};
-	\node[state] (b)[left of = a] {$0\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\vert 1$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$0\mid 1$};
+	\node[state] (b)[left of = a] {$0\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 1$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -474,12 +506,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state] (a) {$1\vert 0$};
-	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\vert 0$};
-	\node[state] (c)[left of = b] {$1\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state] (a) {$1\mid 0$};
+	\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
+	\node[state] (c)[left of = b] {$1\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
@@ -489,12 +521,12 @@ Ein \defWord{Zellulärer $d$"=Graph Automat} $M$ ist ein Tripel $\left(\Gamma, M
 	\end{tikzpicture}
 	
 	\begin{tikzpicture}[node distance=2cm]
-	\node[state, fill=red, text=white, accepting] (a) {$1\vert 0$};
-	\node[state] (b)[left of = a] {$0\vert 0$};
-	\node[state] (c)[left of = b] {$1\vert 0$};
-	\node[state] (d)[left of = c] {$0\vert 0$};
-	\node[state] (e)[left of = d] {$0\vert 0$};
-	\node[state] (f)[left of = e] {$0\vert 0$};
+	\node[state, fill=red, text=white, accepting] (a) {$1\mid 0$};
+	\node[state] (b)[left of = a] {$0\mid 0$};
+	\node[state] (c)[left of = b] {$1\mid 0$};
+	\node[state] (d)[left of = c] {$0\mid 0$};
+	\node[state] (e)[left of = d] {$0\mid 0$};
+	\node[state] (f)[left of = e] {$0\mid 0$};
 	
 	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 	\draw[->] 
