@@ -239,6 +239,12 @@ Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Star
 	Ein \defWord{Zellularer $d$"=Graph Akzeptor} ist ein Zellularer $d$"=Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$.
 	
 	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine Abbildung $c : N \rightarrow L$. Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt $c'\left(n\right) \in F$. Also eine Konfiguration, bei der der ausgezeichnete Knoten sich in einem akzeptierenden Zustand befindet.
+	
+	Ein Zellularer $d$"=Graph Akzeptor \defWord{akzeptiert} den $d$"=Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$, einer Endkonfiguration $c_m$ und $c_i \vdash c_{i+1}$ für $1 \le i \le m$.
+\end{definition}
+
+\begin{definition}
+	Für einen gegebenen endlichen Akzeptor $M = \left(L, Q, \delta, F\right)$ sei $\mathcal{C} \left(M\right) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist ein zellularer $d$"=Graph Akzeptor mit ausgezeichnetem Knoten} \right\}$  die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}\left(M\right)$ auch den \defWord{Zellularen $d$"=Graph Akzeptor von $M$}.
 \end{definition}
 \section{Graphen Eigenschaften}
 
