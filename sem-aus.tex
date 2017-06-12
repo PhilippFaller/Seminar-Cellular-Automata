@@ -330,10 +330,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
 			\draw[->] 
 				(\q) edge[bend left=9] (\p)
 				(\p) edge[bend left=9] (\q) 			
@@ -350,10 +349,10 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
 			\draw[->] 
 				(\q) edge[bend left=9] (\p)
 				(\p) edge[bend left=9] (\q) 			
@@ -370,10 +369,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
 			\draw[->] 
 				(\q) edge[bend left=9] (\p)
 				(\p) edge[bend left=9] (\q) 			
@@ -390,10 +388,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
 		\draw[->] 
 		(\q) edge[bend left=9] (\p)
 		(\p) edge[bend left=9] (\q) 			
@@ -410,10 +407,10 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
-		\node[state](f1)[above right of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f, f2/f}
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
 		\draw[->] 
 		(\q) edge[bend left=9] (\p)
 		(\p) edge[bend left=9] (\q) 			
@@ -430,10 +427,10 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\node[state](c1)[below of = c]{$\#$};
 		\node[state](e)[right of = c1]{$e\mid d$};
 		\node[state](f)[right of = e]{$f\mid d$};
-		\node[state](f1)[below left of = f]{$\#$};
-		\node[state](f2)[below right of = f]{$\#$};
+		\node[state](f1)[below of = f]{$\#$};
 		
-		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, a1/a, a2/a, c1/c, f1/f, f2/f}
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, a1/a, a2/a, c1/c, f1/f}
 		\draw[->] 
 		(\q) edge[bend left=9] (\p)
 		(\p) edge[bend left=9] (\q) 			
