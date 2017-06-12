@@ -144,9 +144,9 @@ mit Abänderungen entnommen wurde.
 \section{Übersicht}
 
 \section{$d$"=Graphen}
-\begin{definition}[$d$=Graph]
+\begin{definition}[$d$"~Graph]
 Sei $L$ eine endliche, nicht leere Menge von Beschriftungen, mit einem ausgezeichneten Element $\#$. 
-Ein \defWord{$d$-Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
+Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 \begin{itemize}
 	\item[$N$] eine endliche, nicht leere Menge aus Knoten ist.
 	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
@@ -169,7 +169,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 
 \begin{beispiel}
 	\label{dGraph}
-	\begin{tikzpicture}[node distance=2cm]
+	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 	\node[state](a){$a$};
 	\node[state](c)[below right of=a]{$c$};
 	\node[state](b)[above right of=c]{$b$};
@@ -181,7 +181,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 \end{beispiel}
 
 \begin{beispiel}
-	\begin{tikzpicture}[node distance=2cm]
+	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state](a){$a$};
 		\node[state](b)[right of = a]{$b$};
 		\node[state](d)[right of = b]{$d$};
@@ -204,11 +204,11 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 \end{beispiel}
 
 \begin{definition}[Zugrunde liegender Graph]
-	Sei $\Gamma$ ein $d$"=Graph. 
-	Der \defWord{$\Gamma$ zugrunde liegende Graph $G = \left(V, E\right)$} ist der Graph, mit der Knotenmenge $G = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}$ und der Kantenmenge  $E = A\setminus \left\{\left(n, m\right) \in A \mid f\left(n\right) = \# \lor f\left(m\right) = \# \right\}$. 
+	Sei $\Gamma$ ein $d$"~Graph. 
+	Der \defWord{$\Gamma$ zugrunde liegende Graph $G(\Gamma) = \left(V, E\right)$} ist der Graph, mit der Knotenmenge $G = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}$ und der Kantenmenge  $E = A\setminus \left\{\left(n, m\right) \in A \mid f\left(n\right) = \# \lor f\left(m\right) = \# \right\}$. 
 	$G$ ist also der Graph, der durch entfernen der Knoten, die mit $\#$ beschriftet sind, entsteht.
 
-	Ein $d$"=Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
+	Ein $d$"~Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
 \end{definition}
 \begin{definition}[Nachbarschaft]
 	Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. 
@@ -218,12 +218,12 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 	Definiere die Abbildung $h : N \times Z_d \rightarrow N$, so dass $h\left(n, i\right) = m \iff g\left(n, m\right) = i$.
 \end{definition}
 
-\section{Zellulare $d$"=Graph Automaten und Akzeptoren}
+\section{Zellulare $d$"~Graph Automaten und Akzeptoren}
 
-\begin{definition}[$d$"=Graph Automat]
-	Ein \defWord{Zellulärer $d$"=Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
+\begin{definition}[$d$"~Graph Automat]
+	Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 	\begin{itemize}
-		\item[$\Gamma$] ein $d$"=Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
+		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
 		\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
 		\begin{itemize}
 			\item[$Q$] ist eine nicht leere Menge von Zuständen, mit $L \subseteq Q$.
@@ -250,54 +250,59 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	Sei $q_m = \left( c\left( m_1\right), \dots , c\left(m_d\right)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
 	Der Folgezustand $c'\left( n\right)$ des Knotens $n$ ist dann gegeben durch $c'\left(n\right) = \delta\left(q, H\left(n\right),q_m \right) $. 
 	Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
-	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"=Graph Automat}.
+	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"~Graph Automat}.
 \end{definition}
 
+
+\begin{bemerkung}
+	Ein zellularer $d$"~Graph Automat ist eine Verallgemeinerung eines endlichen zellulären Automaten, da, falls $\Gamma$ ein regelmäßiges Gitter als zugrunde liegenden Graph besitzt, der Automat effektiv aus einem Gitter $R = G(\Gamma)$, der endlichen Zustandsmenge $Q$, der lokalen Zustandsübergangsfunktion $\delta$, sowie der Nachbarschaft $H$ besteht.
+\end{bemerkung}
+
 \begin{definition}[Akzeptanz]
-	Ein Zellularer $d$"=Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer d"=Graph Automat mit ausgezeichnetem Knoten}.
+	Ein Zellularer $d$"~Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
 	
-	Ein \defWord{Zellularer $d$"=Graph Akzeptor} ist ein Zellularer $d$"=Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$.
+	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$.
 	
 	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine Abbildung $c : N \rightarrow L$. 
 	Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt $c'\left(n\right) \in F$. 
 	Also eine Konfiguration, bei der der ausgezeichnete Knoten sich in einem akzeptierenden Zustand befindet.
 	
-	Ein Zellularer $d$"=Graph Akzeptor \defWord{akzeptiert} den $d$"=Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$, einer Endkonfiguration $c_m$ und $c_i \vdash c_{i+1}$ für $1 \le i \le m$.
+	Ein Zellularer $d$"~Graph Akzeptor \defWord{akzeptiert} den $d$"~Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$, einer Endkonfiguration $c_m$ und $c_i \vdash c_{i+1}$ für $1 \le i \le m$.
 \end{definition}
 
 \begin{definition}[Sprachen]
-	Für einen gegebenen endlichen Akzeptor $M = \left(L, Q, \delta, F\right)$ sei $\mathcal{C} \left(M\right) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist ein zellularer $d$"=Graph Akzeptor mit ausgezeichnetem Knoten} \right\}$  die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. 
-	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}\left(M\right)$ auch den \defWord{Zellularen $d$"=Graph Akzeptor von $M$}.
+	Für einen gegebenen endlichen Akzeptor $M = \left(L, Q, \delta, F\right)$ sei $\mathcal{C} \left(M\right) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist ein zellularer $d$"~Graph Akzeptor mit ausgezeichnetem Knoten} \right\}$  die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. 
+	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}\left(M\right)$ auch den \defWord{Zellularen $d$"~Graph Akzeptor von $M$}.
 	
 	Die \defWord{Sprache von $d$"=Graphen, die durch $\mathcal{C}\left(M\right)$ akzeptiert wird} ist die Menge $\mathcal{L}\left(M\right) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}\left(M\right) \text{ akzeptiert } \Gamma \right\}$
-	Ein $d$"=Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{akzeptiert} $:\iff \Gamma \in \mathcal{L}\left(M\right)$.
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{akzeptiert} $:\iff \Gamma \in \mathcal{L}\left(M\right)$.
 	
-	Die Klasse aller Sprachen, die von einem (deterministischen) Zellularen $d$"=Graph Akzeptor akzeptiert wird, heißt die Klasse der (deterministischen) \defWord{$d$"=Graph Sprachen} $(D)\mathcal{C}d\mathcal{L}$. 
+	Die Klasse aller Sprachen, die von einem (deterministischen) Zellularen $d$"~Graph Akzeptor akzeptiert wird, heißt die Klasse der (deterministischen) \defWord{$d$"~Graph Sprachen} $(D)\mathcal{C}d\mathcal{L}$. 
 \end{definition}
 
-\begin{definition}[$d$"=Graph Entscheider]
+\begin{definition}[$d$"~Graph Entscheider]
 	Wenn $M$ eine weiter Teilmenge $R \subseteq Q$ mit $R \cap F = \emptyset$ besitzt, nennen wir diese die \defWord{ablehnenden Zustände} von $M = \left(L, Q, \delta, F, R\right)$ und schreiben $M$ als 5-Tupel.
 	
 	$M$ \defWord{lehnt $\Gamma$ ab}, wenn der Automat $M_n$ am ausgezeichneten Knoten $n$ nach endlich vielen Schritten in einem ablehnenden Zustand ist.
 	Sei  $\mathcal{L}'\left(M\right) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}\left(M\right) \text{ lehnt } \Gamma \text{ ab}\right\}$.
 	
-	Ein $d$"=Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'\left(M\right)$.
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'\left(M\right)$.
 	
 	$\mathcal{C}\left(M\right)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert alle $d$"=Graphen $\Gamma \in \mathcal{L} \land \mathcal{C}\left(M\right)$ lehnt alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ab.
 	
-	$\mathcal{L}$ wird ein \defWord{Zellulares $d$"=Graph Prädikat} und $\mathcal{C}\left(M\right)$ ein \defWord{Zellularer $d$"=Graph Entscheider} genannt. 
-	Jedes Zellulare $d$"=Graph Prädikat ist insbesondere eine $d$"=Graph Sprache.
+	$\mathcal{L}$ wird ein \defWord{Zellulares $d$"~Graph Prädikat} und $\mathcal{C}\left(M\right)$ ein \defWord{Zellularer $d$"~Graph Entscheider} genannt. 
+	Jedes Zellulare $d$"~Graph Prädikat ist insbesondere eine $d$"~Graph Sprache.
 \end{definition}
 
 \begin{definition}[Akzeptanz zugrunde liegender Graphen]
 	Für einen $d$"=Graphen $\Gamma$ bezeichen $U\left(\Gamma\right)$ den $\Gamma$ zugrunde liegenden Graphen. 
-	Definiere weiter $\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U\left(\Gamma\right) \text{ für einen $d$"=Graph } \Gamma \text{ über } L\right\}$, sowie für $\gamma \in \mathcal{G}_L^d : U^{-1}\left(\gamma\right) := \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}$.
+	Definiere weiter $\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U\left(\Gamma\right) \text{ für einen $d$"~Graph } \Gamma \text{ über } L\right\}$, sowie für $\gamma \in \mathcal{G}_L^d : U^{-1}\left(\gamma\right) := \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}$.
 	
-	$\mathcal{C}\left(M\right)$ \defWord{akzeptiert einen knotenbeschrifteten Graphen $\gamma$}, wenn $\mathcal{C}\left(M\right)$ einen $d$"=Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
-	$\mathcal{C}\left(M\right)$ akzeptiert $\gamma$ \defWord{stark}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"=Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
+	$\mathcal{C}\left(M\right)$ \defWord{akzeptiert einen knotenbeschrifteten Graphen $\gamma$}, wenn $\mathcal{C}\left(M\right)$ einen $d$"~Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
+	$\mathcal{C}\left(M\right)$ akzeptiert $\gamma$ \defWord{stark}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"~Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
 	$\mathcal{C}\left(M\right)$ akzeptiert ein Sprache $\mathcal{L} \subset \mathcal{G}_L^d$ (stark), wenn $\gamma \in \mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert $\gamma$ (stark). 
 	
-	$\mathcal{C}\left(M\right)$ \defWord{lehnt einen knotenbeschrifteten Graphen $\gamma$ ab}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"=Graph in $U^{-1}\left(\gamma\right)$ ablehnt.
+	$\mathcal{C}\left(M\right)$ \defWord{lehnt einen knotenbeschrifteten Graphen $\gamma$ ab}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"~Graph in $U^{-1}\left(\gamma\right)$ ablehnt.
 	$\mathcal{C}\left(M\right)$ \defWord{entscheidet ein Prädikat} $\mathcal{L} \subset \mathcal{G}_L^d :\iff \mathcal{C}\left(M\right)$ akzeptiert jedes $\gamma \in \mathcal{L}$ und $\mathcal{C}\left(M\right)$ lehnt jedes $\gamma \notin \mathcal{L}$ ab.
 	Die Entscheidung ist stark, wenn die Akzeptanz stark ist. 
 \end{definition}
@@ -305,7 +310,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \section{Graphen Eigenschaften}
 
 \begin{definition}[Radius und Durchmesser]
-	Sei $\Gamma$ ein zusammenhängender $d$"=Graph und $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
+	Sei $\Gamma$ ein zusammenhängender $d$"~Graph und $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
 	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
 	$r\left(k\right) := \max_{n \in N : f\left(n\right) \neq \#} \text{dist}\left(k, n\right)$ ist der \defWord{Radius von $\Gamma$ vom Zentrum $k$ aus}.
 	Sei $D$ der ausgezeichnete Knoten in $\Gamma$.
@@ -320,7 +325,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \section{Spannbaum durch Breitensuche}
 
 \begin{beispiel}
-	\begin{tikzpicture}[node distance=2cm]
+	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state](a){$a\mid ?$};
 		\node[state, fill=red, text=white, accepting](b)[right of = a]{$b$};
 		\node[state](d)[right of = b]{$d\mid ?$};
@@ -442,7 +447,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \section{Radius bestimmen und Label finden}
 
 \begin{beispiel}
-	\begin{tikzpicture}[node distance=2cm]
+	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
