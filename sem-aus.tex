@@ -2,7 +2,8 @@
 
 \usepackage{fontspec}
 \usepackage[ngerman]{babel}
-\usepackage[utf8]{inputenc}
+
+%aobs-tikz
 
 \usepackage{amsmath}
 \usepackage{mathtools}
@@ -281,17 +282,39 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	
 	Ein $d$"=Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'\left(M\right)$.
 	
-	$\mathcal{C}\left(M\right)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L} \iff \mathcal{C}$ akzeptiert alle $d$"=Graphen $\Gamma \in \mathcal{L} \land \mathcal{C}\left(M\right)$ lehnt alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ab.
+	$\mathcal{C}\left(M\right)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert alle $d$"=Graphen $\Gamma \in \mathcal{L} \land \mathcal{C}\left(M\right)$ lehnt alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ab.
 	
 	$\mathcal{L}$ wird ein \defWord{Zellulares $d$"=Graph Prädikat} und $\mathcal{C}\left(M\right)$ ein \defWord{Zellularer $d$"=Graph Entscheider} genannt. 
 	Jedes Zellulare $d$"=Graph Prädikat ist insbesondere eine $d$"=Graph Sprache.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Akzeptanz zugrunde liegender Graphen]
 	Für einen $d$"=Graphen $\Gamma$ bezeichen $U\left(\Gamma\right)$ den $\Gamma$ zugrunde liegenden Graphen. 
-	Definiere weiter $\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U\left(\Gamma\right) \text{ für einen $d$"=Graph } \Gamma \text{ über } L\right\}$, sowie für $\gamma \in \mathcal{G}_L^d : U^{-1}\left(\gamma\right) = \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}$. 
+	Definiere weiter $\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U\left(\Gamma\right) \text{ für einen $d$"=Graph } \Gamma \text{ über } L\right\}$, sowie für $\gamma \in \mathcal{G}_L^d : U^{-1}\left(\gamma\right) := \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}$.
+	
+	$\mathcal{C}\left(M\right)$ \defWord{akzeptiert einen knotenbeschrifteten Graphen $\gamma$}, wenn $\mathcal{C}\left(M\right)$ einen $d$"=Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
+	$\mathcal{C}\left(M\right)$ akzeptiert $\gamma$ \defWord{stark}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"=Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
+	$\mathcal{C}\left(M\right)$ akzeptiert ein Sprache $\mathcal{L} \subset \mathcal{G}_L^d$ (stark), wenn $\gamma \in \mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert $\gamma$ (stark). 
+	
+	$\mathcal{C}\left(M\right)$ \defWord{lehnt einen knotenbeschrifteten Graphen $\gamma$ ab}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"=Graph in $U^{-1}\left(\gamma\right)$ ablehnt.
+	$\mathcal{C}\left(M\right)$ \defWord{entscheidet ein Prädikat} $\mathcal{L} \subset \mathcal{G}_L^d :\iff \mathcal{C}\left(M\right)$ akzeptiert jedes $\gamma \in \mathcal{L}$ und $\mathcal{C}\left(M\right)$ lehnt jedes $\gamma \notin \mathcal{L}$ ab.
+	Die Entscheidung ist stark, wenn die Akzeptanz stark ist. 
 \end{definition}
+
 \section{Graphen Eigenschaften}
+
+\begin{definition}[Radius und Durchmesser]
+	Sei $\Gamma$ ein zusammenhängender $d$"=Graph und $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
+	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
+	$r\left(k\right) := \max_{n \in N : f\left(n\right) \neq \#} \text{dist}\left(k, n\right)$ ist der \defWord{Radius von $\Gamma$ vom Zentrum $k$ aus}.
+	Sei $D$ der ausgezeichnete Knoten in $\Gamma$.
+	Dann heißt $r := r\left(D\right)$ der \defWord{Radius von $\Gamma$}.
+	$R\left(\Gamma\right) := \min_{k \in N : f\left(k\right) \neq \#} r\left(k\right)$ heißt der \defWord{echte Radius von $\Gamma$}.
+	
+	Der \defWord{Durchmesser von $\Gamma$} $d\left(\Gamma\right) := \max_{m, n \in N : f\left(m\right) \neq \# \neq f\left(n\right)} \text{dist}\left(m, n\right)$. Je nach Position von $k$ gilt $\frac{\text{Durchmesser}}{2} \le r\left(k\right) \le \text{Durchmesser}.$ Und damit gilt auch $\frac{d\left(\Gamma\right)}{2} \le R\left(\Gamma\right) \le d\left(\Gamma\right)$.
+	Die \defWord{Fläche von $\Gamma$} ist die Mächtigkeit der Menge $ \left\{n \in N \mid f\left(n\right) \neq \# \right\}$.
+	
+\end{definition}
 
 \section{Spannbaum durch Breitensuche}
 
