@@ -467,7 +467,7 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		
 \end{beispiel}
 
-\section{Radius bestimmen und Label finden}
+\section{Radius bestimmen}
 Der Radius $r$ eines $d$"~Graphen zum Zentrum $k$ ist die kürzeste Distanz zwischen $k$ und dem am weitesten von $k$ entfernten Knoten $n$. 
 Haben wir so einen Knoten $n$ gefunden, können wir den Radius bestimmen, indem wir die Schritte zählen, die ein Signal von $k$ benötigt um $n$ zu erreichen. 
 Außerdem können wir sogar sicher sein, dass wenn ein Signal $n$ erreicht hat, hat es auch alle anderen Knoten schon erreicht. 
@@ -490,6 +490,19 @@ Das benötigt zweimal $r$ Zeit. Soll $k$ zusätzlich wissen, wann das markieren 
 
 Die Knoten auf diesem Pfad können wir nun als Zähler benutzen.
 Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Basis $k$, so können wir alle natürlichen Zahlen $< k^{r+1}$ darstellen. Im folgenden Speichern wir den Radius zur Basis 2. Dies funktioniert, da $r < 2^{r+1} , \forall r \geq 0$.
+
+Zunächst sendet $k$ ein Signal $S$ aus. Dieses Signal wird von $n$ wieder zu $k$ zurückgeschickt. Das benötigt $2r$ Zeitschritte. Wir zählen also mit halber Geschwindigkeit die Schritte, die $S$ benötigt, um wieder zu $k$ zurückzukehren.
+
+Das Zählen funktioniert nach dem Prinzip des Carry-Ripple-Addierers. 
+Das LSB ist dabei in $k$ und das MSB in $n$ zu finden.
+Dazu speichert jeder Knoten zwei Bit. Ein Übertragsbit und ein Summenbit. Im ersten Schritt sendet der Knoten $k$ $S$ aus und erhöht gleichzeitig sein Summenbit auf 1. Danach inkrementiert $k$ sein Summenbit bei jedem zweiten Zeitschritt, solange bis $S$ wieder bei $k$ angekommen ist. 
+Tritt ein Übertrag bei einem Knoten $m$ auf, wird dieser sofort vom Kind von $m$ in sein Summenbit übernommen und bei $m$ wieder zurückgesetzt.
+Dadurch kann kein Konflikt zwischen Inkrementieren und Übertrag entstehen.
+Erhält $k$ das Signal $S$ zurück, enthält der Zähler bereits $r$. 
+Es kann jedoch sein, dass noch nicht alle Überträge bis zum höchstwertigen Bit durch propagiert wurden. 
+Damit $k$ feststellen kann, ob dieser Vorgang zu ende ist, kann $n$ zusätzlich zur Reflektion von $S$ ein Signal $S'$ senden, dass mit halber Geschwindigkeit übertragen, also von jedem Knoten erst nach einem Zeitschritt Pause weitergeleitet wird.
+$S'$ benötigt dann zusätzlich $r > log_2 r$ Zeitschritte, nachdem $S$ wieder bei $k$ angekommen ist. 
+Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
 \begin{beispiel}
 	\begin{figure}[h]
@@ -676,6 +689,10 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 	
 	\end{figure}
 \end{beispiel}
+
+\section{Beschriftungen finden}
+
+Wir wollen nun herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. $k$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $n$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $n$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ $k$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $k$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $n$ einen längsten Weg zu $k$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $k$ angekommen.
 %-----------------------------------------------------------------------------
 
 \end{document}
