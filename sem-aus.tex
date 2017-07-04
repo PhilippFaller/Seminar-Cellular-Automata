@@ -493,6 +493,20 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 
 \begin{beispiel}
 	\begin{figure}[h]
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+		\node[state, accepting] (a) {$0\mid 0$};
+		\node[state] (b)[left of = a] {$0\mid 0$};
+		\node[state] (c)[left of = b] {$0\mid 0$};
+		\node[state] (d)[left of = c] {$0\mid 0$};
+		\node[state] (e)[left of = d] {$0\mid 0$};
+		\node[state] (f)[left of = e] {$0\mid 0$};
+		
+		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
+		\draw[->] 
+		(\q) edge (\p)
+		(\p) edge (\q) 			
+		;
+		\end{tikzpicture}		
 	
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
@@ -510,7 +524,7 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, accepting] (a) {$1\mid 0$};
+		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
@@ -525,7 +539,7 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$1\mid 1$};
+		\node[state, accepting] (a) {$1\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
@@ -540,7 +554,7 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$0\mid 0$};
+		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
@@ -555,8 +569,8 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$0\mid 1$};
-		\node[state] (b)[left of = a] {$1\mid 0$};
+		\node[state, accepting] (a) {$0\mid 1$};
+		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
@@ -570,8 +584,8 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$1\mid 0$};
-		\node[state] (b)[left of = a] {$1\mid 0$};
+		\node[state, accepting] (a) {$0\mid 1$};
+		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
@@ -585,8 +599,8 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$1\mid 1$};
-		\node[state] (b)[left of = a] {$1\mid 0$};
+		\node[state, accepting] (a) {$1\mid 0$};
+		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
@@ -600,8 +614,8 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$0\mid 0$};
-		\node[state] (b)[left of = a] {$1\mid 1$};
+		\node[state, accepting] (a) {$0\mid 0$};
+		\node[state] (b)[left of = a] {$1\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
@@ -615,7 +629,7 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$0\mid 1$};
+		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
 		\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
@@ -630,9 +644,9 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state] (a) {$1\mid 0$};
+		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
-		\node[state] (c)[left of = b] {$1\mid 0$};
+		\node[state] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
@@ -645,9 +659,9 @@ Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Bas
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=red, text=white, accepting] (a) {$1\mid 0$};
+		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
-		\node[state] (c)[left of = b] {$1\mid 0$};
+		\node[state] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
