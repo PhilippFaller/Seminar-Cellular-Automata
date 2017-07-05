@@ -37,6 +37,9 @@
 
 \usepackage{csquotes}
 
+\usepackage{xcolor}
+\usepackage{beamercolorthemekit}
+
 
 %-----------------------------------------------------------------------------
 % für das Deckblatt
@@ -346,11 +349,14 @@ Damit $b$ weiß, wann der Baum vollständig konstruiert ist, sendet jedes Blatt,
 Erhält $b$ dieses Signal von allen seinen Nachfolgern, weiß $b$, dass die Konstruktion komplett ist.
 Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den Radius als Zeit benötigt.
 
-
+\definecolor{S3}{named}{kit-green100}
+\definecolor{S1}{named}{kit-blue100}
+\definecolor{S2}{named}{kit-red70}
 \begin{beispiel}
+	
 	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state](a){$a\mid ?$};
-		\node[state, fill=red, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S2, accepting](b)[right of = a]{$b$};
 		\node[state](d)[right of = b]{$d\mid ?$};
 		\node[state](f)[below right of = d]{$f\mid ?$};
 		\node[state](e)[below left of = f]{$e\mid ?$};
@@ -368,12 +374,12 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=red, draw=none, text=white](a){$a\mid b$};
-		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=red, draw=none, text=white](d)[right of = b]{$d\mid b$};
+		\node[state, fill=S2](a){$a\mid b$};
+		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S2](d)[right of = b]{$d\mid b$};
 		\node[state](f)[below right of = d]{$f\mid ?$};
 		\node[state](e)[below left of = f]{$e\mid ?$};
-		\node[state, fill=red, draw=none, text=white](c)[left of = e]{$c\mid b$};
+		\node[state, fill=S2](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -388,12 +394,12 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		\end{tikzpicture}
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\mid b$};
-		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=blue, draw=none, text=white](d)[right of = b]{$d\mid b$};
-		\node[state, fill=red, draw=none, text=white](f)[below right of = d]{$f\mid d$};
-		\node[state, fill=red, draw=none, text=white](e)[below left of = f]{$e\mid d$};
-		\node[state, fill=blue, draw=none, text=white](c)[left of = e]{$c\mid b$};
+		\node[state, fill=S3](a){$a\mid b$};
+		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S1, text=white](d)[right of = b]{$d\mid b$};
+		\node[state, fill=S2](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=S2](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=S1, text=white](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -407,12 +413,12 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		\end{tikzpicture}
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\mid b$};
-		\node[state, fill=blue, text=white, accepting](b)[right of = a]{$b$};
-		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\mid b$};
-		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\mid d$};
-		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\mid d$};
-		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\mid b$};
+		\node[state, fill=S3, text=white](a){$a\mid b$};
+		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S3, text=white](d)[right of = b]{$d\mid b$};
+		\node[state, fill=S3, text=white](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=S3, text=white](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=S3, text=white](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -426,12 +432,12 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		\end{tikzpicture}
 		\newline
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=yellow, draw=none](a){$a\mid b$};
-		\node[state, fill=yellow, accepting](b)[right of = a]{$b$};
-		\node[state, fill=yellow, draw=none](d)[right of = b]{$d\mid b$};
-		\node[state, fill=yellow, draw=none](f)[below right of = d]{$f\mid d$};
-		\node[state, fill=yellow, draw=none](e)[below left of = f]{$e\mid d$};
-		\node[state, fill=yellow, draw=none](c)[left of = e]{$c\mid b$};
+		\node[state, fill=S3, text=white](a){$a\mid b$};
+		\node[state, fill=S3, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S3, text=white](d)[right of = b]{$d\mid b$};
+		\node[state, fill=S3, text=white](f)[below right of = d]{$f\mid d$};
+		\node[state, fill=S3, text=white](e)[below left of = f]{$e\mid d$};
+		\node[state, fill=S3, text=white](c)[left of = e]{$c\mid b$};
 		\node[state](a1)[left of = a]{$\#$};
 		\node[state](a2)[below left of = a]{$\#$};
 		\node[state](c1)[left of = c]{$\#$};
@@ -504,6 +510,7 @@ Damit $k$ feststellen kann, ob dieser Vorgang zu ende ist, kann $n$ zusätzlich 
 $S'$ benötigt dann zusätzlich $r > log_2 r$ Zeitschritte, nachdem $S$ wieder bei $k$ angekommen ist. 
 Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
+\definecolor{S}{named}{kit-green100}
 \begin{beispiel}
 	\begin{figure}[h]
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
@@ -522,7 +529,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\end{tikzpicture}		
 	
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
-		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
+		\node[state, fill=S, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
@@ -538,7 +545,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
-		\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
+		\node[state, fill=S, text=white] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
@@ -554,7 +561,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$1\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 0$};
+		\node[state, fill=S, text=white] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
@@ -570,7 +577,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
+		\node[state, fill=S, text=white] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
 		
@@ -586,7 +593,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
+		\node[state, fill=S, text=white] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
 		
 		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
@@ -602,7 +609,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (f)[left of = e] {$0\mid 0$};
+		\node[state, fill=S, text=white] (f)[left of = e] {$0\mid 0$};
 		
 		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
 		\draw[->] 
@@ -616,7 +623,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\node[state] (b)[left of = a] {$0\mid 1$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (e)[left of = d] {$0\mid 0$};
+		\node[state, fill=S, text=white] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
 		
 		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f}
@@ -630,7 +637,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$1\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (d)[left of = c] {$0\mid 0$};
+		\node[state, fill=S, text=white] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
 		
@@ -644,7 +651,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
-		\node[state, fill=red, text=white, draw = none] (c)[left of = b] {$0\mid 1$};
+		\node[state, fill=S, text=white] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
 		\node[state] (f)[left of = e] {$0\mid 0$};
@@ -658,7 +665,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
-		\node[state, fill=red, text=white, draw = none] (b)[left of = a] {$0\mid 0$};
+		\node[state, fill=S, text=white] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
 		\node[state] (e)[left of = d] {$0\mid 0$};
@@ -672,7 +679,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\end{tikzpicture}
 		
 		\begin{tikzpicture}[node distance=2cm]
-		\node[state, fill=red, text=white, accepting] (a) {$0\mid 1$};
+		\node[state, fill=S, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
 		\node[state] (c)[left of = b] {$0\mid 1$};
 		\node[state] (d)[left of = c] {$0\mid 0$};
