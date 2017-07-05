@@ -153,13 +153,13 @@ Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\r
 \begin{itemize}
 	\item[$N$] eine endliche, nicht leere Menge aus Knoten ist.
 	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
-	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f\left(m\right) = \# \implies f\left(n\right) \neq \#$. $f$  heißt \defWord{Beschriftungsfunktion}.
-	\item[$g$] $: A \rightarrow Z_d$ ist eine Abbildung, wobei $Z_d = \left \{1, 2,\text{\dots}, d \right \}$, die folgende Eigenschaften besitzt:
+	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f(m) = \# \implies f(n) \neq \#$. $f$  heißt \defWord{Beschriftungsfunktion}.
+	\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$, ist eine Abbildung, die folgende Eigenschaften besitzt:
 	
 	Sei $A_n := \left \{\left(n, m\right) \in A\right \}$ die Menge aller Kanten, die von einem Knoten $n \in N$ ausgehen.
 	\begin{enumerate}
-		\item Falls $f\left(n\right) \neq \#$, ist $\left|A_n\right| = d$ und $g \vert_{A_n}$ ($g$ eingeschränkt auf $A_n$) ist eine Bijektion zwischen $A_n$ und $Z_d$.
-		\item Falls $f\left(n\right) = \#$, ist $\left|A_n\right| = 1$
+		\item Falls $f(n) \neq \#$, ist $\left|A_n\right| = d$ und $g \vert_{A_n}$ ($g$ eingeschränkt auf $A_n$) ist eine Bijektion zwischen $A_n$ und $Z_d$.
+		\item Falls $f(n) = \#$, ist $\left|A_n\right| = 1$
 	\end{enumerate}
 	
 \end{itemize}
@@ -167,7 +167,7 @@ Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\r
 
 Informell ist $\Gamma$ also ein Graph, dessen Knoten mit Beschriftungen aus $L$ versehen sind. 
 Jede Kante hat eine Nummer aus $\left\{1, \dots, d\right\}$. 
-Dabei gilt im Allgemeinen $g\left(n, m\right) \neq g\left(m, n\right)$. 
+Dabei gilt im Allgemeinen $g(n, m) \neq g(m, n)$. 
 Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat Grad $1$. 
 
 \begin{beispiel}
@@ -208,17 +208,28 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 
 \begin{definition}[Zugrunde liegender Graph]
 	Sei $\Gamma$ ein $d$"~Graph. 
-	Der \defWord{$\Gamma$ zugrunde liegende Graph $G(\Gamma) = \left(V, E\right)$} ist der Graph, mit der Knotenmenge $G = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}$ und der Kantenmenge  $E = A\setminus \left\{\left(n, m\right) \in A \mid f\left(n\right) = \# \lor f\left(m\right) = \# \right\}$. 
+	Der \defWord{$\Gamma$ zugrunde liegende Graph $G(\Gamma) = \left(V, E\right)$} ist der Graph, mit der Knotenmenge \begin{displaymath}
+		V = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}
+	\end{displaymath} und der Kantenmenge  
+	\begin{displaymath}
+		E = A\setminus \left\{\left(n, m\right) \in A \mid f(n) = \# \lor f(m) = \# \right\}.
+	\end{displaymath} 
 	$G$ ist also der Graph, der durch entfernen der Knoten, die mit $\#$ beschriftet sind, entsteht.
-
 	Ein $d$"~Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
 \end{definition}
+
 \begin{definition}[Nachbarschaft]
 	Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. 
 	Dann heißt $m$ der \defWord{$i$"=te Nachbar von $n$}.
-	Da $A$ symmetrisch ist impliziert das, dass $\left(m, n\right) \in A$ und $\exists j \in Z_d : g\left(m, n\right) = j$.
+	Da $A$ symmetrisch ist impliziert das, dass 
+	\begin{displaymath}
+		\left(m, n\right) \in A \text{ und }\exists j \in Z_d : g(m, n) = j.
+	\end{displaymath}
 	Dann ist $n$ der $j$"=te Nachbar von $m$. 
-	Definiere die Abbildung $h : N \times Z_d \rightarrow N$, so dass $h\left(n, i\right) = m \iff g\left(n, m\right) = i$.
+	Definiere die Abbildung $h : N \times Z_d \rightarrow N$, so dass
+	\begin{displaymath}
+		 h(n, i) = m \iff g(n, m) = i.
+	\end{displaymath}
 \end{definition}
 
 \section{Zellulare $d$"~Graph Automaten und Akzeptoren}
@@ -230,28 +241,35 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 		\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
 		\begin{itemize}
 			\item[$Q$] ist eine nicht leere Menge von Zuständen, mit $L \subseteq Q$.
-			\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\left \{\left(\#, z, q\right) \vert z \in Z_d^d, q \in Q^d\right \}\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
+			\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\#, Z_d^d, Q^d\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
 		\end{itemize}
 		\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. 
-		Für $n \in N$ heißt das Bild $H \left(n\right) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. Es gilt $\forall i \in Z_d : H\left(n\right)_i = \begin{dcases}
-		g\left(h\left(n, i\right), n\right) & ,f\left(n\right) \neq \# \\
-		t & , f\left(n\right) = \# \\
-		\end{dcases}$.
+		Für $n \in N$ heißt das Bild $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. Es gilt: 
+		\begin{displaymath}
+			\forall i \in Z_d : H(n)_i = 
+			\begin{dcases}
+				g(h(n, i), n) & ,f(n) \neq \# \\
+				t & , f(n) = \# \\
+			\end{dcases}
+		\end{displaymath}
 	\end{itemize}
 \end{definition}
 
-Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Startzustand $f\left(n\right) \in L$. 
+Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Startzustand $f(n) \in L$. 
 (Wir sagen auch $\Gamma$ ist der \defWord{Eingabegraph} von $M$.) 
 In jedem Zeitschritt liest $M_n$ die Zustände seiner Nachbarn, sowie den Nachbarschaftsvektor und wechselt dann, wie durch die Zustandsübergangsfunktion $\delta$ festgelegt, in einen anderen Zustand. 
 Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbst von seinen Nachbarn ist. 
-In \thref{dGraph} ist zum Beispiel $H\left(a\right) = \left(2, 1\right)$. 
+In \thref{dGraph} ist zum Beispiel $H(a) = \left(1, 1\right)$. 
 Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
 
 \begin{definition}[Konfiguration]
-	Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung $c : N \rightarrow Q$, die jedem Knoten einen Zustand zuordnet.
-	Sei $n$ ein Knoten mit Zustand $q = c\left(n\right)$ und Nachbarn $m_1, \dots, m_d$. 
-	Sei $q_m = \left( c\left( m_1\right), \dots , c\left(m_d\right)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
-	Der Folgezustand $c'\left( n\right)$ des Knotens $n$ ist dann gegeben durch $c'\left(n\right) = \delta\left(q, H\left(n\right),q_m \right) $. 
+	Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}, die jedem Knoten einen Zustand zuordnet.
+	Sei $n$ ein Knoten mit Zustand $q = c(n)$ und Nachbarn $m_1, \dots, m_d$. 
+	Sei $q_m = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
+	Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
+	\begin{displaymath}
+		c'(n) = \delta(q, H(n),q_m ).
+	\end{displaymath} 
 	Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
 	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"~Graph Automat}.
 \end{definition}
@@ -264,22 +282,33 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \begin{definition}[Akzeptanz]
 	Ein Zellularer $d$"~Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
 	
-	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$.
+	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$ ist.
 	
-	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine Abbildung $c : N \rightarrow L$. 
-	Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt $c'\left(n\right) \in F$. 
+	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine beliebige Abbildung $c : N \rightarrow L$. 
+	Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt: 
+	\begin{displaymath}
+		c'(\hat{n}) \in F
+	\end{displaymath} 
 	Also eine Konfiguration, bei der der ausgezeichnete Knoten sich in einem akzeptierenden Zustand befindet.
 	
-	Ein Zellularer $d$"~Graph Akzeptor \defWord{akzeptiert} den $d$"~Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$, einer Endkonfiguration $c_m$ und $c_i \vdash c_{i+1}$ für $1 \le i \le m$.
+	Ein Zellularer $d$"~Graph Akzeptor \defWord{akzeptiert} den $d$"~Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$ und einer Endkonfiguration $c_m$, sodass:
+	\begin{displaymath}
+		c_{i} \vdash c_{i+1} \text{, für } 0 \le i < m
+	\end{displaymath}
 \end{definition}
 
 \begin{definition}[Sprachen]
-	Für einen gegebenen endlichen Akzeptor $M = \left(L, Q, \delta, F\right)$ sei $\mathcal{C} \left(M\right) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist ein zellularer $d$"~Graph Akzeptor mit ausgezeichnetem Knoten} \right\}$  die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. 
-	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}\left(M\right)$ auch den \defWord{Zellularen $d$"~Graph Akzeptor von $M$}.
-	
-	Die \defWord{Sprache von $d$"=Graphen, die durch $\mathcal{C}\left(M\right)$ akzeptiert wird} ist die Menge $\mathcal{L}\left(M\right) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}\left(M\right) \text{ akzeptiert } \Gamma \right\}$
-	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{akzeptiert} $:\iff \Gamma \in \mathcal{L}\left(M\right)$.
-	
+	Für einen gegebenen endlichen Akzeptor $M$ sei 
+	\begin{displaymath}
+		\mathcal{C}(M) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist $d$"~Graph Akzeptor mit ausgezeichnetem Knoten} \right\}
+	\end{displaymath} 
+	die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. 
+	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}(M)$ auch den \defWord{Zellularen $d$"~Graph Akzeptor von $M$}.
+	Die \defWord{Sprache von $d$"=Graphen, die durch $\mathcal{C}(M)$ akzeptiert wird} ist die Menge 
+	\begin{displaymath}
+		\mathcal{L}(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}(M) \text{ akzeptiert } \Gamma \right\}
+	\end{displaymath}
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{akzeptiert} genau dann, wenn $\Gamma \in \mathcal{L}(M)$.
 	Die Klasse aller Sprachen, die von einem (deterministischen) Zellularen $d$"~Graph Akzeptor akzeptiert wird, heißt die Klasse der (deterministischen) \defWord{$d$"~Graph Sprachen} $(D)\mathcal{C}d\mathcal{L}$. 
 \end{definition}
 
