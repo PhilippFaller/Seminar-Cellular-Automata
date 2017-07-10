@@ -1,0 +1,187 @@
+%% LaTeX-Beamer template for KIT design
+%% by Erik Burger, Christian Hammer
+%% title picture by Klaus Krogmann
+%%
+%% version 2.1
+%%
+%% mostly compatible to KIT corporate design v2.0
+%% http://intranet.kit.edu/gestaltungsrichtlinien.php
+%%
+%% Problems, bugs and comments to
+%% burger@kit.edu
+
+\documentclass[18pt]{beamer}
+
+%% SLIDE FORMAT
+
+% use 'beamerthemekit' for standard 4:3 ratio
+% for widescreen slides (16:9), use 'beamerthemekitwide'
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{templates/beamerthemekit}
+\usepackage{templates/tikzkit}
+% \usepackage{templates/beamerthemekitwide}
+
+%% TITLE PICTURE
+
+% if a custom picture is to be used on the title page, copy it into the 'logos'
+% directory, in the line below, replace 'mypicture' with the 
+% filename (without extension) and uncomment the following line
+% (picture proportions: 63 : 20 for standard, 169 : 40 for wide
+% *.eps format if you use latex+dvips+ps2pdf, 
+% *.jpg/*.png/*.pdf if you use pdflatex)
+
+\titleimage{bauplan}
+
+%% TITLE LOGO
+
+% for a custom logo on the front page, copy your file into the 'logos'
+% directory, insert the filename in the line below and uncomment it
+
+\titlelogo{sdq_logo}
+
+% (*.eps format if you use latex+dvips+ps2pdf,
+% *.jpg/*.png/*.pdf if you use pdflatex)
+
+%% TikZ INTEGRATION
+
+% use these packages for PCM symbols and UML classes
+% \usepackage{templates/tikzkit}
+% \usepackage{templates/tikzuml}
+
+% the presentation starts here
+
+\title[Cellular Graph Automata I]{Cellular Graph Automata I}
+\subtitle{Zellularautomaten und diskrete komplexe Systeme}
+\author{Philipp Faller}
+\institute{Worsch}
+
+% Bibliography
+
+\usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
+\addbibresource{templates/example.bib}
+\bibhang1em
+
+
+\newcommand{\defWord}[1]{\emph{#1}}
+
+\begin{document}
+
+% change the following line to "ngerman" for German style date and logos
+\selectlanguage{ngerman}
+
+%title page
+\begin{frame}
+\titlepage
+\end{frame}
+
+%table of contents
+% \begin{frame}{Gliederung}
+% \tableofcontents
+% \end{frame}
+
+\section{$d$"~Graph}
+\subsection{Definition}
+\begin{frame}{$d$"~Graph}
+	\begin{definition}[$d$"~Graph]
+		Sei $L$ eine endliche, nicht leere Menge von Beschriftungen, mit ausgezeichneten Element $\#$. 
+		Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
+		\begin{itemize}
+			\item[$N$] endliche, nicht leere Menge aus Knoten 
+			\item[$A$] $\subseteq N \times N$ eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
+			\item[$f$] $: N \rightarrow L$  heißt \defWord{Beschriftungsfunktion}.
+			\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$ 			
+		\end{itemize}
+	\end{definition}
+\end{frame}
+
+\begin{frame}
+	\begin{definition}[$d$"~Graph]
+		Weiter muss für $\left(n, m\right) \in A$ gelten:
+		\begin{align*}
+			f(n) = \# &\implies f(m) \neq \#
+		\end{align*}
+		
+		Sei $A_n := \left \{\left(n, m\right) \in A\right \}$. Dann muss gelten:
+		\begin{align*}
+			f(n) \neq \# &\implies  \left|A_n\right| = d \text{ und } g \vert_{A_n} \text{ ist Bijektion} \\
+			f(n) = \# &\implies\left|A_n\right| = 1
+		\end{align*}
+		
+	\end{definition}
+\end{frame}
+
+\subsection{Beispiel}
+\begin{frame}{Beispiel}
+	\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+		\node[state](a){$a$};
+		\node[state](c)[below right of=a]{$c$};
+		\node[state](b)[above right of=c]{$b$};
+		\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
+		\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
+		(\p) edge[bend left=9] node {\b} (\q) 
+		;
+		
+		\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Beispiel}
+	\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+		\node[state](a){$a$};
+		\node[state](b)[right of = a]{$b$};
+		\node[state](d)[right of = b]{$d$};
+		\node[state](f)[below right of = d]{$f$};
+		\node[state](e)[below left of = f]{$e$};
+		\node[state](c)[left of = e]{$c$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](a2)[left of = c1]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
+		
+		
+		\foreach \p/\q/\a/\b in {a/b/1/2, b/d/1/2, b/c/2/3, d/e/2/3, d/f/1/2, e/f/3/3, c/e/1/3, a1/a/1/1, a2/a/3/1, c1/c/1/1, f1/f/2/1}
+		\draw[->] 
+		(\q) edge[bend left=9] node {\a} (\p) 
+		(\p) edge[bend left=9] node {\b} (\q) 			
+		;
+		\end{tikzpicture}
+\end{frame}
+
+\subsection{Weitere Definitionen}
+\begin{frame}{Zugrunde liegender Graph}
+	\begin{definition}[Zugrunde liegender Graph]
+		Sei $\Gamma$ ein $d$"~Graph. 
+		Der Graph $G(\Gamma) = \left(V, E\right)$ mit
+		\begin{align*}
+			V &= N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\} \\		
+			E &= A\setminus \left\{\left(n, m\right) \in A \mid f(n) = \# \lor f(m) = \# \right\}
+		\end{align*} 
+		heißt \defWord{$\Gamma$ zugrunde liegende Graph}.
+		
+		
+		Ein $d$"~Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
+	\end{definition}
+\end{frame}
+
+\section{Zellulare $d$"~Graph Automaten}
+\begin{frame}{Zellulare $d$"~Graph Automaten}
+	
+\end{frame}
+
+\section{Spannbaum durch Breitensuche}
+\begin{frame}{Spannbaum durch Breitensuche}
+	
+\end{frame}
+\section{Radius bestimmen}
+\begin{frame}{Radius bestimmen}
+	
+\end{frame}
+
+\section{Beschriftung finden}
+\begin{frame}{Beschriftung finden}
+	
+\end{frame}
+\end{document}
