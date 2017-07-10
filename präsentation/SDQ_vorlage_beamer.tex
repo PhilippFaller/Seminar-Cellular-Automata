@@ -21,6 +21,7 @@
 \usepackage{templates/beamerthemekit}
 \usepackage{templates/tikzkit}
 % \usepackage{templates/beamerthemekitwide}
+\usepackage{mathtools}
 
 %% TITLE PICTURE
 
@@ -166,11 +167,55 @@
 	\end{definition}
 \end{frame}
 
-\section{Zellulare $d$"~Graph Automaten}
-\begin{frame}{Zellulare $d$"~Graph Automaten}
-	
+\begin{frame}{Nachbarschaft}
+	\begin{definition}[Nachbarschaft]
+		Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. 
+		Dann heißt $m$ der \defWord{$i$"=te Nachbar von $n$}.
+		Außerdem gilt: 
+		\begin{displaymath}
+		\left(m, n\right) \in A \text{ und }\exists j \in Z_d : g(m, n) = j.
+		\end{displaymath}
+		Dann ist $n$ der $j$"=te Nachbar von $m$. 
+		Definiere $h : N \times Z_d \rightarrow N$, so dass
+		\begin{displaymath}
+		h(n, i) = m \iff g(n, m) = i.
+		\end{displaymath}
+	\end{definition}
 \end{frame}
 
+\section{Zellulare $d$"~Graph Automaten}
+\begin{frame}{Zellulare $d$"~Graph Automaten}
+	\begin{definition}[$d$"~Graph Automat]
+		Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
+		\begin{itemize}
+			\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$
+			\item[$M$]  ist endlicher Automat $\left(Q, \delta\right)$, mit 
+			\begin{itemize}
+				\item[$Q$] ist endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
+				\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$  heißt \defWord{Zustandsübergangsfunktion}.
+			\end{itemize}
+			\item[$H$] $: N \rightarrow Z_d^d$. 
+			Für $n \in N$ heißt $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. 
+		\end{itemize}
+	\end{definition}
+\end{frame}
+%TODO Dieser Frame weg, erstes Ding auf Folie davor. Zweites durch BSP ersetzten.
+\begin{frame}{Zellulare $d$"~Graph Automaten}
+	\begin{definition}[$d$"~Graph Automat]
+	Für $\delta$ muss weiter gelten: 
+	\begin{displaymath}
+		\delta \left(\#, Z_d^d, Q^d\right) = \left \{\# \right \}
+	\end{displaymath}
+	Der Nachbarschaftsvektor hat die Gestallt:
+	\begin{displaymath}
+	\forall i \in Z_d : H(n)_i = 
+	\begin{dcases}
+	g(h(n, i), n) & ,f(n) \neq \# \\
+	1 & , f(n) = \# \\
+	\end{dcases}
+	\end{displaymath}
+	\end{definition}
+\end{frame}
 \section{Spannbaum durch Breitensuche}
 \begin{frame}{Spannbaum durch Breitensuche}
 	
