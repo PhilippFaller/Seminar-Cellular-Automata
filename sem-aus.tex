@@ -356,8 +356,8 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 
 \section{Spannbaum durch Breitensuche}
 Wir konstruieren nun für einen gegebenen $d$"~Graph $\Gamma$ mit ausgezeichnetem Knoten $b$ einen Spannbaum, des zugrunde liegenden Graphen, mit der Wurzel $b$ und minimaler Höhe. 
-Dazu sendet $b$ ein Signal aus. Jeder Nachbar von $b$ speichert in seinem Zustand die Nummer, der Kante, die zu $b$ führt und sendet das Signal weiter. 
-Jeder Knoten verarbeitet dieses Signal nur, wenn er es zum ersten Mal erhält. 
+Dazu sendet $b$ ein Signal $S$ aus. Jeder Nachbar von $b$ speichert in seinem Zustand die Nummer, der Kante, die zu $b$ führt und sendet das Signal weiter. 
+Jeder Knoten verarbeitet dieses Signal $S$ nur, wenn er es zum ersten Mal erhält. 
 Erhält ein Knoten das Signal von zwei verschiedenen Nachbarn gleichzeitig, wählt er nach einer beliebigen aber festen Regel (z.B. immer der Nachbar, mit der niedrigsten Nummer) einen der beiden als Vorgänger aus. 
 Dadurch erhalten wir von jedem Knoten $n$ einen eindeutigen Pfad zu $b$, indem wir von $n$ zu seinem Vorgänger $n_1$ und von $n_1$ zu dessen Vorgänger $n_2$ und so weiter gehen, bis wir bei $n_k=b, k \in \mathbb{N}$ angekommen sind. 
 Jeder Knoten verarbeitet genau einmal das Signal. 
@@ -374,9 +374,15 @@ Dazu wartet $n$, bis ein Nachbarn $m$ einen Vorgänger gewählt hat.
 Da $n$ durch die Funktion $H$ weiß, der wievielte Nachbar von $m$ er ist, kann er an dessen Zustand ablesen, ob $m$ sein Nachfolger ist, oder nicht. 
 Davor steht das noch nicht fest, da $m$ möglicherweise von mehreren Knoten gleichzeitig benachrichtigt wird und sich erst entscheiden muss, wer sein Vorgänger ist.
 
-Damit $b$ weiß, wann der Baum vollständig konstruiert ist, sendet jedes Blatt, ein Signal aus, dass von seinem Vorgänger $m$ genau dann weitergeleitet wird, wenn alle Nachfolger von $m$ ihm dieses Signal gesendet haben. 
+Damit $b$ weiß, wann der Baum vollständig konstruiert ist, sendet jedes Blatt, ein Signal $S'$ aus, dass von seinem Vorgänger $m$ genau dann weitergeleitet wird, wenn alle Nachfolger von $m$ ihm dieses Signal gesendet haben. 
 Erhält $b$ dieses Signal von allen seinen Nachfolgern, weiß $b$, dass die Konstruktion komplett ist.
 Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den Radius als Zeit benötigt.
+
+Sei Zustandsmenge $Q = \left\{N, S, S', W\right\} \times Z_d \cup \{?\} \times \mathbb{B}$. Dabei gibt die erste Komponente an, ob der Knoten unbesucht ist $N$, gerade das Signal $S$ oder $S'$ versendet, oder mit $W$ signalisiert, dass er darauf wartet $S'$ von seinen Kindern zu erhalten. In der zweiten Komponente wird die Kantennummer des Elternknotens gespeichert und in der dritte, ob es sich um den Wurzelknoten handelt. Jeder Knoten startet also mit der Beschriftung $(N, ?, \texttt{false})$, bis die Wurzel, da diese in der letzten Komponente \texttt{true} stehen hat. Damit sähe eine mögliche Zustansübergangsfunktion $\delta : Q \times Z_d^d \times Q^d \rightarrow Q$ folgendermaßen aus:
+%\begin{displaymath}%
+%	\delta (N, ?, true, Z_d^d, Q^d) = (S, ?, true) 
+%	\delta (N, ?, false, Z_d^d, (q_1, \dots, q_d)) = (S, \min_{i \in Z_d} \{q_i \mid q_i = (S, Z_d, \mathbb{B})\}) 
+%\end{displaymath}
 
 \definecolor{S3}{named}{kit-green100}
 \definecolor{S1}{named}{kit-blue100}
