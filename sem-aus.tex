@@ -240,7 +240,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
 		\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
 		\begin{itemize}
-			\item[$Q$] ist eine nicht leere Menge von Zuständen, mit $L \subseteq Q$.
+			\item[$Q$] ist eine endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
 			\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\#, Z_d^d, Q^d\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
 		\end{itemize}
 		\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. 
@@ -249,7 +249,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 			\forall i \in Z_d : H(n)_i = 
 			\begin{dcases}
 				g(h(n, i), n) & ,f(n) \neq \# \\
-				t & , f(n) = \# \\
+				1 & , f(n) = \# \\ %Warum stand statt 1 t dort? 
 			\end{dcases}
 		\end{displaymath}
 	\end{itemize}
