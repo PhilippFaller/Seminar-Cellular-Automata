@@ -194,29 +194,29 @@
 			\item[$M$]  ist endlicher Automat $\left(Q, \delta\right)$, mit 
 			\begin{itemize}
 				\item[$Q$] ist endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
-				\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$  heißt \defWord{Zustandsübergangsfunktion}.
+				\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
+				
+				Dabei ist $\cramped{\delta(\#, z, q) = \{\# \}}, \forall z \in Z_d^d, q \in Q^d$
 			\end{itemize}
 			\item[$H$] $: N \rightarrow Z_d^d$. 
 			Für $n \in N$ heißt $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. 
 		\end{itemize}
 	\end{definition}
 \end{frame}
-%TODO Dieser Frame weg, erstes Ding auf Folie davor. Zweites durch BSP ersetzten.
 \begin{frame}{Zellulare $d$"~Graph Automaten}
-	\begin{definition}[$d$"~Graph Automat]
-	Für $\delta$ muss weiter gelten: 
-	\begin{displaymath}
-		\delta \left(\#, Z_d^d, Q^d\right) = \left \{\# \right \}
-	\end{displaymath}
-	Der Nachbarschaftsvektor hat die Gestallt:
-	\begin{displaymath}
-	\forall i \in Z_d : H(n)_i = 
-	\begin{dcases}
-	g(h(n, i), n) & ,f(n) \neq \# \\
-	1 & , f(n) = \# \\
-	\end{dcases}
-	\end{displaymath}
-	\end{definition}
+%\begin{frame}{Beispiel}
+%	\centering
+%		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+%		\node[state](a){$a$};
+%		\node[state](c)[below right of=a]{$c$};
+%		\node[state](b)[above right of=c]{$b$};
+%		\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
+%		\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
+%		(\p) edge[bend left=9] node {\b} (\q) 
+%		;
+%		
+%		\end{tikzpicture}
+%\end{frame}
 \end{frame}
 
 %TODO Entsprechung normaler ZA
@@ -229,6 +229,14 @@
 \subsection{Algorithmus}
 \begin{frame}{Spannbaum durch Breitensuche}
 	
+	Wir bestimmen einen Spannbaum von minimaler Höhe zur Wurzel $k$.
+	\begin{itemize}
+		\item Wurzel $k$ sendet Signal $S$ aus.
+		\item Erhält Knoten $n$ zum erste Mal $S$ (von einem Knoten $m$), ist $m$ der Vater von $n$. Falls mehrere gleichzeitig senden, wähle einen beliebigen Knoten als Vater aus.
+		\item $m$ sendet $S$ weiter und zeigt an, dass $n$ sein Vater ist. Dann weiß $n$, dass $m$ sein Kind ist.
+		\item Ein Blatt sendet $S'$ aus, sobald feststeht, dass es eines ist. 
+		\item $S'$ wird von einem Knoten $n$ weitergeleitet, wenn alle Kinder von $n$ das Signal $S'$ gesendet haben.
+	\end{itemize}
 \end{frame}
 
 \subsection{Beispiel}
@@ -368,15 +376,15 @@
 	}
 	\only<+>{
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
-		\node[state, accepting, fill=S3](b){$b$};
-		\node[state, fill=S3](c)[below of = b]{$c$};
-		\node[state, fill=S3](d)[right of = c]{$d$};
-		\node[state, fill=S3](a)[left of = c]{$a$};
+		\node[state, accepting, fill=S3, text=white](b){$b$};
+		\node[state, fill=S3, text=white](c)[below of = b]{$c$};
+		\node[state, fill=S3, text=white](d)[right of = c]{$d$};
+		\node[state, fill=S3, text=white](a)[left of = c]{$a$};
 %		\node[state](a1)[below of = a]{$\#$};
 %		\node[state](a2)[left of = a1]{$\#$};
 %		\node[state](c1)[below of = c]{$\#$};
-		\node[state, fill=S3](e)[below of = d]{$e$};
-		\node[state, fill=S3](f)[right of = e]{$f$};
+		\node[state, fill=S3, text=white](e)[below of = d]{$e$};
+		\node[state, fill=S3, text=white](f)[right of = e]{$f$};
 %		\node[state](f1)[below of = f]{$\#$};
 		
 		
@@ -399,9 +407,61 @@
 		\end{overprint}
 \end{frame}
 \section{Radius bestimmen}
-\subsection{Algorithmus}
+\subsection{Definition}
 \begin{frame}{Radius bestimmen}
-	Inhalt...
+	\begin{definition}[Radius]
+		Sei $\Gamma$ ein zusammenhängender $d$"~Graph, $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
+		Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
+		
+		Weiter heißt
+
+		\begin{displaymath}
+			r\left(k\right) := \max_{\mathclap{f\left(n\right) \neq \#}} \text{ dist}\left(k, n\right)
+		\end{displaymath}
+		der \defWord{Radius von $\Gamma$ vom Zentrum $k$ aus}.
+	\end{definition}
+\end{frame}
+\subsection{Algorithmus}
+\begin{frame}
+	\begin{exampleblock}{Bemerkung}
+		Sei $T$ ein Spannbaum mit Wurzel $k$ und Höhe $h$, wie im letzten Abschnitt. Da $T$ durch Breitensuche konstruiert wurde, sind die Äste kürzeste Wege und es gilt:
+		\begin{displaymath}
+			h = \max_{\mathclap{f\left(n\right) \neq \#}} \text{ dist}\left(k, n\right) = r(k)
+		\end{displaymath}
+		
+		Die Höhe von $T$ kann im Längsten Ast binär gespeichert werden, da
+		\begin{displaymath}
+			h < 2^{h + 1} , \forall h \in \mathbb{N}
+		\end{displaymath}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Radius bestimmen}
+	Wir bestimmen den Radius des Knotens $k$.
+	\begin{itemize}
+		\item Spannbaum mit Wurzel $k$ erzeugen.
+		\item Sende Signal $S_1$ von $k$ aus.
+		\item Erhält ein Blatt $S_1$, sendet es ein Signal $S_2$ zu seinem Elternknoten.
+		\item Hat ein Knoten $m$ das Signal $S_2$ von einem Kind $m_1$ erhalten, aber noch nicht von einem anderen Kind $m_2$, sendet $m$ ein Signal $R$ zu $m_1$.
+		\item k sendet Signal $S_3$ entlang des Astes.
+		\item Das Blatt des Astes sendet $S_3'$ zurück.
+		\item Zähle Länge des Astes. 
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Radius bestimmen}
+	Um die Länge des Astes zu bestimmen gehen wir folgendermaßen vor:
+	
+	Jeder Knoten speichert ein Zählerbit und ein Carrybit.
+	\begin{itemize}
+		\item $k$ sendet Signal $S_1$ aus und erhöht Zähler um 1. 
+		\item Jeden zweiten Zeitschritt wird der Zähler von $k$ inkrementiert.
+		\item Ist bei einem Knoten das Carrybit gesetzt, übernimmt sein Kind dieses in seinen Zähler.
+		\item Erhält das Blatt das Signal $S_1$ sendet es $S_1'$ zurück.
+		\item Erhält $k$ das Signal $S_1'$ stopp $k$ das inkrementieren.
+		\item $k$ sendet noch ein Signal $S_2$ den Ast entlang.
+		\item Das Blatt sendet $S_2'$ zurück.
+	\end{itemize}
 \end{frame}
 
 \subsection{Beispiel}
