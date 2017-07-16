@@ -204,19 +204,29 @@
 	\end{definition}
 \end{frame}
 \begin{frame}{Zellulare $d$"~Graph Automaten}
-%\begin{frame}{Beispiel}
-%	\centering
-%		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
-%		\node[state](a){$a$};
-%		\node[state](c)[below right of=a]{$c$};
-%		\node[state](b)[above right of=c]{$b$};
-%		\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
-%		\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
-%		(\p) edge[bend left=9] node {\b} (\q) 
-%		;
-%		
-%		\end{tikzpicture}
-%\end{frame}
+	\begin{columns}
+		\begin{column}{0.48\textwidth}
+		\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+		\node[state](a){$a$};
+		\node[state](c)[below right of=a]{$c$};
+		\node[state](b)[above right of=c]{$b$};
+		\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
+		\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
+		(\p) edge[bend left=9] node {\b} (\q) 
+		;
+		
+		\end{tikzpicture}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\begin{itemize}
+				\item H(a) = (2, 1)
+				\item H(b) = (1, 2)
+				\item H(c) = (2, 2)
+			\end{itemize}
+		\end{column}
+	\end{columns}
+	
 \end{frame}
 
 %TODO Entsprechung normaler ZA
@@ -441,7 +451,7 @@
 	\begin{itemize}
 		\item Spannbaum mit Wurzel $k$ erzeugen.
 		\item Sende Signal $S_1$ von $k$ aus.
-		\item Erhält ein Blatt $S_1$, sendet es ein Signal $S_2$ zu seinem Elternknoten.
+		\item Erhält ein Blatt das Signal $S_1$, sendet es ein Signal $S_2$ zu seinem Elternknoten.
 		\item Hat ein Knoten $m$ das Signal $S_2$ von einem Kind $m_1$ erhalten, aber noch nicht von einem anderen Kind $m_2$, sendet $m$ ein Signal $R$ zu $m_1$.
 		\item k sendet Signal $S_3$ entlang des Astes.
 		\item Das Blatt des Astes sendet $S_3'$ zurück.
