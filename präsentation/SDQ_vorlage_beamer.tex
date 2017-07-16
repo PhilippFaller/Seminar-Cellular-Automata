@@ -23,6 +23,7 @@
 \usepackage{templates/tikzkit}
 % \usepackage{templates/beamerthemekitwide}
 \usepackage{mathtools}
+\usetikzlibrary{chains}
 
 %% TITLE PICTURE
 
@@ -86,7 +87,7 @@
 \subsection{Definition}
 \begin{frame}{$d$"~Graph}
 	\begin{definition}[$d$"~Graph]
-		Sei $L$ eine endliche, nicht leere Menge von Beschriftungen, mit ausgezeichneten Element $\#$. 
+		Sei $L$ eine endliche, nicht leere Menge von Beschriftungen mit ausgezeichneten Element $\#$. 
 		Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 		\begin{itemize}
 			\item[$N$] endliche, nicht leere Menge aus Knoten 
@@ -98,7 +99,7 @@
 \end{frame}
 
 \begin{frame}
-	\begin{definition}[$d$"~Graph]
+	\begin{definition}[]
 		Weiter muss für $\left(n, m\right) \in A$ gelten:
 		\begin{align*}
 			f(n) = \# &\implies f(m) \neq \#
@@ -161,13 +162,14 @@
 			V &= N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\} \\		
 			E &= A\setminus \left\{\left(n, m\right) \in A \mid f(n) = \# \lor f(m) = \# \right\}
 		\end{align*} 
-		heißt \defWord{$\Gamma$ zugrunde liegende Graph}.
+		heißt der \defWord{$\Gamma$ zugrunde liegende Graph}.
 		
 		
 		Ein $d$"~Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
 	\end{definition}
 \end{frame}
 
+%TODO Unnötige Folie?
 \begin{frame}{Nachbarschaft}
 	\begin{definition}[Nachbarschaft]
 		Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. 
@@ -229,7 +231,58 @@
 	
 \end{frame}
 
-%TODO Entsprechung normaler ZA
+\begin{frame}{Zellulare $d$"~Graph Automaten}
+	\begin{definition}[Konfiguration]
+		Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}.
+		
+		Sei $n$ ein Knoten mit Nachbarn $m_1, \dots, m_d$		
+		und $q_m = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$. 
+		Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
+		\begin{displaymath}
+		c'(n) = \delta(c(n), H(n),q_m ).
+		\end{displaymath} 
+		Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
+	\end{definition}
+\end{frame}
+
+\begin{frame}
+	\begin{exampleblock}{Bemerkung}
+		Der Zellulare $d$"~Graph Automat ist eine Verallgemeinerung des \emph{endlichen} Zellularautomaten.
+	\end{exampleblock}
+	\centering
+	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+	
+	\begin{scope}[start chain=1 going right,node distance=0cm]
+	\node[on chain=1, draw, minimum size = 1.5cm] (a){$q_0$};
+	\node[on chain=1, draw, minimum size = 1.5cm] (b){$q_1$};
+	\node[on chain=1, draw, minimum size = 1.5cm] (c) {$q_2$};
+	\node[on chain=1, draw, minimum size = 1.5cm]  (d) {$q_3$};
+	\node[on chain=1, draw, minimum size = 1.5cm]  (e) {$q_4$};
+	\node[on chain=1, draw, minimum size = 1.5cm]  (f) {$q_5$};
+	\end{scope}
+	
+	
+	\end{tikzpicture}
+	
+	\vspace{0.75cm}
+	\begin{tikzpicture}[node distance=1.5cm, baseline=(current bounding box.north), every state/.style={minimum size = 3.3em}]
+	\node[state] (a) {$q_5$};
+	\node[state] (b)[left of = a] {$q_4$};
+	\node[state] (c)[left of = b] {$q_3$};
+	\node[state] (d)[left of = c] {$q_2$};
+	\node[state] (e)[left of = d] {$q_1$};
+	\node[state] (f)[left of = e] {$q_0$};
+	\node[state] (a1)[right of = a] {$\#$};
+	\node[state] (f1)[left of = f] {$\#$};
+	
+	\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f, a/a1, f/f1}
+	\draw[->] 
+	(\q) edge (\p)
+	(\p) edge (\q) 			
+	;
+	\end{tikzpicture}
+		
+\end{frame}
 
 \definecolor{S3}{named}{kit-green100}
 \definecolor{S1}{named}{kit-blue100}
