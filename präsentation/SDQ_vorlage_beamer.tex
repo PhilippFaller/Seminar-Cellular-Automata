@@ -41,7 +41,7 @@
 % for a custom logo on the front page, copy your file into the 'logos'
 % directory, insert the filename in the line below and uncomment it
 
-\titlelogo{sdq_logo}
+\titlelogo{plain}
 
 % (*.eps format if you use latex+dvips+ps2pdf,
 % *.jpg/*.png/*.pdf if you use pdflatex)
@@ -54,10 +54,10 @@
 
 % the presentation starts here
 
-\title[Cellular Graph Automata I]{Cellular Graph Automata I}
+\title[Cellular Graph Automata I]{Cellular Graph Automata I -- Wu \& Rosenfeld}
 \subtitle{Zellularautomaten und diskrete komplexe Systeme}
 \author{Philipp Faller}
-\institute{Worsch}
+\institute{Thomas Worsch}
 
 % Bibliography
 
@@ -98,7 +98,7 @@
 	\end{definition}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{$d$"~Graph}
 	\begin{definition}[]
 		Weiter muss für $\left(n, m\right) \in A$ gelten:
 		\begin{align*}
@@ -222,7 +222,7 @@
 		\end{column}
 		\begin{column}{0.48\textwidth}
 			\begin{itemize}
-				\item H(a) = (2, 1)
+				\item H(a) = (1, 1)
 				\item H(b) = (1, 2)
 				\item H(c) = (2, 2)
 			\end{itemize}
@@ -245,7 +245,7 @@
 	\end{definition}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Zellulare $d$"~Graph Automaten}
 	\begin{exampleblock}{Bemerkung}
 		Der Zellulare $d$"~Graph Automat ist eine Verallgemeinerung des \emph{endlichen} Zellularautomaten.
 	\end{exampleblock}
@@ -300,6 +300,7 @@
 		\item Ein Blatt sendet $S'$ aus, sobald feststeht, dass es eines ist. 
 		\item $S'$ wird von einem Knoten $n$ weitergeleitet, wenn alle Kinder von $n$ das Signal $S'$ gesendet haben.
 	\end{itemize}
+	$\implies 2r(k) \text{ Schritte}$
 \end{frame}
 
 \subsection{Beispiel}
@@ -378,6 +379,34 @@
 		(\p) edge[bend left=9, line width = 2pt, S3] (\q) 			
 		;	
 		
+		\end{tikzpicture}
+	}
+	\only<+>{
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
+		\node[state, fill=S3, text=white](a){$a$};
+		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
+		\node[state, fill=S1, text=white](d)[right of = b]{$d$};
+		\node[state, fill=S3, text=white](f)[below right of = d]{$f$};
+		\node[state, fill=S3, text=white](e)[below left of = f]{$e$};
+		\node[state, fill=S3, text=white](c)[left of = e]{$c$};
+		\node[state](a1)[left of = a]{$\#$};
+		\node[state](a2)[below left of = a]{$\#$};
+		\node[state](c1)[left of = c]{$\#$};
+		\node[state](f1)[right of = f]{$\#$};
+		
+		\foreach \p/\q in {a/b, b/d, b/c, d/e, d/f, e/f, c/e, a1/a, a2/a, c1/c, f1/f}
+		\draw[->] 
+		(\q) edge[bend left=9] (\p)
+		(\p) edge[bend left=9] (\q) 			
+		;
+		\foreach \p/\q in {a/b, d/b, c/b, e/d, f/d}
+		\draw[->] 
+		(\p) edge[bend left=9, line width = 2pt, S1] (\q) 			
+		;	
+		\foreach \p/\q in {b/a, b/c, b/d, d/e, d/f}
+		\draw[->] 
+		(\p) edge[bend left=9, line width = 2pt, S3] (\q) 			
+		;	
 		\end{tikzpicture}
 	}
 	\only<+>{
@@ -485,7 +514,7 @@
 	\end{definition}
 \end{frame}
 \subsection{Algorithmus}
-\begin{frame}
+\begin{frame}{Radius bestimmen}
 	\begin{exampleblock}{Bemerkung}
 		Sei $T$ ein Spannbaum mit Wurzel $k$ und Höhe $h$, wie im letzten Abschnitt. Da $T$ durch Breitensuche konstruiert wurde, sind die Äste kürzeste Wege und es gilt:
 		\begin{displaymath}
@@ -504,12 +533,13 @@
 	\begin{itemize}
 		\item Spannbaum mit Wurzel $k$ erzeugen.
 		\item Sende Signal $S_1$ von $k$ aus.
-		\item Erhält ein Blatt das Signal $S_1$, sendet es ein Signal $S_2$ zu seinem Elternknoten.
+		\item Erhält ein Blatt das Signal $S_1$, sendet es Signal $S_2$ zu seinem Elternknoten.
 		\item Hat ein Knoten $m$ das Signal $S_2$ von einem Kind $m_1$ erhalten, aber noch nicht von einem anderen Kind $m_2$, sendet $m$ ein Signal $R$ zu $m_1$.
-		\item k sendet Signal $S_3$ entlang des Astes.
+		\item Erhält $k$ das Signal $S_2$ von seinem letzten Kind, sendet $k$ Signal $S_3$ entlang des Astes.
 		\item Das Blatt des Astes sendet $S_3'$ zurück.
 		\item Zähle Länge des Astes. 
 	\end{itemize}
+	$\implies 2r(k) + 4r(k) = 6r(k) \text{ Schritte}$
 \end{frame}
 
 \begin{frame}{Radius bestimmen}
@@ -519,12 +549,13 @@
 	\begin{itemize}
 		\item $k$ sendet Signal $S_1$ aus und erhöht Zähler um 1. 
 		\item Jeden zweiten Zeitschritt wird der Zähler von $k$ inkrementiert.
-		\item Ist bei einem Knoten das Carrybit gesetzt, übernimmt sein Kind dieses in seinen Zähler.
+		\item Ist das Carrybit gesetzt, übernimmt das Kind dieses in seinen Zähler.
 		\item Erhält das Blatt das Signal $S_1$ sendet es $S_1'$ zurück.
-		\item Erhält $k$ das Signal $S_1'$ stopp $k$ das inkrementieren.
+		\item Erhält $k$ das Signal $S_1'$ stoppt $k$ das inkrementieren.
 		\item $k$ sendet noch ein Signal $S_2$ den Ast entlang.
 		\item Das Blatt sendet $S_2'$ zurück.
 	\end{itemize}
+	$\implies 6r(k) + 4r(k) = 10r(k) \text{ Schritte}$
 \end{frame}
 
 \subsection{Beispiel}
@@ -726,10 +757,5 @@
 	\end{tikzpicture}
 	}	
 	\end{overprint}
-\end{frame}
-
-\section{Beschriftung finden}
-\begin{frame}{Beschriftung finden}
-	
 \end{frame}
 \end{document}
