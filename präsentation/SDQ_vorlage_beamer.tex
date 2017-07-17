@@ -91,7 +91,7 @@
 		Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 		\begin{itemize}
 			\item[$N$] endliche, nicht leere Menge aus Knoten 
-			\item[$A$] $\subseteq N \times N$ eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
+			\item[$A$] $\subseteq N \times N$ symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
 			\item[$f$] $: N \rightarrow L$  heißt \defWord{Beschriftungsfunktion}.
 			\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$ 			
 		\end{itemize}
@@ -163,8 +163,8 @@
 			E &= A\setminus \left\{\left(n, m\right) \in A \mid f(n) = \# \lor f(m) = \# \right\}
 		\end{align*} 
 		heißt der \defWord{$\Gamma$ zugrunde liegende Graph}.
-		
-		
+	\end{definition}
+	\begin{definition}[Zusammenhängend]
 		Ein $d$"~Graph heißt \defWord{zusammenhängend}, wenn der zugrunde liegende Graph zusammenhängend ist.
 	\end{definition}
 \end{frame}
@@ -193,9 +193,9 @@
 		Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 		\begin{itemize}
 			\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$
-			\item[$M$]  ist endlicher Automat $\left(Q, \delta\right)$, mit 
+			\item[$M$] endlicher Automat $\left(Q, \delta\right)$, mit 
 			\begin{itemize}
-				\item[$Q$] ist endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
+				\item[$Q$] endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
 				\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
 				
 				Dabei ist $\cramped{\delta(\#, z, q) = \{\# \}}, \forall z \in Z_d^d, q \in Q^d$
@@ -501,12 +501,12 @@
 \section{Radius bestimmen}
 \subsection{Definition}
 \begin{frame}{Radius bestimmen}
-	\begin{definition}[Radius]
+	\begin{definition}[Abstand]
 		Sei $\Gamma$ ein zusammenhängender $d$"~Graph, $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
 		Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
-		
+	\end{definition}
+	\begin{definition}[Radius]
 		Weiter heißt
-
 		\begin{displaymath}
 			r\left(k\right) := \max_{\mathclap{f\left(n\right) \neq \#}} \text{ dist}\left(k, n\right)
 		\end{displaymath}
@@ -757,5 +757,96 @@
 	\end{tikzpicture}
 	}	
 	\end{overprint}
+\end{frame}
+
+\section{Zellulare $d$"~Graph Akzeptoren}
+\subsection{Definition}
+\begin{frame}{Zellularer $d$"~Graph Akzeptor}
+	\begin{definition}[Ausgezeichneter Knoten]
+		Ein $d$"~Graph Automat, bei dem genau ein Knoten eine Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
+	\end{definition}
+	\begin{definition}[Zellularer $d$"~Graph Akzeptor]
+		Sei $\mathcal{M} = \left(\Gamma, (Q, \delta), H \right)$ ein $d$"~Graph Automat mit ausgezeichnetem Knoten , sodass $(L, Q, \delta, F)$ ein endlicher Akzeptor ist.
+		Dann heißt $\mathcal{M}$ \defWord{Zellularer $d$"~Graph Akzeptor}.
+	\end{definition}
+\end{frame}
+
+\begin{frame}{Sprache}
+	\begin{definition}[Akzeptanz]
+		Ein $d$"~Graph Akzeptor \defWord{akzeptiert} $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit
+		\begin{displaymath}
+		c_1 = f, c_m(\hat{n}) \in F
+		\end{displaymath}
+		für den ausgezeichneten Knoten $\hat{n}$, sodass:
+		\begin{displaymath}
+		c_{i} \vdash c_{i+1} \text{, für } 1 \le i \le m
+		\end{displaymath}
+	\end{definition}
+	\begin{definition}[Sprache]
+		Die \defWord{Sprache von $d$"=Graphen, die durch $M$ akzeptiert wird} ist die Menge 
+		\begin{displaymath}
+		\mathcal{L}(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \text{ akzeptiert } \Gamma \right\}
+		\end{displaymath}
+	\end{definition}
+\end{frame}
+\subsection{Beispiel}
+
+\definecolor{S3}{named}{kit-green100}
+\definecolor{S1}{named}{kit-blue100}
+\definecolor{S2}{named}{kit-red70}
+\begin{frame}{Beispiel}
+	$\mathcal{L}(M) = \{\Gamma \mid \text{Der $\Gamma$ zugrunde liegende Graph ist bipartit}\}$
+	\centering{
+	\begin{overprint}
+		\only<+>{	
+			\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+			\node[state, accepting, fill=S1] (a) {};
+			\node[state] (b)[below of = a] {};
+			\node[state] (c)[below of = b] {};
+			\node[state] (d)[right of = a] {};
+			\node[state] (e)[below of = d] {};
+			\node[state] (f)[below of = e] {};
+			
+			\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+			\draw[->] 
+			(\q) edge (\p)
+			(\p) edge (\q) 			
+			;
+			\end{tikzpicture}
+		}
+		\only<+>{	
+			\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+			\node[state, accepting, fill=S1] (a) {};
+			\node[state] (b)[below of = a] {};
+			\node[state] (c)[below of = b] {};
+			\node[state, fill=S3] (d)[right of = a] {};
+			\node[state, fill=S3] (e)[below of = d] {};
+			\node[state, fill=S3] (f)[below of = e] {};
+			
+			\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+			\draw[->] 
+			(\q) edge (\p)
+			(\p) edge (\q) 			
+			;
+			\end{tikzpicture}
+		}
+		\only<+>{	
+			\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+			\node[state, accepting, fill=S1] (a) {};
+			\node[state, fill=S1] (b)[below of = a] {};
+			\node[state, fill=S1] (c)[below of = b] {};
+			\node[state, fill=S3] (d)[right of = a] {};
+			\node[state, fill=S3] (e)[below of = d] {};
+			\node[state, fill=S3] (f)[below of = e] {};
+			
+			\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+			\draw[->] 
+			(\q) edge (\p)
+			(\p) edge (\q) 			
+			;
+			\end{tikzpicture}
+		}	
+	\end{overprint}
+}
 \end{frame}
 \end{document}
