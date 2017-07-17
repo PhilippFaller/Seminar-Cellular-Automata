@@ -87,19 +87,19 @@
 \subsection{Definition}
 \begin{frame}{$d$"~Graph}
 	\begin{definition}[$d$"~Graph]
-		Sei $L$ eine endliche, nicht leere Menge von Beschriftungen mit ausgezeichneten Element $\#$. 
+		Sei $L$ eine endliche, nicht leere Menge von Beschriftungen mit ausgezeichnetem Element $\#$. 
 		Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\right)$, wobei
 		\begin{itemize}
-			\item[$N$] endliche, nicht leere Menge aus Knoten 
-			\item[$A$] $\subseteq N \times N$ symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
+			\item[$N$] endliche, nicht leere Menge aus Knoten. 
+			\item[$A$] $\subseteq N \times N$ symmetrische Relation über $N$, heißt \defWord{Kantenmenge} von $\Gamma$.
 			\item[$f$] $: N \rightarrow L$  heißt \defWord{Beschriftungsfunktion}.
-			\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$ 			
+			\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$. 			
 		\end{itemize}
 	\end{definition}
 \end{frame}
 
 \begin{frame}{$d$"~Graph}
-	\begin{definition}[]
+	\begin{definition}[$d$"~Graph (Fortsetzung)]
 		Weiter muss für $\left(n, m\right) \in A$ gelten:
 		\begin{align*}
 			f(n) = \# &\implies f(m) \neq \#
@@ -174,15 +174,15 @@
 	\begin{definition}[Nachbarschaft]
 		Sei $\left(n, m\right) \in A$ und $g\left(n, m\right) = i$. 
 		Dann heißt $m$ der \defWord{$i$"=te Nachbar von $n$}.
-		Außerdem gilt: 
+		Nach Definition gilt: 
 		\begin{displaymath}
 		\left(m, n\right) \in A \text{ und }\exists j \in Z_d : g(m, n) = j.
 		\end{displaymath}
 		Dann ist $n$ der $j$"=te Nachbar von $m$. 
-		Definiere $h : N \times Z_d \rightarrow N$, so dass
-		\begin{displaymath}
-		h(n, i) = m \iff g(n, m) = i.
-		\end{displaymath}
+		%Definiere $h : N \times Z_d \rightarrow N$, so dass
+		%\begin{displaymath}
+		%h(n, i) = m \iff g(n, m) = i.
+		%\end{displaymath}
 	\end{definition}
 \end{frame}
 
@@ -192,13 +192,13 @@
 	\begin{definition}[$d$"~Graph Automat]
 		Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 		\begin{itemize}
-			\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$
+			\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$.
 			\item[$M$] endlicher Automat $\left(Q, \delta\right)$, mit 
 			\begin{itemize}
 				\item[$Q$] endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
 				\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
 				
-				Dabei ist $\cramped{\delta(\#, z, q) = \{\# \}}, \forall z \in Z_d^d, q \in Q^d$
+				Dabei ist $\cramped{\delta(\#, z, q) = \{\# \}}, \forall z \in Z_d^d, q \in Q^d$.
 			\end{itemize}
 			\item[$H$] $: N \rightarrow Z_d^d$. 
 			Für $n \in N$ heißt $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. 
@@ -209,7 +209,7 @@
 	\begin{columns}
 		\begin{column}{0.48\textwidth}
 		\centering
-		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+		\begin{tikzpicture}[node distance=3cm, baseline=(current bounding box.north), auto]
 		\node[state](a){$a$};
 		\node[state](c)[below right of=a]{$c$};
 		\node[state](b)[above right of=c]{$b$};
@@ -236,10 +236,10 @@
 		Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}.
 		
 		Sei $n$ ein Knoten mit Nachbarn $m_1, \dots, m_d$		
-		und $q_m = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$. 
+		und $q := \left( c(m_1), \dots , c(m_d)\right) \in Q^d$. 
 		Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
 		\begin{displaymath}
-		c'(n) = \delta(c(n), H(n),q_m ).
+		c'(n) = \delta(c(n), H(n),q )
 		\end{displaymath} 
 		Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
 	\end{definition}
@@ -292,15 +292,15 @@
 \subsection{Algorithmus}
 \begin{frame}{Spannbaum durch Breitensuche}
 	
-	Wir bestimmen einen Spannbaum von minimaler Höhe zur Wurzel $k$.
+	Wir bestimmen einen Spannbaum von minimaler Höhe $h$ zur Wurzel $k$.
 	\begin{itemize}
 		\item Wurzel $k$ sendet Signal $S$ aus.
-		\item Erhält Knoten $n$ zum erste Mal $S$ (von einem Knoten $m$), ist $m$ der Vater von $n$. Falls mehrere gleichzeitig senden, wähle einen beliebigen Knoten als Vater aus.
+		\item Erhält Knoten $n$ zum ersten Mal $S$ (von einem Knoten $m$), ist $m$ der Vater von $n$. Falls mehrere gleichzeitig senden, wähle einen beliebigen Knoten als Vater aus.
 		\item $m$ sendet $S$ weiter und zeigt an, dass $n$ sein Vater ist. Dann weiß $n$, dass $m$ sein Kind ist.
 		\item Ein Blatt sendet $S'$ aus, sobald feststeht, dass es eines ist. 
 		\item $S'$ wird von einem Knoten $n$ weitergeleitet, wenn alle Kinder von $n$ das Signal $S'$ gesendet haben.
 	\end{itemize}
-	$\implies 2r(k) \text{ Schritte}$
+	$\implies 2h \text{ Schritte}$
 \end{frame}
 
 \subsection{Beispiel}
@@ -521,7 +521,7 @@
 			h = \max_{\mathclap{f\left(n\right) \neq \#}} \text{ dist}\left(k, n\right) = r(k)
 		\end{displaymath}
 		
-		Die Höhe von $T$ kann im Längsten Ast binär gespeichert werden, da
+		Die Höhe von $T$ kann im längsten Ast binär gespeichert werden, da
 		\begin{displaymath}
 			h < 2^{h + 1} , \forall h \in \mathbb{N}
 		\end{displaymath}
@@ -543,15 +543,15 @@
 \end{frame}
 
 \begin{frame}{Radius bestimmen}
-	Um die Länge des Astes zu bestimmen gehen wir folgendermaßen vor:
+	Um die Länge des Astes zu bestimmen, gehen wir folgendermaßen vor:
 	
 	Jeder Knoten speichert ein Zählerbit und ein Carrybit.
 	\begin{itemize}
 		\item $k$ sendet Signal $S_1$ aus und erhöht Zähler um 1. 
 		\item Jeden zweiten Zeitschritt wird der Zähler von $k$ inkrementiert.
 		\item Ist das Carrybit gesetzt, übernimmt das Kind dieses in seinen Zähler.
-		\item Erhält das Blatt das Signal $S_1$ sendet es $S_1'$ zurück.
-		\item Erhält $k$ das Signal $S_1'$ stoppt $k$ das inkrementieren.
+		\item Erhält das Blatt das Signal $S_1$, sendet es $S_1'$ zurück.
+		\item Erhält $k$ das Signal $S_1'$, stoppt $k$ das Inkrementieren.
 		\item $k$ sendet noch ein Signal $S_2$ den Ast entlang.
 		\item Das Blatt sendet $S_2'$ zurück.
 	\end{itemize}
@@ -775,15 +775,15 @@
 	\begin{definition}[Akzeptanz]
 		Ein $d$"~Graph Akzeptor \defWord{akzeptiert} $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit
 		\begin{displaymath}
-		c_1 = f, c_m(\hat{n}) \in F
+		c_1 = f, c_m(n) \in F
 		\end{displaymath}
-		für den ausgezeichneten Knoten $\hat{n}$, sodass:
+		für den ausgezeichneten Knoten $n$, sodass:
 		\begin{displaymath}
 		c_{i} \vdash c_{i+1} \text{, für } 1 \le i \le m
 		\end{displaymath}
 	\end{definition}
 	\begin{definition}[Sprache]
-		Die \defWord{Sprache von $d$"=Graphen, die durch $M$ akzeptiert wird} ist die Menge 
+		Die \defWord{Sprache von $d$"=Graphen, die durch $M$ akzeptiert wird,} ist die Menge 
 		\begin{displaymath}
 		\mathcal{L}(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \text{ akzeptiert } \Gamma \right\}
 		\end{displaymath}
