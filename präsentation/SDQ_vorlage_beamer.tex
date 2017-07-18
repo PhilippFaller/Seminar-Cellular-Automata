@@ -179,10 +179,10 @@
 		\left(m, n\right) \in A \text{ und }\exists j \in Z_d : g(m, n) = j.
 		\end{displaymath}
 		Dann ist $n$ der $j$"=te Nachbar von $m$. 
-		%Definiere $h : N \times Z_d \rightarrow N$, so dass
-		%\begin{displaymath}
-		%h(n, i) = m \iff g(n, m) = i.
-		%\end{displaymath}
+		Definiere $h : N \times Z_d \rightarrow N$, so dass
+		\begin{displaymath}
+		h(n, i) = m \iff g(n, m) = i.
+		\end{displaymath}
 	\end{definition}
 \end{frame}
 
@@ -198,7 +198,7 @@
 				\item[$Q$] endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
 				\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
 				
-				Dabei ist $\cramped{\delta(\#, z, q) = \{\# \}}, \forall z \in Z_d^d, q \in Q^d$.
+				Dabei ist $\forall z \in Z_d^d, q \in Q^d : \cramped{\delta(\#, z, q) = \{\# \}}$.
 			\end{itemize}
 			\item[$H$] $: N \rightarrow Z_d^d$. 
 			Für $n \in N$ heißt $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. 
@@ -235,7 +235,7 @@
 	\begin{definition}[Konfiguration]
 		Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}.
 		
-		Sei $n$ ein Knoten mit Nachbarn $m_1, \dots, m_d$		
+		Sei $n$ ein Knoten mit Nachbarn $m_1 := h(n, 1) , \dots, m_d := h(n, d)$		
 		und $q := \left( c(m_1), \dots , c(m_d)\right) \in Q^d$. 
 		Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
 		\begin{displaymath}
@@ -503,7 +503,7 @@
 \begin{frame}{Radius bestimmen}
 	\begin{definition}[Abstand]
 		Sei $\Gamma$ ein zusammenhängender $d$"~Graph, $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
-		Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
+		Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge der kürzesten Wege von $m$ nach $n$.
 	\end{definition}
 	\begin{definition}[Radius]
 		Weiter heißt
@@ -523,7 +523,7 @@
 		
 		Die Höhe von $T$ kann im längsten Ast binär gespeichert werden, da
 		\begin{displaymath}
-			h < 2^{h + 1} , \forall h \in \mathbb{N}
+			\forall h \in \mathbb{N} : h < 2^{h + 1}
 		\end{displaymath}
 	\end{exampleblock}
 \end{frame}
@@ -773,7 +773,7 @@
 
 \begin{frame}{Sprache}
 	\begin{definition}[Akzeptanz]
-		Ein $d$"~Graph Akzeptor \defWord{akzeptiert} $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit
+		Ein $d$"~Graph Akzeptor \defWord{akzeptiert} $\Gamma = (N, A, f, g)$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit
 		\begin{displaymath}
 		c_1 = f, c_m(n) \in F
 		\end{displaymath}
