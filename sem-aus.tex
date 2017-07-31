@@ -153,22 +153,25 @@ Ein \defWord{$d$"~Graph} über $L$ ist ein 4"=Tupel $\Gamma = \left(N, A, f, g\r
 \begin{itemize}
 	\item[$N$] eine endliche, nicht leere Menge aus Knoten ist.
 	\item[$A$] $\subseteq N \times N$ ist eine symmetrische Relation über $N$ und heißt \defWord{Kantenmenge} von $L$.
-	\item[$f$] $: N \rightarrow L$ ist eine Abbildung, sodass für $\left(m, n\right) \in A$ gilt: $f(m) = \# \implies f(n) \neq \#$. $f$  heißt \defWord{Beschriftungsfunktion}.
-	\item[$g$] $: A \rightarrow Z_d$ , mit $Z_d = \left \{1, 2,\text{\dots}, d \right \}$, ist eine Abbildung, die folgende Eigenschaften besitzt:
-	
-	Sei $A_n := \left \{\left(n, m\right) \in A\right \}$ die Menge aller Kanten, die von einem Knoten $n \in N$ ausgehen.
-	\begin{enumerate}
-		\item Falls $f(n) \neq \#$, ist $\left|A_n\right| = d$ und $g \vert_{A_n}$ ($g$ eingeschränkt auf $A_n$) ist eine Bijektion zwischen $A_n$ und $Z_d$.
-		\item Falls $f(n) = \#$, ist $\left|A_n\right| = 1$
-	\end{enumerate}
-	
+	\item[$f$] $: N \rightarrow L$  heißt \defWord{Beschriftungsfunktion}.
+	\item[$g$] $: A \rightarrow Z_d$ , ist eine Abbildung, wobei $Z_d = \left \{1, 2,\text{\dots}, d \right \}$. 
 \end{itemize}
+Dabei muss für eine Kante $\left(n, m\right) \in A$ gelten:
+\begin{align*}
+f(n) = \# &\implies f(m) \neq \#
+\end{align*}
+Sei $A_n := \left \{\left(n, m\right) \in A\right \}$ die Menge aller Kanten, die von einem Knoten $n$ ausgehen. Dann muss außerdem noch gelten:
+\begin{align*}
+f(n) \neq \# &\implies  \left|A_n\right| = d \text{ und } g \vert_{A_n} \text{ ist Bijektion} \\
+f(n) = \# &\implies\left|A_n\right| = 1
+\end{align*}
+
 \end{definition}
 
 Informell ist $\Gamma$ also ein Graph, dessen Knoten mit Beschriftungen aus $L$ versehen sind. 
 Jede Kante hat eine Nummer aus $\left\{1, \dots, d\right\}$. 
 Dabei gilt im Allgemeinen $g(n, m) \neq g(m, n)$. 
-Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat Grad $1$. 
+Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Ausgangsgrad $d$, jeder andere hat Ausgangsgrad $1$. 
 
 \begin{beispiel}
 	\label{dGraph}
@@ -209,7 +212,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 \begin{definition}[Zugrunde liegender Graph]
 	Sei $\Gamma$ ein $d$"~Graph. 
 	Der \defWord{$\Gamma$ zugrunde liegende Graph $G(\Gamma) = \left(V, E\right)$} ist der Graph, mit der Knotenmenge \begin{displaymath}
-		V = N\setminus \left\{n \in N \mid f\left(n\right) = \# \right\}
+		V = N\setminus \left\{n \in N \mid f(n) = \# \right\}
 	\end{displaymath} und der Kantenmenge  
 	\begin{displaymath}
 		E = A\setminus \left\{\left(n, m\right) \in A \mid f(n) = \# \lor f(m) = \# \right\}.
@@ -237,13 +240,16 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 \begin{definition}[$d$"~Graph Automat]
 	Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 	\begin{itemize}
-		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
-		\item[$M$]  ist ein endlicher Automat $\left(Q, \delta\right)$, mit 
+		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$ ist.
+		\item[$M$] ist ein endlicher Automat $\left(Q, \delta\right)$, dabei ist 
 		\begin{itemize}
-			\item[$Q$] ist eine endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$.
-			\item[$\delta$] $: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)$ ist eine Abbildung, für die gilt $\delta \left(\#, Z_d^d, Q^d\right) = \left \{\# \right \}$. $\delta$ heißt \defWord{Zustandsübergangsfunktion}.
+			\item[$Q$] eine endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$,
+			\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
+			
+			Dabei ist $\forall z \in Z_d^d, q \in Q^d : \cramped{\delta(\#, z, q) = \{\# \}}$.
 		\end{itemize}
-		\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung. 
+		\item[$H$] $: N \rightarrow Z_d^d$.  
+	\end{itemize}
 		Für $n \in N$ heißt das Bild $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. Es gilt: 
 		\begin{displaymath}
 			\forall i \in Z_d : H(n)_i = 
@@ -252,7 +258,6 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Grad $d$, jeder andere hat
 				1 & , f(n) = \# \\ %Warum stand statt 1 t dort? 
 			\end{dcases}
 		\end{displaymath}
-	\end{itemize}
 \end{definition}
 
 Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Startzustand $f(n) \in L$. 
@@ -262,13 +267,37 @@ Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbs
 In \thref{dGraph} ist zum Beispiel $H(a) = \left(1, 1\right)$. 
 Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
 
+\begin{beispiel}
+		\begin{minipage}{0.48\textwidth}
+			\centering
+			\begin{tikzpicture}[node distance=3cm, baseline=(current bounding box.north), auto]
+			\node[state](a){$a$};
+			\node[state](c)[below right of=a]{$c$};
+			\node[state](b)[above right of=c]{$b$};
+			\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
+			\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
+			(\p) edge[bend left=9] node {\b} (\q) 
+			;
+			
+			\end{tikzpicture}
+		\end{minipage}
+		\begin{minipage}{0.48\textwidth}
+			\begin{itemize}
+				\item H(a) = (1, 1)
+				\item H(b) = (1, 2)
+				\item H(c) = (2, 2)
+			\end{itemize}
+		\end{minipage}
+	
+\end{beispiel}
+
 \begin{definition}[Konfiguration]
 	Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}, die jedem Knoten einen Zustand zuordnet.
-	Sei $n$ ein Knoten mit Zustand $q = c(n)$ und Nachbarn $m_1, \dots, m_d$. 
-	Sei $q_m = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
+	Sei $n$ ein Knoten mit Zustand $q = c(n)$ und Nachbarn $m_1 := h(n, 1), \dots, m_d := h(n, d)$. 
+	Sei $q = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
 	Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
 	\begin{displaymath}
-		c'(n) = \delta(q, H(n),q_m ).
+		c'(n) = \delta(c(n), H(n),q).
 	\end{displaymath} 
 	Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
 	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"~Graph Automat}.
