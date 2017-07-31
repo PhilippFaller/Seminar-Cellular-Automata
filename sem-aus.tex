@@ -282,7 +282,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \begin{definition}[Akzeptanz]
 	Ein Zellularer $d$"~Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
 	
-	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $\mathcal{M}$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$ ist.
+	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $M$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$ ist.
 	
 	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine beliebige Abbildung $c : N \rightarrow L$. 
 	Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt: 
@@ -313,44 +313,73 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \end{definition}
 
 \begin{definition}[$d$"~Graph Entscheider]
-	Wenn $M$ eine weiter Teilmenge $R \subseteq Q$ mit $R \cap F = \emptyset$ besitzt, nennen wir diese die \defWord{ablehnenden Zustände} von $M = \left(L, Q, \delta, F, R\right)$ und schreiben $M$ als 5-Tupel.
+	Wir nennen eine weitere Teilmenge $R \subseteq Q$ mit 
+	\begin{displaymath}
+		R \cap F = \emptyset
+	\end{displaymath} 
+	die \defWord{ablehnenden Zustände von $M$} und schreiben $M$ als 5-Tupel $\left(L, Q, \delta, F, R\right)$.
 	
-	$M$ \defWord{lehnt $\Gamma$ ab}, wenn der Automat $M_n$ am ausgezeichneten Knoten $n$ nach endlich vielen Schritten in einem ablehnenden Zustand ist.
-	Sei  $\mathcal{L}'\left(M\right) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}\left(M\right) \text{ lehnt } \Gamma \text{ ab}\right\}$.
+	$M$ \defWord{lehnt $\Gamma$ ab}, $M$ nach endlich vielen Schritten in einer Konfiguration ist, für die gilt: 
+	\begin{displaymath}
+		c(n) \in R
+	\end{displaymath}
+	wobei $n$ der ausgezeichnete Knoten von $M$ ist.
+	Weiter definieren wir : 
+	\begin{displaymath}
+		\mathcal{L}'(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}(M) \text{ lehnt } \Gamma \text{ ab}\right\}
+	\end{displaymath}
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}(M)$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'(M)$.
+	$\mathcal{C}(M)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L}$ genau dann, wenn $\mathcal{C}(M)$ alle $d$"=Graphen $\Gamma \in \mathcal{L}$ akzeptiert und alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ablehnt.
 	
-	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'\left(M\right)$.
-	
-	$\mathcal{C}\left(M\right)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert alle $d$"=Graphen $\Gamma \in \mathcal{L} \land \mathcal{C}\left(M\right)$ lehnt alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ab.
-	
-	$\mathcal{L}$ wird ein \defWord{Zellulares $d$"~Graph Prädikat} und $\mathcal{C}\left(M\right)$ ein \defWord{Zellularer $d$"~Graph Entscheider} genannt. 
+	Dann wird $\mathcal{L}$ ein \defWord{Zellulares $d$"~Graph Prädikat} und $\mathcal{C}(M)$ ein \defWord{Zellularer $d$"~Graph Entscheider} genannt. 
 	Jedes Zellulare $d$"~Graph Prädikat ist insbesondere eine $d$"~Graph Sprache.
 \end{definition}
 
 \begin{definition}[Akzeptanz zugrunde liegender Graphen]
-	Für einen $d$"=Graphen $\Gamma$ bezeichen $U\left(\Gamma\right)$ den $\Gamma$ zugrunde liegenden Graphen. 
-	Definiere weiter $\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U\left(\Gamma\right) \text{ für einen $d$"~Graph } \Gamma \text{ über } L\right\}$, sowie für $\gamma \in \mathcal{G}_L^d : U^{-1}\left(\gamma\right) := \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}$.
+	Für einen $d$"=Graphen $\Gamma$ bezeichen $U(\Gamma)$ den $\Gamma$ zugrunde liegenden Graphen. 
+	Definiere weiter 
+	\begin{displaymath}
+		\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U(\Gamma) \text{ für einen $d$"~Graph } \Gamma \text{ über } L\right\}
+	\end{displaymath} sowie für $\gamma \in \mathcal{G}_L^d :$
+	\begin{displaymath}
+		 U^{-1}(\gamma) := \left\{\Gamma \mid \gamma = U\left(\Gamma\right)\right\}
+	\end{displaymath}
 	
-	$\mathcal{C}\left(M\right)$ \defWord{akzeptiert einen knotenbeschrifteten Graphen $\gamma$}, wenn $\mathcal{C}\left(M\right)$ einen $d$"~Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
-	$\mathcal{C}\left(M\right)$ akzeptiert $\gamma$ \defWord{stark}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"~Graph in $U^{-1}\left(\gamma\right)$ akzeptiert.
-	$\mathcal{C}\left(M\right)$ akzeptiert ein Sprache $\mathcal{L} \subset \mathcal{G}_L^d$ (stark), wenn $\gamma \in \mathcal{L} \iff \mathcal{C}\left(M\right)$ akzeptiert $\gamma$ (stark). 
+	$\mathcal{C}(M)$ \defWord{akzeptiert einen knotenbeschrifteten Graphen $\gamma$}, wenn $\mathcal{C}(M)$ einen $d$"~Graph in $U^{-1}(\gamma)$ akzeptiert.
+	$\mathcal{C}(M)$ akzeptiert $\gamma$ \defWord{stark}, wenn $\mathcal{C}(M)$ jeden $d$"~Graph in $U^{-1}(\gamma)$ akzeptiert.
+	$\mathcal{C}(M)$ akzeptiert ein Sprache $\mathcal{L} \subset \mathcal{G}_L^d$ (stark), wenn gilt: 
+	\begin{displaymath}
+		\gamma \in \mathcal{L} \iff \mathcal{C}\left(M\right) \text{ akzeptiert } \gamma \text{ (stark).}
+	\end{displaymath} 
 	
-	$\mathcal{C}\left(M\right)$ \defWord{lehnt einen knotenbeschrifteten Graphen $\gamma$ ab}, wenn $\mathcal{C}\left(M\right)$ jeden $d$"~Graph in $U^{-1}\left(\gamma\right)$ ablehnt.
-	$\mathcal{C}\left(M\right)$ \defWord{entscheidet ein Prädikat} $\mathcal{L} \subset \mathcal{G}_L^d :\iff \mathcal{C}\left(M\right)$ akzeptiert jedes $\gamma \in \mathcal{L}$ und $\mathcal{C}\left(M\right)$ lehnt jedes $\gamma \notin \mathcal{L}$ ab.
+	$\mathcal{C}(M)$ \defWord{lehnt einen knotenbeschrifteten Graphen $\gamma$ ab}, wenn $\mathcal{C}(M)$ jeden $d$"~Graph in $U^{-1}(\gamma)$ ablehnt.
+	$\mathcal{C}(M)$ \defWord{entscheidet ein Prädikat} $\mathcal{L} \subset \mathcal{G}_L^d$ genau dann, wenn $\mathcal{C}(M)$ jedes $\gamma \in \mathcal{L}$  akzeptiert und jedes $\gamma \notin \mathcal{L}$ ablehnt.
 	Die Entscheidung ist stark, wenn die Akzeptanz stark ist. 
 \end{definition}
 
 \section{Graphen Eigenschaften}
 
 \begin{definition}[Radius und Durchmesser]
-	Sei $\Gamma$ ein zusammenhängender $d$"~Graph und $k$ ein Knoten von $\Gamma$ mit $f\left(k\right) \neq \#$.
-	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}\left(m , n\right)$, ist die Länge des kürzesten Weges von $m$ nach $n$.
-	$r\left(k\right) := \max_{n \in N : f\left(n\right) \neq \#} \text{dist}\left(k, n\right)$ ist der \defWord{Radius von $\Gamma$ vom Zentrum $k$ aus}.
-	Sei $D$ der ausgezeichnete Knoten in $\Gamma$.
-	Dann heißt $r := r\left(D\right)$ der \defWord{Radius von $\Gamma$}.
-	$R\left(\Gamma\right) := \min_{k \in N : f\left(k\right) \neq \#} r\left(k\right)$ heißt der \defWord{echte Radius von $\Gamma$}.
+	Sei $\Gamma$ ein zusammenhängender $d$"~Graph und $k$ ein Knoten von $\Gamma$ mit $f(k) \neq \#$.
+	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}(m , n)$, ist die Länge der kürzesten Wege von $m$ nach $n$.
+	\begin{displaymath}
+	r(k) := \max_{\mathclap{f(n) \neq \#}} \text{ dist}(k, n)
+	\end{displaymath}
+	der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
+	Sei $l$ der ausgezeichnete Knoten in $\Gamma$.
+	Dann heißt $r := r(l)$ der \defWord{Radius von $\Gamma$}.
+	\begin{displaymath}
+		R(\Gamma) := \min_{f(n) \neq \#} r(n)
+	\end{displaymath}
+	 heißt der \defWord{echte Radius von $\Gamma$}.
 	
-	Der \defWord{Durchmesser von $\Gamma$} $d\left(\Gamma\right) := \max_{m, n \in N : f\left(m\right) \neq \# \neq f\left(n\right)} \text{dist}\left(m, n\right)$. Je nach Position von $k$ gilt $\frac{\text{Durchmesser}}{2} \le r\left(k\right) \le \text{Durchmesser}.$ Und damit gilt auch $\frac{d\left(\Gamma\right)}{2} \le R\left(\Gamma\right) \le d\left(\Gamma\right)$.
-	Die \defWord{Fläche von $\Gamma$} ist die Mächtigkeit der Menge $ \left\{n \in N \mid f\left(n\right) \neq \# \right\}$.
+	Den \defWord{Durchmesser von $\Gamma$} definieren wir als 
+	\begin{displaymath}
+		d(\Gamma) := \max_{f(m) \neq \# \neq f(n)} \text{dist}(m, n)
+	\end{displaymath} 
+	
+	Je nach Position von $k$ gilt $d(\Gamma)/2 \le r\left(k\right) \le d(\Gamma).$ Und damit auch $d(\Gamma)/2 \le R(\Gamma) \le d(\Gamma)$.
+	Die \defWord{Fläche von $\Gamma$} ist die Mächtigkeit der Menge $ \left\{n \in N \mid f(n) \neq \# \right\}$.
 	
 \end{definition}
 
@@ -519,7 +548,7 @@ Der Baum hat Höhe $r$ und jeder Knoten kennt seine Kinder und seinen Eltern Kno
 Ein Knoten $n$, der das Blatt auf einem längsten Ast ist, ist der am weitesten von $k$ entfernte Knoten, da unser Spannbaum aus kürzesten Wegen besteht. 
 Um $n$ zu bestimmen gehen wir wie folgt vor:
 
-Wir senden ein Signal $S_1$ von $k$ aus. Erreicht $S_1$ ein Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Elternknoten. Erhält ein Knoten $m$ das $S_2$ von einem Kind $m_1$, aber hat von einem anderen Kind $m_"$ noch kein Signal erhalten, weiß $m$, dass $m_2$ weiter entfernt liegt als $m_1$. 
+Wir senden ein Signal $S_1$ von $k$ aus. Erreicht $S_1$ ein Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Elternknoten. Erhält ein Knoten $m$ das $S_2$ von einem Kind $m_1$, aber hat von einem anderen Kind $m_2$ noch kein Signal erhalten, weiß $m$, dass $m_2$ weiter entfernt liegt als $m_1$. 
 Also schickt $m$ ein Signal $R$ zum Teilbaum, der bei $m_1$ startet. Dieses Signal bedeutet den Knoten, dass sie nicht auf dem längsten Ast liegen. 
 Erhält $m$  von mehreren Kindern $S_2$ gleichzeitig, kann ein beliebiges Kind für den längsten Pfad ausgewählt werden, da alle den gleichen Abstand zu $m$ haben. 
 Die restlichen Kinder erhalten ebenfalls das Signal $R$. 
