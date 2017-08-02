@@ -40,6 +40,10 @@
 \usepackage{xcolor}
 \usepackage{beamercolorthemekit}
 
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{cga.bib}
+\nocite{*}
+
 
 %-----------------------------------------------------------------------------
 % für das Deckblatt
@@ -60,8 +64,8 @@
 \newcommand{\defWord}[1]{\emph{#1}}
 
 %-----------------------------------------------------------------------------
-\author{Thomas Worsch}
-\title{Hinweise zu Seminarausarbeitungen}
+\author{Philipp Faller}
+\title{Cellular Graph Automata I}
 
 %=============================================================================
 \begin{document}
@@ -1036,7 +1040,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
 Wir wollen nun herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. $k$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $n$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $n$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ $k$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $k$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $n$ einen längsten Weg zu $k$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $k$ angekommen.
 %-----------------------------------------------------------------------------
-
+\printbibliography
 \end{document}
 %=============================================================================
 %%% Der Rest ist für meine Editor  (GNU Emacs, was sonst ;-) :
