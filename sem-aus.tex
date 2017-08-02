@@ -46,6 +46,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{automata}
+\usetikzlibrary{chains}
 
 \newcommand{\teilnehmername}{Philipp Faller} % !!!!!
 \newcommand{\teilnehmermatrnr}{1939704}        % !!!!!
@@ -173,19 +174,19 @@ Jede Kante hat eine Nummer aus $\left\{1, \dots, d\right\}$.
 Dabei gilt im Allgemeinen $g(n, m) \neq g(m, n)$. 
 Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Ausgangsgrad $d$, jeder andere hat Ausgangsgrad $1$. 
 
-\begin{beispiel}
-	\label{dGraph}
-	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
-	\node[state](a){$a$};
-	\node[state](c)[below right of=a]{$c$};
-	\node[state](b)[above right of=c]{$b$};
-	\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
-			\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
-					  (\p) edge[bend left=9] node {\b} (\q) 
-			;
-						
-	\end{tikzpicture}
-\end{beispiel}
+%\begin{beispiel}
+%	\label{dGraph}
+%	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
+%	\node[state](a){$a$};
+%	\node[state](c)[below right of=a]{$c$};
+%	\node[state](b)[above right of=c]{$b$};
+%	\foreach \q/\p/\a/\b in {a/b/1/1, a/c/2/1, b/c/2/2}
+%			\draw[->] (\q) edge[bend left=9] node {\a} (\p) 
+%					  (\p) edge[bend left=9] node {\b} (\q) 
+%			;
+%						
+%	\end{tikzpicture}
+%\end{beispiel}
 
 \begin{beispiel}
 	\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north), auto]
@@ -268,6 +269,8 @@ In \thref{dGraph} ist zum Beispiel $H(a) = \left(1, 1\right)$.
 Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
 
 \begin{beispiel}
+	Das folgende Beispiel soll den Nachbarschaftsvektor veranschaulichen. 
+	\par\medskip \noindent
 		\begin{minipage}{0.48\textwidth}
 			\centering
 			\begin{tikzpicture}[node distance=3cm, baseline=(current bounding box.north), auto]
@@ -283,9 +286,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 		\end{minipage}
 		\begin{minipage}{0.48\textwidth}
 			\begin{itemize}
-				\item H(a) = (1, 1)
-				\item H(b) = (1, 2)
-				\item H(c) = (2, 2)
+				\item[] H(a) = (1, 1)
+				\item[] H(b) = (1, 2)
+				\item[] H(c) = (2, 2)
 			\end{itemize}
 		\end{minipage}
 	
@@ -305,7 +308,43 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 
 
 \begin{bemerkung}
-	Ein zellularer $d$"~Graph Automat ist eine Verallgemeinerung eines endlichen zellulären Automaten, da, falls $\Gamma$ ein regelmäßiges Gitter als zugrunde liegenden Graph besitzt, der Automat effektiv aus einem Gitter $R = G(\Gamma)$, der endlichen Zustandsmenge $Q$, der lokalen Zustandsübergangsfunktion $\delta$, sowie der Nachbarschaft $H$ besteht.
+	Ein zellularer $d$"~Graph Automat ist eine Verallgemeinerung eines endlichen zellulären Automaten, wie man am folgenden Beispiel leicht sieht. Da jedoch die Knotenmenge $N$ und die Zustandsmenge $Q$ endlich sind, ist der zellulare $d$"~Graph Automat weniger mächtig als ein allgemeiner, unendlich großer Zellularautomat.
+	
+	\par\medskip
+	\noindent
+	\begin{minipage}{\textwidth}
+		\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+		\begin{scope}[start chain=1 going right,node distance=0cm]
+		\node[on chain=1, draw, minimum size = 1.5cm] (a){$q_0$};
+		\node[on chain=1, draw, minimum size = 1.5cm] (b){$q_1$};
+		\node[on chain=1, draw, minimum size = 1.5cm] (c) {$q_2$};
+		\node[on chain=1, draw, minimum size = 1.5cm]  (d) {$q_3$};
+		\node[on chain=1, draw, minimum size = 1.5cm]  (e) {$q_4$};
+		\node[on chain=1, draw, minimum size = 1.5cm]  (f) {$q_5$};
+		\end{scope}
+		\end{tikzpicture}
+		
+		\par\medskip
+		\begin{tikzpicture}[node distance=1.5cm, baseline=(current bounding box.north), every state/.style={minimum size = 3.3em}]
+		\node[state] (a) {$q_5$};
+		\node[state] (b)[left of = a] {$q_4$};
+		\node[state] (c)[left of = b] {$q_3$};
+		\node[state] (d)[left of = c] {$q_2$};
+		\node[state] (e)[left of = d] {$q_1$};
+		\node[state] (f)[left of = e] {$q_0$};
+		\node[state] (a1)[right of = a] {$\#$};
+		\node[state] (f1)[left of = f] {$\#$};
+		
+		\foreach \p/\q in {a/b, b/c, c/d, d/e, e/f, a/a1, f/f1}
+		\draw[->] 
+		(\q) edge (\p)
+		(\p) edge (\q) 			
+		;
+		\end{tikzpicture}
+		
+	\end{minipage}
+	
 \end{bemerkung}
 
 \begin{definition}[Akzeptanz]
@@ -386,6 +425,71 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	Die Entscheidung ist stark, wenn die Akzeptanz stark ist. 
 \end{definition}
 
+\begin{beispiel}
+	Als Beispiel wollen wir die Klasse der Zellularen $d$"~Graph Akzeptoren konstruieren, die die Sprache $\mathcal{L} = \left\{\gamma \mid \gamma \text{ ist bipartit und zusammenhängend} \right\}$ erkennen.
+	Das heißt, alle Graphen, die zusammenhängend sind und deren Knotenmenge sich in zwei disjunkte Teilmengen aufteilen lässt, sodass es keine Kanten zwischen Knoten in der selben Menge gibt.
+	
+	Sei also $\mathcal{M} = (\Gamma, M, H)$ ein $d$"~Graph Akzeptor mit $U(\Gamma) = \gamma$.
+	Zunächst sendet der ausgezeichnete Knoten $n$ von $\Gamma$ ein Signal aus, das anzeigt, dass er zur ersten Teilmenge gehört. Jeder Nachbar von $n$ kann nicht in der selben Teilmenge liegen wie $n$, da es sonst eine Kante innerhalb dieser Teilmenge gäbe. Also sendet wiederum jeder dieser Nachbarn ein Signal, um anzuzeigen, dass sie zur zweiten Menge gehören. So verfährt jeder Knoten weiter, der eines der beiden Signale erhält. Erhält ein Knoten beide Signale gleichzeitig, kann $\gamma$ nicht bipartit sein. Also sendet dieser Knoten ein Fehlersignal aus. Erhält der ausgezeichnete Knoten dieses Signal, akzeptiert er $\gamma$ nicht. Tritt kein Fehler auf, muss der ausgezeichnete Knoten wissen, wann jeder Knoten ein Signal erhalten hat. Dies kann zum Beispiel durch die parallele Konstruktion eines Spannbaumes, wie später beschrieben, geschehen.
+	
+	In der folgenden Abbildung ist das Signal, dass ein Knoten sendet, wenn er zur ersten Menge gehört, blau dargestellt, das andere Signal grün. Der ausgezeichnete Knoten ist doppelt umrandet.
+	
+	\definecolor{S3}{named}{kit-green100}
+	\definecolor{S1}{named}{kit-blue100}
+	\definecolor{S2}{named}{kit-red70}	
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+		\node[state, accepting, fill=S1] (a) {};
+		\node[state] (b)[below of = a] {};
+		\node[state] (c)[below of = b] {};
+		\node[state] (d)[right of = a] {};
+		\node[state] (e)[below of = d] {};
+		\node[state] (f)[below of = e] {};
+		
+		\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+		\draw[->] 
+		(\q) edge (\p)
+		(\p) edge (\q) 			
+		;
+		\end{tikzpicture}
+	\end{minipage}
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+		\node[state, accepting, fill=S1] (a) {};
+		\node[state] (b)[below of = a] {};
+		\node[state] (c)[below of = b] {};
+		\node[state, fill=S3] (d)[right of = a] {};
+		\node[state, fill=S3] (e)[below of = d] {};
+		\node[state, fill=S3] (f)[below of = e] {};
+		
+		\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+		\draw[->] 
+		(\q) edge (\p)
+		(\p) edge (\q) 			
+		;
+		\end{tikzpicture}
+	\end{minipage}
+	\begin{minipage}{0.3\textwidth}
+		\centering
+		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
+		\node[state, accepting, fill=S1] (a) {};
+		\node[state, fill=S1] (b)[below of = a] {};
+		\node[state, fill=S1] (c)[below of = b] {};
+		\node[state, fill=S3] (d)[right of = a] {};
+		\node[state, fill=S3] (e)[below of = d] {};
+		\node[state, fill=S3] (f)[below of = e] {};
+		
+		\foreach \p/\q in {a/d, a/e, a/f, b/d, b/e, b/f, c/d, c/e, c/f}
+		\draw[->] 
+		(\q) edge (\p)
+		(\p) edge (\q) 			
+		;
+		\end{tikzpicture}
+	\end{minipage}
+\end{beispiel}
+
 \section{Graphen Eigenschaften}
 
 \begin{definition}[Radius und Durchmesser]
@@ -413,7 +517,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \end{definition}
 
 \section{Spannbaum durch Breitensuche}
-Wir konstruieren nun für einen gegebenen $d$"~Graph $\Gamma$ mit ausgezeichnetem Knoten $b$ einen Spannbaum des zugrunde liegenden Graphen, mit der Wurzel $b$ und minimaler Höhe $h$. 
+Wir konstruieren nun für einen gegebenen, zusammenhängenden $d$"~Graph $\Gamma$ mit ausgezeichnetem Knoten $b$ einen Spannbaum des zugrunde liegenden Graphen, mit der Wurzel $b$ und minimaler Höhe $h$. 
 Dazu sendet $b$ ein Signal $S$ aus. Jeder Nachbar von $b$ speichert in seinem Zustand die Nummer, der Kante, die zu $b$ führt und sendet das Signal weiter. 
 Jeder Knoten verarbeitet dieses Signal $S$ nur, wenn er es zum ersten Mal erhält. 
 Erhält ein Knoten das Signal von zwei verschiedenen Nachbarn gleichzeitig, wählt er nach einer beliebigen aber festen Regel (z.B. immer der Nachbar, mit der niedrigsten Nummer) einen der beiden als Vorgänger aus. 
@@ -447,7 +551,15 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 \definecolor{S3}{named}{kit-green100}
 \definecolor{S1}{named}{kit-blue100}
 \definecolor{S2}{named}{kit-red70}
-\begin{beispiel}
+\begin{beispiel} 
+	In der folgenden Abbildung ist das Signal $S$ rot und das Signal $S'$ grün dargestellt. 
+	Ein blauer Pfeil bedeutet, dass der Knoten von dem der Pfeil ausgeht als Vorgänger gewählt hat.
+	Ein Grüner Pfeil steht umgekehrt dafür, dass der Knoten als Nachfolger erkannt wurde. 
+	Die blaue Färbung heißt, dass der Knoten auf das Signal $S'$ von einem seiner Nachfolger wartet.
+	
+	\par\medskip
+	\noindent
+	\begin{minipage}{\textwidth}
 	\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state](a){$a$};
@@ -467,7 +579,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		(\p) edge[bend left=9] (\q) 			
 		;
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, fill=S2](a){$a$};
 		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
@@ -491,7 +605,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		(\p) edge[bend left=9, line width = 2pt, S1] (\q) 			
 		;		
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, fill=S3, text=white](a){$a$};
 		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
@@ -519,7 +635,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		;	
 		
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, fill=S3, text=white](a){$a$};
 		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
@@ -546,7 +664,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		(\p) edge[bend left=9, line width = 2pt, S3] (\q) 			
 		;	
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, fill=S3, text=white](a){$a$};
 		\node[state, fill=S1, text=white, accepting](b)[right of = a]{$b$};
@@ -573,7 +693,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		(\p) edge[bend left=9, line width = 2pt, S3] (\q) 			
 		;	
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, fill=S3, text=white](a){$a$};
 		\node[state, fill=S3, text=white, accepting](b)[right of = a]{$b$};
@@ -601,7 +723,9 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		(\p) edge[bend left=9, line width = 2pt, S3] (\q) 			
 		;
 		\end{tikzpicture}
-	
+	\end{minipage}\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
 		\node[state, accepting, fill=S3, text=white](b){$b$};
 		\node[state, fill=S3, text=white](c)[below of = b]{$c$};
@@ -630,6 +754,8 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		;
 		
 		\end{tikzpicture}	
+		
+	\end{minipage}
 \end{beispiel}
 
 \section{Radius bestimmen}
@@ -676,7 +802,10 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
 \definecolor{S}{named}{kit-green100}
 \begin{beispiel}
-	\begin{figure}[h]
+	In der folgenden Abbildung  ist $S$ wieder grün dargestellt. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit.
+	\par\medskip \noindent
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
@@ -691,7 +820,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}		
-	
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.north)]
 		\node[state, fill=S, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
@@ -706,7 +837,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering			
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state, fill=S, text=white] (b)[left of = a] {$0\mid 0$};
@@ -721,7 +854,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$1\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
@@ -736,7 +871,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
@@ -751,7 +888,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
@@ -766,7 +905,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
@@ -781,7 +922,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$1\mid 0$};
 		\node[state] (b)[left of = a] {$0\mid 1$};
@@ -796,7 +939,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 0$};
 		\node[state] (b)[left of = a] {$1\mid 0$};
@@ -811,7 +956,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
@@ -826,7 +973,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, accepting] (a) {$0\mid 1$};
 		\node[state, fill=S, text=white] (b)[left of = a] {$0\mid 0$};
@@ -841,7 +990,9 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		(\p) edge (\q) 			
 		;
 		\end{tikzpicture}
-		
+	\end{minipage}
+	\begin{minipage}{\textwidth}
+		\centering
 		\begin{tikzpicture}[node distance=2cm]
 		\node[state, fill=S, text=white, accepting] (a) {$0\mid 1$};
 		\node[state] (b)[left of = a] {$0\mid 0$};
@@ -858,7 +1009,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 		\end{tikzpicture}
 	
 	
-	\end{figure}
+	\end{minipage}
 \end{beispiel}
 
 \section{Beschriftungen finden}
