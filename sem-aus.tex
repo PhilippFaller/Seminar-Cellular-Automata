@@ -264,8 +264,7 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Ausgangsgrad $d$, jeder an
 Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Startzustand $f(n) \in L$. 
 (Wir sagen auch $\Gamma$ ist der \defWord{Eingabegraph} von $M$.) 
 In jedem Zeitschritt liest $M_n$ die Zustände seiner Nachbarn, sowie den Nachbarschaftsvektor und wechselt dann, wie durch die Zustandsübergangsfunktion $\delta$ festgelegt, in einen anderen Zustand. 
-Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbst von seinen Nachbarn ist. 
-In \thref{dGraph} ist zum Beispiel $H(a) = \left(1, 1\right)$. 
+Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbst von seinen Nachbarn ist.  
 Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
 
 \begin{beispiel}
@@ -758,6 +757,27 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 	\end{minipage}
 \end{beispiel}
 
+Eine Zustandsüberführungsfunktion $\delta$, für den oben beschriebenen Algorithmus könnte wie folgt aussehen: 
+$\delta$ erhält hier als ersten Parameter den Zustand des aktuellen Knotens, bestehend aus einem Signal und der Nummer des Vorgängerknotens. 
+$N$ ist dabei ein neutrales Zustand, in dem sich ein Knoten befindet, wenn er noch kein anderes Signal erhalten hat und $W$ der Zustand, in dem ein Knoten auf das Signal $S'$ von seinen Nachfolgern wartet. 
+Die Vorgängernummer kann $-1$ sein, falls der Knoten die Wurzel sein soll und $0$ falls er noch keinen Vorgänger hat. $H$ ist hier der Nachbarschaftsvektor des aktuellen Knotens und $q$ der Vektor, der die Zustände seiner Nachbarn enthält.
+\begin{align*}
+	\delta((N, -1), H, q) &= (S, -1) \\
+	\delta((N, 0), H, q) &= \begin{cases}
+							(N, 0), &\text{falls }\forall i \in Z_d : q_i \neq S \\
+							(S, \min_{q_i = S} i), &\text{sonst}
+						\end{cases} \\
+	\delta((S, j), H, q) &= \begin{cases}
+							(S', j), &\text{falls } \forall i \in Z_d : q_i \neq N \\
+							(W, j),  & \text{sonst} 
+						\end{cases} \\
+	\delta((W, j), H, q) &= \begin{cases}
+							(S', j), & \text{falls }\forall i \in Z_d \text{ mit } q_i = (X, H_i) : X = S' \\
+							(W, j),  & \text{sonst} 
+						\end{cases} \\
+	\delta((S', j), H, q) &= (S', j)
+\end{align*}
+
 \section{Radius bestimmen}
 Der Radius $r$ eines $d$"~Graphen zum Zentrum $k$ ist die kürzeste Distanz zwischen $k$ und dem am weitesten von $k$ entfernten Knoten $n$. 
 Haben wir so einen Knoten $n$ gefunden, können wir den Radius bestimmen, indem wir die Schritte zählen, die ein Signal von $k$ benötigt um $n$ zu erreichen. 
@@ -802,7 +822,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
 \definecolor{S}{named}{kit-green100}
 \begin{beispiel}
-	In der folgenden Abbildung  ist $S$ wieder grün dargestellt. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit.
+	In der folgenden Abbildung ist jede Zeile der Längste Ast zu einem Zeitpunkt. $S$ ist wieder grün dargestellt. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit.
 	\par\medskip \noindent
 	\begin{minipage}{\textwidth}
 		\centering
