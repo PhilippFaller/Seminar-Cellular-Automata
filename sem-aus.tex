@@ -245,15 +245,15 @@ Jeder Knoten, dessen Beschriftung nicht $\#$ ist, hat Ausgangsgrad $d$, jeder an
 \begin{definition}[$d$"~Graph Automat]
 	Ein \defWord{Zellulärer $d$"~Graph Automat} $\mathcal{M}$ ist ein Tripel $\left(\Gamma, M, H\right)$, wobei
 	\begin{itemize}
-		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über Menge von Beschriftungen $L$ ist.
+		\item[$\Gamma$] ein $d$"~Graph $\left(N, A, f, g\right)$ über einer Menge von Beschriftungen $L$ ist.
 		\item[$M$] ist ein endlicher Automat $\left(Q, \delta\right)$, dabei ist 
 		\begin{itemize}
 			\item[$Q$] eine endliche, nicht leere Menge von Zuständen, mit $L \subseteq Q$,
 			\item[$\delta$] $\cramped{: Q \times Z_d^d \times Q^d \rightarrow \mathcal{P}\left(Q\right)}$  heißt \defWord{Zustandsübergangsfunktion}.
 			
-			Dabei ist $\forall z \in Z_d^d, q \in Q^d : \cramped{\delta(\#, z, q) = \{\# \}}$.
+			Es gilt $\forall z \in Z_d^d, q \in Q^d : \cramped{\delta(\#, z, q) = \{\# \}}$.
 		\end{itemize}
-		\item[$H$] $: N \rightarrow Z_d^d$.  
+		\item[$H$] $: N \rightarrow Z_d^d$ ist eine Abbildung.  
 	\end{itemize}
 		Für $n \in N$ heißt das Bild $H(n) = \left(t_1, \text{\dots}, t_n\right) \in Z_d^d$ \defWord{Nachbarschaftsvektor} von $n$. Es gilt: 
 		\begin{displaymath}
@@ -269,7 +269,7 @@ Informell ist jeder Knoten $n$ in $\Gamma$ ein endlicher Automat $M_n$, mit Star
 (Wir sagen auch $\Gamma$ ist der \defWord{Eingabegraph} von $M$.) 
 In jedem Zeitschritt liest $M_n$ die Zustände seiner Nachbarn, sowie den Nachbarschaftsvektor und wechselt dann, wie durch die Zustandsübergangsfunktion $\delta$ festgelegt, in einen anderen Zustand. 
 Der Nachbarschaftsvektor sagt einem Knoten dabei, der wievielte Nachbar er selbst von seinen Nachbarn ist.  
-Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
+Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn in Abhängigkeit davon zu betrachten, der wievielte Nachbar er von diesem Knoten ist.
 
 \begin{beispiel}
 	Das folgende Beispiel soll den Nachbarschaftsvektor veranschaulichen. 
@@ -301,9 +301,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	Eine \defWord{Konfiguration von $\mathcal{M}$} ist eine Abbildung \hbox{$c : N \rightarrow Q$}, die jedem Knoten einen Zustand zuordnet.
 	Sei $n$ ein Knoten mit Zustand $q = c(n)$ und Nachbarn $m_1 := h(n, 1), \dots, m_d := h(n, d)$. 
 	Sei $q = \left( c(m_1), \dots , c(m_d)\right) \in Q^d$ der Vektor, der die Zustände der Nachbarn von $n$ enthält. 
-	Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch 
+	Der Folgezustand $c'(n)$ des Knotens $n$ ist dann gegeben durch: 
 	\begin{displaymath}
-		c'(n) = \delta(c(n), H(n),q).
+		c'(n) = \delta(c(n), H(n),q)
 	\end{displaymath} 
 	Wir sagen $\delta$ überführt $c$ in $c'$ und schreiben $c \vdash c'$.
 	Wird bei der Überführung $H$ nicht benutzt, das heißt $\delta$ bildet effektiv von $Q^{d+1}$ nach $Q$ ab, so heißt $\mathcal{M}$ \defWord{Schwacher Zellularer $d$"~Graph Automat}.
@@ -311,7 +311,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 
 
 \begin{bemerkung}
-	Ein zellularer $d$"~Graph Automat ist eine Verallgemeinerung eines endlichen zellulären Automaten, wie man am folgenden Beispiel leicht sieht. Da jedoch die Knotenmenge $N$ und die Zustandsmenge $Q$ endlich sind, ist der zellulare $d$"~Graph Automat weniger mächtig als ein allgemeiner, unendlich großer Zellularautomat.
+	Ein zellularer $d$"~Graph Automat ist eine Verallgemeinerung eines endlichen Zellularautomaten, wie man am folgenden Beispiel leicht sieht. Da jedoch die Knotenmenge $N$ und die Zustandsmenge $Q$ endlich sind, ist der zellulare $d$"~Graph Automat weniger mächtig als ein allgemeiner, unendlich großer Zellularautomat.
 	
 	\par\medskip
 	\noindent
@@ -351,9 +351,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \end{bemerkung}
 
 \begin{definition}[Akzeptanz]
-	Ein Zellularer $d$"~Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{Zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
+	Ein Zellularer $d$"~Graph Automat, bei dem genau ein Knoten eine ausgezeichnete Marke als Teil seines Zustandes  besitzt, heißt \defWord{zellularer $d$"~Graph Automat mit ausgezeichnetem Knoten}.
 	
-	Ein \defWord{Zellularer $d$"~Graph Akzeptor} ist ein Zellularer $d$"~Graph Automat $\mathcal{M} = \left(\Gamma, M, H \right)$ mit einem ausgezeichneten Knoten, sodass $M$ ein endlicher Akzeptor $\left(L, Q, \delta, F\right)$, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$ ist.
+	Sei $\mathcal{M} = \left(\Gamma, (Q, \delta), H \right)$ ein $d$"~Graph Automat mit ausgezeichnetem Knoten , sodass $(L, Q, \delta, F)$ ein endlicher Akzeptor, mit Startzuständen $L$, Zustandsmenge $Q$, Zustandsüberführungsfunktion $\delta$ und akzeptierenden Zuständen $F \subseteq Q$ ist. Dann heißt $\mathcal{M}$ \defWord{zellularer $d$"~Graph Akzeptor}.
 	
 	Eine \defWord{Startkonfiguration} von $\mathcal{M}$ ist eine beliebige Abbildung $c : N \rightarrow L$. 
 	Eine \defWord{Endkonfiguration} ist eine Abbildung $c' : N \rightarrow Q$, bei der für den ausgezeichneten Knoten $\hat{n}$ gilt: 
@@ -362,7 +362,7 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	\end{displaymath} 
 	Also eine Konfiguration, bei der der ausgezeichnete Knoten sich in einem akzeptierenden Zustand befindet.
 	
-	Ein Zellularer $d$"~Graph Akzeptor \defWord{akzeptiert} den $d$"~Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{1 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$ und einer Endkonfiguration $c_m$, sodass:
+	Ein Zellularer $d$"~Graph Akzeptor \defWord{akzeptiert} den $d$"~Graph $\Gamma$, wenn es eine endliche Folge von Konfigurationen $\left(c_i\right)_{0 \le i \le m}$ gibt, mit einer Startkonfiguration $c_0 = f$ und einer Endkonfiguration $c_m$, sodass:
 	\begin{displaymath}
 		c_{i} \vdash c_{i+1} \text{, für } 0 \le i < m
 	\end{displaymath}
@@ -373,24 +373,24 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	\begin{displaymath}
 		\mathcal{C}(M) = \left\{\mathcal{M} = \left(\Gamma, M, H\right) \mid \mathcal{M} \text{ ist $d$"~Graph Akzeptor mit ausgezeichnetem Knoten} \right\}
 	\end{displaymath} 
-	die \defWord{Klasse, der durch $M$ festgelegten Zellularen Graph Akzeptoren}. 
-	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}(M)$ auch den \defWord{Zellularen $d$"~Graph Akzeptor von $M$}.
+	die \defWord{Klasse, der durch $M$ festgelegten zellularen $d$"~Graph Akzeptoren}. 
+	Wenn keine Verwechslungsgefahr besteht, nennen wir $\mathcal{C}(M)$ auch den \defWord{zellularen $d$"~Graph Akzeptor von $M$}.
 	Die \defWord{Sprache von $d$"=Graphen, die durch $\mathcal{C}(M)$ akzeptiert wird} ist die Menge 
 	\begin{displaymath}
 		\mathcal{L}(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}(M) \text{ akzeptiert } \Gamma \right\}
 	\end{displaymath}
-	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}$ \defWord{akzeptiert} genau dann, wenn $\Gamma \in \mathcal{L}(M)$.
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}(M)$ \defWord{akzeptiert} genau dann, wenn $\Gamma \in \mathcal{L}(M)$.
 	Die Klasse aller Sprachen, die von einem (deterministischen) Zellularen $d$"~Graph Akzeptor akzeptiert wird, heißt die Klasse der (deterministischen) \defWord{$d$"~Graph Sprachen} $(D)\mathcal{C}d\mathcal{L}$. 
 \end{definition}
 
 \begin{definition}[$d$"~Graph Entscheider]
-	Wir nennen eine weitere Teilmenge $R \subseteq Q$ mit 
+	Wir nennen eine weitere Teilmenge $R \subseteq Q$ mit: 
 	\begin{displaymath}
 		R \cap F = \emptyset
 	\end{displaymath} 
 	die \defWord{ablehnenden Zustände von $M$} und schreiben $M$ als 5-Tupel $\left(L, Q, \delta, F, R\right)$.
 	
-	$M$ \defWord{lehnt $\Gamma$ ab}, $M$ nach endlich vielen Schritten in einer Konfiguration ist, für die gilt: 
+	$M$ \defWord{lehnt $\Gamma$ ab}, wenn $M$ nach endlich vielen Schritten in einer Konfiguration ist, für die gilt: 
 	\begin{displaymath}
 		c(n) \in R
 	\end{displaymath}
@@ -399,15 +399,15 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	\begin{displaymath}
 		\mathcal{L}'(M) = \left\{\Gamma \mid \mathcal{M} = \left(\Gamma, M, H\right) \in \mathcal{C}(M) \text{ lehnt } \Gamma \text{ ab}\right\}
 	\end{displaymath}
-	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}(M)$ \defWord{abgelehnt} $:\iff \Gamma \in \mathcal{L}'(M)$.
-	$\mathcal{C}(M)$ \defWord{entscheidet} eine $d$"=Graphen Sprache $\mathcal{L}$ genau dann, wenn $\mathcal{C}(M)$ alle $d$"=Graphen $\Gamma \in \mathcal{L}$ akzeptiert und alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ablehnt.
+	Ein $d$"~Graph $\Gamma$ wird von $\mathcal{C}(M)$ \defWord{abgelehnt}, genau dann, wenn $\Gamma \in \mathcal{L}'(M)$.
+	$\mathcal{C}(M)$ \defWord{entscheidet} eine $d$"=Graph Sprache $\mathcal{L}$ genau dann, wenn $\mathcal{C}(M)$ alle $d$"=Graphen $\Gamma \in \mathcal{L}$ akzeptiert und alle $d$"=Graphen $\Gamma \notin \mathcal{L}$ ablehnt.
 	
-	Dann wird $\mathcal{L}$ ein \defWord{Zellulares $d$"~Graph Prädikat} und $\mathcal{C}(M)$ ein \defWord{Zellularer $d$"~Graph Entscheider} genannt. 
-	Jedes Zellulare $d$"~Graph Prädikat ist insbesondere eine $d$"~Graph Sprache.
+	Dann wird $\mathcal{L}$ ein \defWord{zellulares $d$"~Graph Prädikat} und $\mathcal{C}(M)$ ein \defWord{zellularer $d$"~Graph Entscheider} genannt. 
+	Jedes zellulare $d$"~Graph Prädikat ist insbesondere eine $d$"~Graph Sprache.
 \end{definition}
 
 \begin{definition}[Akzeptanz zugrunde liegender Graphen]
-	Für einen $d$"=Graphen $\Gamma$ bezeichen $U(\Gamma)$ den $\Gamma$ zugrunde liegenden Graphen. 
+	Für einen $d$"=Graphen $\Gamma$ bezeichnet $U(\Gamma)$ den $\Gamma$ zugrunde liegenden Graphen. 
 	Definiere weiter 
 	\begin{displaymath}
 		\mathcal{G}_L^d = \left\{\gamma \mid \gamma = U(\Gamma) \text{ für einen $d$"~Graph } \Gamma \text{ über } L\right\}
@@ -429,11 +429,11 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 \end{definition}
 
 \begin{beispiel}
-	Als Beispiel wollen wir die Klasse der Zellularen $d$"~Graph Akzeptoren konstruieren, die die Sprache $\mathcal{L} = \left\{\gamma \mid \gamma \text{ ist bipartit und zusammenhängend} \right\}$ erkennen.
-	Das heißt, alle Graphen, die zusammenhängend sind und deren Knotenmenge sich in zwei disjunkte Teilmengen aufteilen lässt, sodass es keine Kanten zwischen Knoten in der selben Menge gibt.
+	Als Beispiel wollen wir die Klasse der Zellularen $d$"~Graph Entscheider angeben, die das Prädikat $\mathcal{L} = \left\{\gamma \mid \gamma \text{ ist bipartit} \right\}$ entscheidet.
+	Das heißt, alle Graphen, deren Knotenmenge sich in zwei disjunkte Teilmengen aufteilen lässt, sodass es keine Kanten zwischen Knoten in der selben Menge gibt. Wir nehmen dabei der Einfachheit halber an, dass $\gamma$ zusammenhängend ist.
 	
 	Sei also $\mathcal{M} = (\Gamma, M, H)$ ein $d$"~Graph Akzeptor mit $U(\Gamma) = \gamma$.
-	Zunächst sendet der ausgezeichnete Knoten $n$ von $\Gamma$ ein Signal aus, das anzeigt, dass er zur ersten Teilmenge gehört. Jeder Nachbar von $n$ kann nicht in der selben Teilmenge liegen wie $n$, da es sonst eine Kante innerhalb dieser Teilmenge gäbe. Also sendet wiederum jeder dieser Nachbarn ein Signal, um anzuzeigen, dass sie zur zweiten Menge gehören. So verfährt jeder Knoten weiter, der eines der beiden Signale erhält. Erhält ein Knoten beide Signale gleichzeitig, kann $\gamma$ nicht bipartit sein. Also sendet dieser Knoten ein Fehlersignal aus. Erhält der ausgezeichnete Knoten dieses Signal, akzeptiert er $\gamma$ nicht. Tritt kein Fehler auf, muss der ausgezeichnete Knoten wissen, wann jeder Knoten ein Signal erhalten hat. Dies kann zum Beispiel durch die parallele Konstruktion eines Spannbaumes, wie später beschrieben, geschehen.
+	Zunächst sendet der ausgezeichnete Knoten $n$ von $\Gamma$ ein Signal aus, das anzeigt, dass er zur ersten Teilmenge gehört. Jeder Nachbar von $n$ kann nicht in der selben Teilmenge liegen wie $n$, da es sonst eine Kante innerhalb dieser Teilmenge gäbe. Also sendet wiederum jeder dieser Nachbarn ein Signal, um anzuzeigen, dass sie zur zweiten Menge gehören. So verfährt jeder Knoten weiter, der eines der beiden Signale erhält. Erhält ein Knoten beide Signale gleichzeitig, kann $\gamma$ nicht bipartit sein. Also sendet dieser Knoten ein Fehlersignal aus. Erhält der ausgezeichnete Knoten dieses Signal, lehnt er $\gamma$ ab. Tritt kein Fehler auf, muss der ausgezeichnete Knoten wissen, wann jeder Knoten ein Signal erhalten hat. Dies kann zum Beispiel durch die Konstruktion eines Spannbaumes, wie später beschrieben, geschehen.
 	
 	In der folgenden Abbildung ist das Signal, dass ein Knoten sendet, wenn er zur ersten Menge gehört, blau dargestellt, das andere Signal grün. Der ausgezeichnete Knoten ist doppelt umrandet.
 	
@@ -501,15 +501,14 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 	\begin{displaymath}
 	r(k) := \max_{\mathclap{f(n) \neq \#}} \text{ dist}(k, n)
 	\end{displaymath}
-	der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
+	heißt der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
 	Sei $l$ der ausgezeichnete Knoten in $\Gamma$.
 	Dann heißt $r := r(l)$ der \defWord{Radius von $\Gamma$}.
 	\begin{displaymath}
 		R(\Gamma) := \min_{f(n) \neq \#} r(n)
 	\end{displaymath}
 	 heißt der \defWord{echte Radius von $\Gamma$}.
-	
-	Den \defWord{Durchmesser von $\Gamma$} definieren wir als 
+	Den \defWord{Durchmesser von $\Gamma$} definieren wir als: 
 	\begin{displaymath}
 		d(\Gamma) := \max_{f(m) \neq \# \neq f(n)} \text{dist}(m, n)
 	\end{displaymath} 
@@ -521,9 +520,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn zu in Abhängigkeit
 
 \section{Spannbaum durch Breitensuche}
 Wir konstruieren nun für einen gegebenen, zusammenhängenden $d$"~Graph $\Gamma$ mit ausgezeichnetem Knoten $b$ einen Spannbaum des zugrunde liegenden Graphen, mit der Wurzel $b$ und minimaler Höhe $h$. 
-Dazu sendet $b$ ein Signal $S$ aus. Jeder Nachbar von $b$ speichert in seinem Zustand die Nummer, der Kante, die zu $b$ führt und sendet das Signal weiter. 
+Dazu sendet $b$ ein Signal $S$ aus. Jeder Nachbar von $b$ speichert in seinem Zustand die Nummer der Kante, die zu $b$ führt und sendet das Signal weiter. 
 Jeder Knoten verarbeitet dieses Signal $S$ nur, wenn er es zum ersten Mal erhält. 
-Erhält ein Knoten das Signal von zwei verschiedenen Nachbarn gleichzeitig, wählt er nach einer beliebigen aber festen Regel (z.B. immer der Nachbar, mit der niedrigsten Nummer) einen der beiden als Vorgänger aus. 
+Erreicht einen Knoten das Signal von zwei verschiedenen Nachbarn gleichzeitig, wählt er nach einer beliebigen aber festen Regel (z.B. immer der Nachbar, mit der niedrigsten Nummer) einen der beiden als Vorgänger aus. 
 Dadurch erhalten wir von jedem Knoten $n$ einen eindeutigen Pfad zu $b$, indem wir von $n$ zu seinem Vorgänger $n_1$ und von $n_1$ zu dessen Vorgänger $n_2$ und so weiter gehen, bis wir bei $n_k=b, k \in \mathbb{N}$ angekommen sind. 
 Jeder Knoten verarbeitet genau einmal das Signal. 
 Und der längste Weg, den das Signal zurücklegen kann ist der Radius von $\Gamma$ zum Zentrum $b$. 
@@ -535,7 +534,7 @@ Dann hätte jedoch das Signal über diesen Pfad $n$ zuerst erreicht und der ande
 Das ist ein Widerspruch.
 
 Zusätzlich kann jeder Knoten $n$ seine Nachfolger bestimmen. 
-Dazu wartet $n$, bis ein Nachbarn $m$ einen Vorgänger gewählt hat.
+Dazu wartet $n$, bis ein Nachbar $m$ einen Vorgänger gewählt hat.
 Da $n$ durch die Funktion $H$ weiß, der wievielte Nachbar von $m$ er ist, kann er an dessen Zustand ablesen, ob $m$ sein Nachfolger ist, oder nicht. 
 Davor steht das noch nicht fest, da $m$ möglicherweise von mehreren Knoten gleichzeitig benachrichtigt wird und sich erst entscheiden muss, wer sein Vorgänger ist.
 
@@ -556,8 +555,8 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 \definecolor{S2}{named}{kit-red70}
 \begin{beispiel} 
 	In der folgenden Abbildung ist das Signal $S$ rot und das Signal $S'$ grün dargestellt. 
-	Ein blauer Pfeil bedeutet, dass der Knoten von dem der Pfeil ausgeht als Vorgänger gewählt hat.
-	Ein Grüner Pfeil steht umgekehrt dafür, dass der Knoten als Nachfolger erkannt wurde. 
+	Ein blauer Pfeil bedeutet, dass der Knoten von dem der Pfeil ausgeht, den anderen Knoten als Vorgänger gewählt hat.
+	Ein Grüner Pfeil steht umgekehrt dafür, dass der Knoten, bei dem der Pfeil endet vom anderen als Nachfolger erkannt wurde. 
 	Die blaue Färbung heißt, dass der Knoten auf das Signal $S'$ von einem seiner Nachfolger wartet.
 	
 	\par\medskip
@@ -760,10 +759,10 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		
 	\end{minipage}
 \end{beispiel}
-
-Eine Zustandsüberführungsfunktion $\delta$, für den oben beschriebenen Algorithmus könnte wie folgt aussehen: 
+\noindent
+Eine Zustandsüberführungsfunktion $\delta$ für den oben beschriebenen Algorithmus (ohne das Erkennen der Nachfolger) könnte wie folgt aussehen: 
 $\delta$ erhält hier als ersten Parameter den Zustand des aktuellen Knotens, bestehend aus einem Signal und der Nummer des Vorgängerknotens. 
-$N$ ist dabei ein neutrales Zustand, in dem sich ein Knoten befindet, wenn er noch kein anderes Signal erhalten hat und $W$ der Zustand, in dem ein Knoten auf das Signal $S'$ von seinen Nachfolgern wartet. 
+$N$ ist dabei ein neutraler Zustand, in dem sich ein Knoten befindet, wenn er noch kein anderes Signal erhalten hat und $W$ der Zustand, in dem ein Knoten auf das Signal $S'$ von seinen Nachfolgern wartet. 
 Die Vorgängernummer kann $-1$ sein, falls der Knoten die Wurzel sein soll und $0$ falls er noch keinen Vorgänger hat. $H$ ist hier der Nachbarschaftsvektor des aktuellen Knotens und $q$ der Vektor, der die Zustände seiner Nachbarn enthält.
 \begin{align*}
 	\delta((N, -1), H, q) &= (S, -1) \\
@@ -788,8 +787,7 @@ Haben wir so einen Knoten $n$ gefunden, können wir den Radius bestimmen, indem 
 Außerdem können wir sogar sicher sein, dass wenn ein Signal $n$ erreicht hat, hat es auch alle anderen Knoten schon erreicht. 
 Dies gilt natürlich nur, wenn jeder Knoten das Signal mit der selben Geschwindigkeit weiter gibt.
 
-Gegeben sei ein Spannbaum, wie wir ihn im letzten Abschnitt konstruiert haben, mit einer Wurzel $k$. 
-Der Baum hat Höhe $h$ in dem jeder Knoten seine Kinder und seinen Eltern Knoten kennt. 
+Gegeben sei ein Spannbaum, wie wir ihn im letzten Abschnitt konstruiert haben, mit einer Wurzel $k$, Höhe $h$ und in dem jeder Knoten seine Nachfolger und seinen Vorgängerknoten kennt. 
 Ein Knoten $n$, der das Blatt auf einem der längsten Äste ist, ist einer der am weitesten von $k$ entfernten Knoten, da unser Spannbaum aus kürzesten Wegen besteht. 
 Es gilt also:
 \begin{displaymath}
@@ -797,16 +795,17 @@ h = \max_{\mathclap{f\left(n\right) \neq \#}} \text{ dist}\left(k, n\right) = r(
 \end{displaymath}
 Um $n$ zu bestimmen gehen wir wie folgt vor:
 
-Wir senden ein Signal $S_1$ von $k$ aus. Erreicht $S_1$ ein Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Elternknoten. 
-Erhält ein Knoten $m$ das Signal $S_2$ von einem Kind $m_1$, aber hat von einem anderen Kind $m_2$ noch kein Signal erhalten, weiß $m$, dass $m_2$ weiter entfernt liegt als $m_1$. 
+Wir senden ein Signal $S_1$ von $k$ aus. Erreicht $S_1$ ein Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Vorgängerknoten. 
+Erhält ein Knoten $m$ das Signal $S_2$ von einem Nachfolger $m_1$, aber hat von einem anderen Nachfolger $m_2$ noch kein Signal erhalten, weiß $m$, dass $m_2$ weiter entfernt liegt als $m_1$. 
 Also schickt $m$ ein Signal $R$ zum Teilbaum, der bei $m_1$ startet. Dieses Signal bedeutet den Knoten, dass sie nicht auf dem längsten Ast liegen. 
-Erhält $m$  von mehreren Kindern $S_2$ gleichzeitig, kann ein beliebiges Kind für den längsten Pfad ausgewählt werden, da alle den gleichen Abstand zu $m$ haben. 
-Die restlichen Kinder erhalten ebenfalls das Signal $R$. 
-Jeder Knoten hat also höchstens ein Kind, dem er nicht $R$ sendet. 
-Es ist klar, dass das $S_2$ vom weitesten entfernten Blatt $n$ zuletzt bei $k$ ankommt. 
+Erhält $m$  von mehreren Nachfolgern $S_2$ gleichzeitig, kann ein beliebiger Nachfolger für den längsten Pfad ausgewählt werden, da alle den gleichen Abstand zu $m$ haben. 
+Die restlichen Nachfolger erhalten ebenfalls das Signal $R$. 
+Jeder Knoten hat also höchstens einen Nachfolger, dem er nicht $R$ sendet. 
+Es ist klar, dass das Signal $S_2$ vom weitesten entfernten Blatt $n$ zuletzt bei $k$ ankommt. 
 Damit sind also die einzigen Knoten, die nicht $R$ erhalten haben diejenigen, die auf dem Ast von $k$ nach $n$ liegen.
 $k$ kann nun ein Signal entlang dieses Astes schicken, damit die Knoten wissen, dass sie Teil des längsten Astes sind.
 Das benötigt zweimal $r(k)$ Zeit. Soll $k$ zusätzlich wissen, wann das Markieren beendet ist, sendet $n$ ein Signal zu $k$ zurück. Das benötigt noch einmal $r(k)$ Schritte.
+Zusammen mit der Zeit, die wir benötigen, um den Spannbaum zu konstruieren, sind bisher also $6r(k)$ Zeitschritte vergangen.
 
 Die Knoten auf diesem Pfad können wir nun als Zähler benutzen.
 Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Basis $k$, so können wir alle natürlichen Zahlen $< k^{r+1}$ darstellen. Im folgenden Speichern wir den Radius zur Basis 2. Dies funktioniert, da $\forall r \in \mathbb{N} : r < 2^{r+1}$.
@@ -816,17 +815,18 @@ Zunächst sendet $k$ ein Signal $S$ aus. Dieses Signal wird von $n$ wieder zu $k
 Das Zählen funktioniert nach dem Prinzip des Carry-Ripple-Addierers. 
 Das niederwertigste Bit ist dabei in $k$ und das höchstwertige Bit in $n$ zu finden.
 Jeder Knoten speichert zusätlich zum Summenbit ein Übertragsbit. Im ersten Schritt sendet der Knoten $k$ das Signal $S$ aus und erhöht gleichzeitig sein Summenbit auf 1. Danach inkrementiert $k$ sein Summenbit bei jedem zweiten Zeitschritt, solange bis $S$ wieder bei $k$ angekommen ist. 
-Tritt ein Übertrag bei einem Knoten $m$ auf, wird dieser sofort vom Kind von $m$ in sein Summenbit übernommen und bei $m$ wieder zurückgesetzt.
+Tritt ein Übertrag bei einem Knoten $m$ auf, wird dieser sofort vom Nachfolger von $m$ in sein Summenbit übernommen und bei $m$ wieder zurückgesetzt.
 Dadurch kann kein Konflikt zwischen Inkrementieren und Übertrag entstehen.
 Erhält $k$ das Signal $S$ zurück, enthält der Zähler bereits $r(k)$. 
 Es kann jedoch sein, dass noch nicht alle Überträge bis zum höchstwertigen Bit durch propagiert wurden. 
-Damit $k$ feststellen kann, ob dieser Vorgang zu ende ist, kann $n$ zusätzlich zur Reflektion von $S$ ein Signal $S'$ senden, dass mit halber Geschwindigkeit übertragen, also von jedem Knoten erst nach einem Zeitschritt Pause weitergeleitet wird.
+Damit $k$ feststellen kann, ob dieser Vorgang zu Ende ist, kann $n$ zusätzlich zur Reflektion von $S$ ein Signal $S'$ senden, dass mit halber Geschwindigkeit übertragen, also von jedem Knoten erst nach einem Zeitschritt Pause weitergeleitet wird.
 $S'$ benötigt dann zusätzlich $r(l) > log_2 r(k)$ Zeitschritte, nachdem $S$ wieder bei $k$ angekommen ist. 
-Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
+Damit sind sicher alle Überträge verarbeitet, bis $S'$ ankommt.
+Insgesamt benötigen wir also $10r(k)$ Zeitschritte.
 
 \definecolor{S}{named}{kit-green100}
 \begin{beispiel}
-	In der folgenden Abbildung ist jede Zeile der Längste Ast zu einem Zeitpunkt. $S$ ist wieder grün dargestellt. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit.
+	In der folgenden Abbildung ist jede Zeile eine Konfiguration des längsten Astes. $S$ ist wieder grün dargestellt, genauso wie $S'$. Die linke Ziffer im Knoten ist das Carrybit und die Rechte das Zählerbit. $k$ ist der doppelt umrahmte Knoten.
 	\par\medskip \noindent
 	\begin{minipage}{\textwidth}
 		\centering
@@ -1038,7 +1038,7 @@ Damit sind sicher alle Übertrage verarbeitet, bis $S'$ ankommt.
 
 \section{Beschriftungen finden}
 
-Wir wollen nun herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. $k$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $n$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $n$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ $k$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $k$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $n$ einen längsten Weg zu $k$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $k$ angekommen.
+Wir wollen abschließend herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. $k$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $n$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $n$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ $k$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $k$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $n$ einen längsten Weg zu $k$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $k$ angekommen.
 %-----------------------------------------------------------------------------
 \printbibliography
 \end{document}
