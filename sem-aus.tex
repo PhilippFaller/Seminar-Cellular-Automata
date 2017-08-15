@@ -437,6 +437,8 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn in Abhängigkeit da
 	
 	In der folgenden Abbildung ist das Signal, das ein Knoten sendet, wenn er zur ersten Menge gehört, blau dargestellt, das andere Signal grün. Der ausgezeichnete Knoten ist doppelt umrandet.
 	
+	\par\medskip
+	\noindent
 	\definecolor{S3}{named}{kit-green100}
 	\definecolor{S1}{named}{kit-blue100}
 	\definecolor{S2}{named}{kit-red70}	
@@ -497,17 +499,18 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn in Abhängigkeit da
 
 \begin{definition}[Radius und Durchmesser]
 	Es sei $\Gamma$ ein zusammenhängender $d$"~Graph und $k$ ein Knoten von $\Gamma$ mit $f(k) \neq \#$.
-	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}(m , n)$, ist die Länge der kürzesten Wege von $m$ nach $n$.
+	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}(m , n)$, ist die Länge der kürzesten Wege von $m$ nach $n$. Damit heißt
 	\begin{displaymath}
 	r(k) := \max_{\mathclap{f(l) \neq \#}} \text{ dist}(k, l)
 	\end{displaymath}
-	heißt der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
+	der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
 	Es sei $\hat{n}$ der ausgezeichnete Knoten in $\Gamma$.
 	Dann heißt $r := r(\hat{n})$ der \defWord{Radius von $\Gamma$}.
+	Weiter definieren wir, dass
 	\begin{displaymath}
 		R(\Gamma) := \min_{f(n) \neq \#} r(n)
 	\end{displaymath}
-	 heißt der \defWord{echte Radius von $\Gamma$}.
+	der \defWord{echte Radius von $\Gamma$} heißt.
 	Den \defWord{Durchmesser von $\Gamma$} definieren wir als: 
 	\begin{displaymath}
 		d(\Gamma) := \max_{f(m) \neq \# \neq f(n)} \text{dist}(m, n)
@@ -561,7 +564,7 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 	Der ausgezeichnete Knoten ist doppelt umrandet.
 	
 	\par\medskip
-	\noindent
+	%\noindent
 	\begin{minipage}{\textwidth}
 	\centering
 		\begin{tikzpicture}[node distance=2cm, baseline=(current bounding box.mid), every state/.style={minimum size = 3.3em}]
@@ -760,7 +763,7 @@ Mit einem analogen Argument wie oben folgt, dass diese Konstruktion zweimal den 
 		
 	\end{minipage}
 \end{beispiel}
-
+\pagebreak
 %\par\medskip
 \noindent
 Eine Zustandsüberführungsfunktion $\delta$ für den oben beschriebenen Algorithmus (ohne das Erkennen der Nachfolger) könnte wie folgt aussehen: 
