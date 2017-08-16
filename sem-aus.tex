@@ -793,46 +793,46 @@ Haben wir so einen Knoten $l$ gefunden, können wir den Radius bestimmen, indem 
 Außerdem können wir sogar sicher sein, dass wenn ein Signal den Knoten $l$ erreicht hat, hat es auch alle anderen Knoten schon erreicht. 
 Dies gilt natürlich nur, wenn jeder Knoten das Signal mit derselben Geschwindigkeit weiter gibt.
 
-Gegeben sei ein Spannbaum, wie wir ihn im letzten Abschnitt konstruiert haben, mit einer Wurzel $k$, Höhe $h$ und in dem jeder Knoten seine Nachfolger und seinen Vorgängerknoten kennt. 
-Ein Knoten $l$, der das Blatt auf einem der längsten Äste ist, ist einer der am weitesten von $k$ entfernten Knoten, da unser Spannbaum aus kürzesten Wegen besteht. 
+Gegeben sei ein Spannbaum, wie wir ihn im letzten Abschnitt konstruiert haben, mit einer Wurzel $\hat{n}$, Höhe $h$ und in dem jeder Knoten seine Nachfolger und seinen Vorgängerknoten kennt. 
+Ein Knoten $\hat{m}$, der das Blatt auf einem der längsten Äste ist, ist einer der am weitesten von $\hat{n}$ entfernten Knoten, da unser Spannbaum aus kürzesten Wegen besteht. 
 Es gilt also:
 \begin{displaymath}
-h = \max_{\mathclap{f(l) \neq \#}} \text{ dist}(k, l) = r(k)
+h = \max_{\mathclap{f(m) \neq \#}} \text{ dist}(\hat{n}, m) = r(\hat{n}) = r
 \end{displaymath}
-Um $l$ zu bestimmen gehen wir wie folgt vor:
+Um $\hat{m}$ zu bestimmen gehen wir wie folgt vor:
 
-Wir senden ein Signal $S_1$ von $k$ aus. Erreicht $S_1$ einen Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Vorgängerknoten. 
+Wir senden ein Signal $S_1$ von $\hat{n}$ aus. Erreicht $S_1$ einen Blattknoten, sendet dieser ein Signal $S_2$ zu seinem Vorgängerknoten. 
 Erhält ein Knoten $m$ das Signal $S_2$ von einem Nachfolger $m_1$, aber hat von einem anderen Nachfolger $m_2$ noch kein Signal erhalten, weiß $m$, dass $m_2$ weiter entfernt liegt als $m_1$. 
 Also schickt $m$ ein Signal $R$ zum Teilbaum, der bei $m_1$ startet. Dieses Signal bedeutet den Knoten, dass sie nicht auf dem längsten Ast liegen. 
 Erhält $m$  von mehreren Nachfolgern das Signal $S_2$ gleichzeitig, kann ein beliebiger Nachfolger für den längsten Pfad ausgewählt werden, da alle den gleichen Abstand zu $m$ haben. 
 Die restlichen Nachfolger erhalten ebenfalls das Signal $R$. 
 Jeder Knoten hat also höchstens einen Nachfolger, dem er nicht $R$ sendet. 
-Es ist klar, dass das Signal $S_2$ vom weitesten entfernten Blatt $l$ zuletzt bei $k$ ankommt. 
-Damit sind also die einzigen Knoten, die nicht $R$ erhalten haben, diejenigen, die auf dem Ast von $k$ nach $l$ liegen.
-$k$ kann nun ein Signal entlang dieses Astes schicken, damit die Knoten wissen, dass sie Teil des längsten Astes sind.
-Das benötigt zweimal $r(k)$ Zeit. Soll $k$ zusätzlich wissen, wann das Markieren beendet ist, sendet $l$ ein Signal zu $k$ zurück. Das benötigt noch einmal $r(k)$ Schritte.
-Zusammen mit der Zeit, die wir benötigen, um den Spannbaum zu konstruieren, sind bisher also $6r(k)$ Zeitschritte vergangen.
+Es ist klar, dass das Signal $S_2$ vom weitesten entfernten Blatt $\hat{m}$ zuletzt bei $\hat{n}$ ankommt. 
+Damit sind also die einzigen Knoten, die nicht $R$ erhalten haben, diejenigen, die auf dem Ast von $\hat{n}$ nach $\hat{m}$ liegen.
+$\hat{n}$ kann nun ein Signal entlang dieses Astes schicken, damit die Knoten wissen, dass sie Teil des längsten Astes sind.
+Das benötigt zweimal $r$ Zeit. Soll $\hat{n}$ zusätzlich wissen, wann das Markieren beendet ist, sendet $\hat{m}$ ein Signal zu $\hat{n}$ zurück. Das benötigt noch einmal $r$ Schritte.
+Zusammen mit der Zeit, die wir benötigen, um den Spannbaum zu konstruieren, sind bisher also $6r$ Zeitschritte vergangen.
 
 Die Knoten auf diesem Pfad können wir nun als Zähler benutzen.
 Dabei wird eine Ziffer pro Knoten gespeichert. Speichern wir also Zahlen zur Basis $b$, so können wir alle natürlichen Zahlen $< b^{r+1}$ darstellen. Im Folgenden speichern wir den Radius zur Basis 2. Dies funktioniert, da $\forall r \in \mathbb{N} : r < 2^{r+1}$.
 
-Zunächst sendet $k$ ein Signal $S$ aus. Dieses Signal wird von $l$ wieder zu $k$ zurückgeschickt. Das benötigt $2r(k)$ Zeitschritte. Wir zählen also mit halber Geschwindigkeit die Schritte, die $S$ benötigt, um wieder zu $k$ zurückzukehren.
+Zunächst sendet $\hat{n}$ ein Signal $S$ aus. Dieses Signal wird von $\hat{m}$ wieder zu $\hat{n}$ zurückgeschickt. Das benötigt $2r$ Zeitschritte. Wir zählen also mit halber Geschwindigkeit die Schritte, die $S$ benötigt, um wieder zu $\hat{m}$ zurückzukehren.
 
 Das Zählen funktioniert nach dem Prinzip des Carry-Ripple-Addierers. 
-Das niedrigstwertige Bit ist dabei in $k$ und das höchstwertige Bit in $l$ zu finden.
-Jeder Knoten speichert zusätzlich zum Summenbit ein Übertragsbit. Im ersten Schritt sendet der Knoten $k$ das Signal $S$ aus und erhöht gleichzeitig sein Summenbit auf 1. Danach inkrementiert $k$ sein Summenbit bei jedem zweiten Zeitschritt, solange, bis $S$ wieder bei $k$ angekommen ist. 
+Das niedrigstwertige Bit ist dabei in $\hat{n}$ und das höchstwertige Bit in $\hat{m}$ zu finden.
+Jeder Knoten speichert zusätzlich zum Summenbit ein Übertragsbit. Im ersten Schritt sendet der Knoten $\hat{n}$ das Signal $S$ aus und erhöht gleichzeitig sein Summenbit auf 1. Danach inkrementiert $\hat{n}$ sein Summenbit bei jedem zweiten Zeitschritt, solange, bis $S$ wieder bei $\hat{n}$ angekommen ist. 
 Tritt ein Übertrag bei einem Knoten $m$ auf, wird dieser sofort vom Nachfolger von $m$ in sein Summenbit übernommen und bei $m$ wieder zurückgesetzt.
 Dadurch kann kein Konflikt zwischen Inkrementieren und Übertrag entstehen.
-Erhält $k$ das Signal $S$ zurück, enthält der Zähler bereits $r(k)$. 
+Erhält $\hat{n}$ das Signal $S$ zurück, enthält der Zähler bereits $r$. 
 Es kann jedoch sein, dass noch nicht alle Überträge bis zum höchstwertigen Bit durch propagiert wurden. 
-Damit $k$ feststellen kann, ob dieser Vorgang zu Ende ist, kann $l$ zusätzlich zur Reflektion von $S$ ein Signal $S'$ senden, dass mit halber Geschwindigkeit übertragen, also von jedem Knoten erst nach einem Zeitschritt Pause weitergeleitet wird.
-$S'$ benötigt dann zusätzlich $r(k) > log_2 r(k)$ Zeitschritte, nachdem $S$ wieder bei $k$ angekommen ist. 
+Damit $\hat{n}$ feststellen kann, ob dieser Vorgang zu Ende ist, kann $\hat{n}$ zusätzlich zur Reflektion von $S$ ein Signal $S'$ senden, dass mit halber Geschwindigkeit übertragen, also von jedem Knoten erst nach einem Zeitschritt Pause weitergeleitet wird.
+$S'$ benötigt dann zusätzlich $r > log_2 r$ Zeitschritte, nachdem $S$ wieder bei $\hat{n}$ angekommen ist. 
 Damit sind sicher alle Überträge verarbeitet, bis $S'$ ankommt.
-Insgesamt benötigen wir also $10r(k)$ Zeitschritte.
+Insgesamt benötigen wir also $10r$ Zeitschritte.
 
 \definecolor{S}{named}{kit-green100}
 \begin{beispiel}
-	In der folgenden Abbildung ist jede Zeile eine Konfiguration des längsten Astes. $S$ ist wieder grün dargestellt, genauso wie $S'$. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit. $k$ ist der doppelt umrahmte Knoten.
+	In der folgenden Abbildung ist jede Zeile eine Konfiguration des längsten Astes. $S$ ist wieder grün dargestellt, genauso wie $S'$. Die linke Ziffer im Knoten ist das Carrybit und die rechte das Zählerbit. $\hat{n}$ ist der doppelt umrahmte Knoten.
 	\par\medskip \noindent
 	\begin{minipage}{\textwidth}
 		\centering
@@ -1044,7 +1044,7 @@ Insgesamt benötigen wir also $10r(k)$ Zeitschritte.
 
 \section{Beschriftungen finden}
 
-Wir wollen abschließend herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. Ein Knoten $l$, der einen längsten Pfad zu $k$ hat, kann, wie im letzten Abschnitt beschrieben, gefunden werden. $k$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $l$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $l$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ den Knoten $k$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $k$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $l$ einen längsten Weg zu $k$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $k$ angekommen.
+Wir wollen abschließend herausfinden, ob eine bestimmte Beschriftung $\alpha$ in unserem $d$-Graph vorhanden ist. Dazu sei wieder der Spannbaum aus dem vorletzten Abschnitt gegeben. Ein Knoten $\hat{m}$, der einen längsten Pfad zur Wurzel $\hat{n}$ hat, kann, wie im letzten Abschnitt beschrieben, gefunden werden. $\hat{n}$ sendet nun ein Signal $S$ aus, das an alle Knoten weitergeleitet wird. Erhält ein Knoten mit Beschriftung $\alpha$ dieses Signal, so sendet er ein Signal $S_m$ zurück, um anzuzeigen, dass $\alpha$ gefunden wurde. $S_m$ soll dabei ein dominierendes Signal sein. Das heißt, wenn ein Knoten mehrere Signale neben $S_m$ erhält, leitet er lediglich $S_m$ weiter. Hat $\hat{m}$ nicht die Beschriftung $\alpha$ und erhält das Signal $S$, sendet $\hat{m}$ ein weiteres Signal $S_r$ aus. Erreicht $S_r$ den Knoten $\hat{n}$, ohne dass zuvor ein $S_m$ eingegangen ist, weiß $\hat{n}$, dass es die Beschriftung $\alpha$ nicht gibt. Denn wäre das der Fall, hätte der so beschriftete Knoten $S_m$ losgeschickt und da $\hat{m}$ einen längsten Weg zu $\hat{n}$ hat, wäre dieses $S_m$ spätestens gleichzeitig mit $S_r$ bei $\hat{n}$ angekommen.
 %-----------------------------------------------------------------------------
 \printbibliography
 \end{document}
