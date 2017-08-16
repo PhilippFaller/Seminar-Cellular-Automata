@@ -499,9 +499,9 @@ Das erlaubt einem Automaten $M_n$ den Zustand eines Nachbarn in Abhängigkeit da
 
 \begin{definition}[Radius und Durchmesser]
 	Es sei $\Gamma$ ein zusammenhängender $d$"~Graph und $k$ ein Knoten von $\Gamma$ mit $f(k) \neq \#$.
-	Der \defWord{Abstand zwischen zwei Knoten $m, n$ in $\Gamma$}, geschrieben $\text{dist}(m , n)$, ist die Länge der kürzesten Wege von $m$ nach $n$. Damit heißt
+	Der \defWord{Abstand zwischen zwei Knoten $p, q$ in $\Gamma$}, geschrieben $\text{dist}(p , q)$, ist die Länge der kürzesten Wege von $p$ nach $q$. Damit heißt
 	\begin{displaymath}
-	r(k) := \max_{\mathclap{f(l) \neq \#}} \text{ dist}(k, l)
+	r(k) := \max_{\mathclap{f(m) \neq \#}} \text{ dist}(k, m)
 	\end{displaymath}
 	der \defWord{Radius von $\Gamma$ zum Zentrum $k$}.
 	Es sei $\hat{n}$ der ausgezeichnete Knoten in $\Gamma$.
@@ -797,7 +797,7 @@ Gegeben sei ein Spannbaum, wie wir ihn im letzten Abschnitt konstruiert haben, m
 Ein Knoten $\hat{m}$, der das Blatt auf einem der längsten Äste ist, ist einer der am weitesten von $\hat{n}$ entfernten Knoten, da unser Spannbaum aus kürzesten Wegen besteht. 
 Es gilt also:
 \begin{displaymath}
-h = \max_{\mathclap{f(m) \neq \#}} \text{ dist}(\hat{n}, m) = r(\hat{n}) = r
+h = \text{ dist}(\hat{n}, \hat{m}) =  \max_{\mathclap{f(m) \neq \#}} \text{ dist}(\hat{n}, m) = r(\hat{n}) = r
 \end{displaymath}
 Um $\hat{m}$ zu bestimmen gehen wir wie folgt vor:
 
